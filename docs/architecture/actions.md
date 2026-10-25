@@ -43,3 +43,28 @@ never reported as proof that the underlying write failed.
 Tests cover validation, permission denial before writes, transaction rollback on
 audit failure, idempotent retry, stale edits, center/org mismatch and audit source.
 No generic privileged mutation helper is exposed to clients or AI adapters.
+
+## ACC-11 enforcement boundary (2026-10-25)
+
+`requirePermission` resolves a fresh authenticated membership for each call. Account
+password changes require that membership; login/access administration additionally
+requires the protected `is_owner` flag. Existing account mutations use narrow SQL
+RPCs that repeat authorization and commit their immutable audit entry atomically.
+Direct authenticated writes to tenancy/account tables remain revoked.
+
+The domain overload accepts an area, grid action and trusted record context
+(org, center, persisted date and creator). It checks org equality, reads the active
+center through RLS, evaluates the persisted override (defaults only for SQL NULL),
+and applies Same Day in that center's timezone and edit/delete creator limits.
+Malformed overrides, invalid dates, missing centers and read errors deny access.
+Tests cover all five base roles, saved overrides and denied contexts.
+
+For a new record, actions must construct this context on the server after validating
+references. For edits/deletes, load it from an RLS-authorized existing record; never
+pass client-supplied ownership or dates. This is an area/grid guard, not a complete
+domain authorization decision. Doctor own/shared and own-treatment access, staff
+contact-only fields, accountant financial-only access, appointment visibility and
+module/consent restrictions must also be checked by the domain's RLS and transaction
+RPC before any data is exposed or saved. No clinical or financial mutation endpoint
+exists yet; introducing one requires those domain checks and isolation tests.
+The server guard never substitutes for SQL authorization at commit time.
