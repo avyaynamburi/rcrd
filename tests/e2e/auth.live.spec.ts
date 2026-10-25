@@ -199,6 +199,16 @@ test("live login, access denial, mobile access, password change, recovery and lo
       has: page.getByRole("button", { name: "Save role", exact: true }),
     })
     .first();
+  const stampMenu = roleForm
+    .locator("summary")
+    .filter({ hasText: "Record details" });
+  await stampMenu.focus();
+  await page.keyboard.press("Enter");
+  await expect(roleForm.getByRole("note")).toContainText("Created:");
+  await expect(roleForm.getByRole("note")).toContainText("Updated:");
+  await expect(roleForm.getByRole("note").locator("time")).toHaveCount(2);
+  await page.keyboard.press("Enter");
+  await expect(roleForm.getByRole("note")).toBeHidden();
   // Promote then demote without a reload: revalidation must replace owner defaults.
   const baseRole = roleForm.getByRole("combobox", {
     name: "Base role",
@@ -222,7 +232,15 @@ test("live login, access denial, mobile access, password change, recovery and lo
     if (role === "owner") await expect(billingDelete).toBeDisabled();
     else await expect(billingDelete).toBeEnabled();
   }
-  await roleForm.locator("summary").click();
+  await stampMenu.click();
+  await expect(roleForm.getByRole("note")).toContainText(
+    `Updated: ${ownerEmail}`,
+  );
+  await stampMenu.click();
+  await roleForm
+    .locator("summary")
+    .filter({ hasText: /^Access$/ })
+    .click();
   await roleForm
     .getByLabel("Select Copy Access from", { exact: true })
     .selectOption({ label: ownerEmail });
@@ -237,7 +255,10 @@ test("live login, access denial, mobile access, password change, recovery and lo
   await expect(billingDelete).toHaveValue("same");
   await page.reload();
   await expect(billingDelete).toHaveValue("none");
-  await roleForm.locator("summary").click();
+  await roleForm
+    .locator("summary")
+    .filter({ hasText: /^Access$/ })
+    .click();
   await roleForm
     .locator("details")
     .getByRole("button", { name: "Save access", exact: true })
@@ -286,7 +307,10 @@ test("live login, access denial, mobile access, password change, recovery and lo
   await expect(
     roleForm.getByLabel("Consultant", { exact: true }),
   ).toBeChecked();
-  await roleForm.locator("summary").click();
+  await roleForm
+    .locator("summary")
+    .filter({ hasText: /^Access$/ })
+    .click();
   await roleForm
     .getByLabel("Billing / Invoices: Allow Edit", { exact: true })
     .selectOption("same");
@@ -298,11 +322,17 @@ test("live login, access denial, mobile access, password change, recovery and lo
     roleForm.getByText("Access saved.", { exact: true }),
   ).toBeVisible();
   await page.reload();
-  await roleForm.locator("summary").click();
+  await roleForm
+    .locator("summary")
+    .filter({ hasText: /^Access$/ })
+    .click();
   await expect(
     roleForm.getByLabel("Billing / Invoices: Allow Edit", { exact: true }),
   ).toHaveValue("same");
-  await roleForm.locator("summary").click();
+  await roleForm
+    .locator("summary")
+    .filter({ hasText: /^Access$/ })
+    .click();
   await roleForm.getByLabel("Synthetic branch", { exact: true }).check();
   await roleForm
     .getByRole("button", { name: "Save centers", exact: true })

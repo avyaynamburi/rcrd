@@ -1,3 +1,4 @@
+import { RecordStampMenu } from "@/components/blocks/record-stamps";
 import Link from "next/link";
 import { ExportControl } from "@/components/auth/export-control";
 import { memberExportSchema } from "@/lib/permissions/export-control";
@@ -49,6 +50,19 @@ export default async function Team() {
     .array(z.object({ id: z.uuid(), access_grid: accessGridSchema.nullable() }))
     .safeParse(accessResult.data);
   const roles = memberRolesSchema.safeParse(rolesResult.data);
+  const stampsResult = await account.client.rpc("list_member_stamps");
+  const stampRows = z
+    .array(
+      z.object({
+        id: z.uuid(),
+        created_by: z.string().nullable(),
+        created_at: z.string(),
+        updated_by: z.string().nullable(),
+        updated_at: z.string(),
+      }),
+    )
+    .safeParse(stampsResult.data);
+  const users = {};
   return (
     <main id="main" className="mx-auto max-w-3xl space-y-5 px-6 py-10">
       <h1 className="text-2xl font-semibold">{en.auth.team}</h1>
@@ -63,6 +77,16 @@ export default async function Team() {
             key={person.id}
             className="space-y-3 rounded border border-border p-4"
           >
+            {(() => {
+              const stamps = (stampRows.success ? stampRows.data : []).find(
+                (row) => row.id === person.id,
+              );
+              return !stampsResult.error && stamps ? (
+                <RecordStampMenu stamps={stamps} users={users} />
+              ) : (
+                <p role="alert">{en.stamps.unavailable}</p>
+              );
+            })()}
             <AccountAccess
               account={person}
               self={person.id === account.member.id}

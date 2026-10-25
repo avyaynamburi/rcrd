@@ -34,8 +34,14 @@ delete from public.access_audit where action='auth_login_failed';
 insert into public.access_audit(org_id,actor_id,action,record_id) values
  ('10000000-0000-4000-8000-000000000001','00000000-0000-4000-8000-000000000001','audit_test','00000000-0000-4000-8000-000000000001'),
  ('10000000-0000-4000-8000-000000000002','00000000-0000-4000-8000-000000000003','audit_test','00000000-0000-4000-8000-000000000003');
+update public.memberships set created_by='00000000-0000-4000-8000-000000000001', updated_by='00000000-0000-4000-8000-000000000003' where id='30000000-0000-4000-8000-000000000002';
 set local role authenticated;
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select extensions.is((select item->>'created_by' from jsonb_array_elements(public.list_member_stamps()) item where item->>'id'='30000000-0000-4000-8000-000000000002'),'owner-a@example.invalid','Same-tenant creator resolved');
+select extensions.ok((select item->>'updated_by' is null from jsonb_array_elements(public.list_member_stamps()) item where item->>'id'='30000000-0000-4000-8000-000000000002'),'Foreign actor email hidden');
+select extensions.is(jsonb_array_length(public.list_member_stamps()),2,'Stamps include only own organization members');
+select extensions.ok(not exists(select 1 from jsonb_array_elements(public.list_member_stamps()) item where item->>'id'='30000000-0000-4000-8000-000000000003'),'Foreign member stamps hidden');
+select extensions.ok((public.list_member_stamps()->0) ?& array['created_by','created_at','updated_by','updated_at'],'All stamp fields returned');
 select extensions.is((select count(*)::integer from public.access_audit),1,'Owner sees only own organization audit');
 select extensions.lives_ok($$select public.record_audit_export('xlsx',1)$$,'Owner export audited');
 select extensions.is((select count(*)::integer from public.access_audit where action='export'),1,'Export has audit event');
@@ -44,6 +50,7 @@ select extensions.throws_ok($$update public.access_audit set action='tamper'$$,'
 select extensions.throws_ok($$delete from public.access_audit$$,'42501',null,'Owner cannot delete history');
 select extensions.throws_ok($$insert into public.access_audit(org_id,actor_id,action,record_id) values ('10000000-0000-4000-8000-000000000001','00000000-0000-4000-8000-000000000001','forged','00000000-0000-4000-8000-000000000001')$$,'42501',null,'Owner cannot forge events directly');
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000002","role":"authenticated"}', true);
+select extensions.throws_ok('select public.list_member_stamps()','42501',null,'Staff cannot read Team stamps');
 select extensions.is((select count(*)::integer from public.access_audit),0,'Staff cannot read audit');
 select extensions.throws_ok($$select public.record_audit_export('pdf',1)$$,'42501',null,'Staff cannot export audit');
 reset role;
@@ -262,6 +269,7 @@ select extensions.throws_ok($$select public.set_login_access('30000000-0000-4000
 reset role;
 update public.memberships set login_enabled = false where is_owner;
 set local role authenticated;
+select extensions.throws_ok('select public.list_member_stamps()','42501',null,'Disabled owner cannot read stamps');
 select extensions.ok(not public.can_manage_logins(), 'Disabled owner has no capability');
 select extensions.throws_ok('select * from public.list_login_accounts()', '42501', null, 'Disabled owner cannot list accounts');
 reset role;

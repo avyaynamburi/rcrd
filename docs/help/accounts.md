@@ -29,3 +29,5 @@ An owner can choose **Allowed to see appointments → All / Own only** for each 
 The setting is available now; live Calendar, Today and status-count enforcement is connected when appointment storage is built in P4. Preview status circles continue to show unavailable counts. Owner settings are protected; offline changes cannot be submitted. On a save error, retry when connected.
 
 Owners can disable Excel, PDF and print exports for an individual in Team. Save the export restriction separately from other access changes. Owner accounts are protected. This restriction does not grant access to records. Report and list export controls will use it when those screens are built.
+
+Open Record details (the three-dot control) on a Team row to see its yellow Created and Updated note. Dates include the time in India time. The user is shown by their account email; older or system-created records without an attributable clinic user show “User unavailable”. These notes describe the account row, not a detailed change history; use Access Audit for individual events. Saving changes refreshes the note.

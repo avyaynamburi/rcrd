@@ -389,6 +389,10 @@ export type Database = {
           id: string;
         }[];
       };
+      list_member_stamps: {
+        Args: never;
+        Returns: Json;
+      };
       list_login_accounts: {
         Args: Record<PropertyKey, never>;
         Returns: {

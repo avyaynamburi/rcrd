@@ -1,4 +1,13 @@
 export const en = {
+  stamps: {
+    menu: "Record details",
+    created: "Created",
+    updated: "Updated",
+    on: "on",
+    unknownUser: "User unavailable",
+    unknownDate: "Date unavailable",
+    unavailable: "Record details unavailable. Try reloading.",
+  },
   audit: {
     title: "Access Audit",
     description:
@@ -27,7 +36,6 @@ export const en = {
     previous: "Previous",
     next: "Next",
   },
-
   exportControl: {
     title: "Disable export to Excel/PDF in reports",
     note: "Also blocks print and list exports. Record access permissions still apply.",
