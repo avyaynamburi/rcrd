@@ -7,6 +7,8 @@ export default function Help() {
       <p>{en.helpText}</p>
       <h2 className="text-xl font-semibold">{en.topBarHelpTitle}</h2>
       <p>{en.topBarHelpText}</p>
+      <h2 className="text-xl font-semibold">{en.statusHelpTitle}</h2>
+      <p>{en.statusHelpText}</p>
       <h2 className="text-xl font-semibold">{en.railHelp}</h2>
       <p>{en.railHelpText}</p>
       <h2 className="text-xl font-semibold">{en.installHelp}</h2>

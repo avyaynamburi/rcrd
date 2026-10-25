@@ -1,6 +1,8 @@
 import { IconRail } from "@/components/shell/icon-rail";
 import { navigationItems } from "@/lib/shell-navigation";
 import { version } from "@/package.json";
+import { StatusCircles } from "@/components/shell/status-circles";
+import { ClinicClock } from "@/components/shell/clinic-clock";
 import { AppTitle } from "@/components/shell/app-title";
 import { UpdateNotice } from "@/components/pwa/update-notice";
 import type { Metadata, Viewport } from "next";
@@ -30,7 +32,14 @@ export default function RootLayout({
           messagingNeedsSetup
         />
         <div className="min-w-0 pl-[70px]">
-          <AppTitle />
+          <AppTitle
+            controls={
+              <>
+                <StatusCircles />
+                <ClinicClock />
+              </>
+            }
+          />
           <UpdateNotice />
           {children}
         </div>

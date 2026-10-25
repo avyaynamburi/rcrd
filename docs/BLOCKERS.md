@@ -50,3 +50,8 @@ Status: open. The menu and help work in the data-free preview; identity is expli
 Needed: authenticated organisation context before displaying the actual clinic name.
 Owner steps: no action now. Codex must pass the session-authorized organisation display name into AppTitle when implementing authenticated tenancy; forms/profiles must pass their explicit parent back destination, and calendar/status features must populate the controls slot.
 Status: open. The public preview displays “Clinic not configured”; no clinic identity or status count is invented.
+
+## 9. Connect live appointment counts (SHELL-06 / ACC-02 / P4)
+Needed: authenticated center access, appointments schema with RLS, and a permission-checked read path before status totals or realtime subscriptions can run.
+Owner steps: no action now. Codex must aggregate today's appointments across permitted centers using clinic-local day boundaries, subscribe only to authorized changes, refresh on day rollover/reconnection, and show loading/error/unavailable distinctly from zero. Connect the Calendar Today panel to these status filters in P4; test cross-org/cross-center denial and realtime updates then.
+Status: open. Seven accessible preview circles and validated Calendar filter destinations exist; counts are unavailable. SHELL-06 remains blocked for live data rather than claiming completion.

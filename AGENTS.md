@@ -202,7 +202,7 @@ appointment default card colour #C2417A (doctor/category colours from a 10-colou
 
 - SHELL-04 [DESIGN] avatar menu: confirm name, role, current center, password and center-switch controls in the draft before polishing.
 - CAL-02 group-of-people icon on the calendar top bar: what does it open?
-- SHELL-06 dark-grey status circle: which status?
+- SHELL-06 dark-grey status circle: confirm missed; [DESIGN] confirm circle click opens Calendar Today filtered by status.
 - CAL-33 "Auto Billing" tick box: exact behaviour?
 - ACC-16 "Advanced Security": what does it do in BestoSys?
 - ACC-08 can a patient registered at one branch be treated at the other without re-registering?
