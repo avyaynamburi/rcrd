@@ -1,3 +1,4 @@
+import { defaultGrid } from "@/lib/permissions/access-grid";
 import { expect, test } from "@playwright/test";
 import { createClient } from "@supabase/supabase-js";
 import { execFileSync } from "node:child_process";
@@ -161,6 +162,61 @@ test("live login, access denial, mobile access, password change, recovery and lo
       has: page.getByRole("button", { name: "Save role", exact: true }),
     })
     .first();
+  // Promote then demote without a reload: revalidation must replace owner defaults.
+  const baseRole = roleForm.getByRole("combobox", {
+    name: "Base role",
+    exact: true,
+  });
+  const billingDelete = roleForm.getByLabel(
+    "Billing / Invoices: Allow Delete",
+    {
+      exact: true,
+    },
+  );
+  for (const role of ["owner", "staff"] as const) {
+    await baseRole.selectOption(role);
+    await roleForm
+      .getByRole("button", { name: "Save role", exact: true })
+      .click();
+    await expect(
+      roleForm.getByText("Role and tags saved.", { exact: true }),
+    ).toBeVisible();
+    await expect(billingDelete).toHaveValue(role === "owner" ? "any" : "none");
+    if (role === "owner") await expect(billingDelete).toBeDisabled();
+    else await expect(billingDelete).toBeEnabled();
+  }
+  await roleForm.locator("summary").click();
+  await roleForm
+    .locator("details")
+    .getByRole("button", { name: "Save access", exact: true })
+    .click();
+  await expect(
+    roleForm.getByText("Access saved.", { exact: true }),
+  ).toBeVisible();
+  await page.reload();
+  await expect(billingDelete).toHaveValue("none");
+  // Verify every persisted cell, including non-rendered areas, uses staff defaults.
+  const verifier = createClient(
+    local!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      auth: { persistSession: false, autoRefreshToken: false },
+    },
+  );
+  const verifiedLogin = await verifier.auth.signInWithPassword({
+    email: ownerEmail,
+    password,
+  });
+  expect(verifiedLogin.error).toBeNull();
+  const savedAccess = await verifier.rpc("list_member_access");
+  expect(savedAccess.error).toBeNull();
+  expect(
+    savedAccess.data.find(
+      (item: { id: string }) =>
+        item.id === "22222222-2222-4222-8222-222222222222",
+    ).access_grid,
+  ).toEqual(defaultGrid("staff"));
+  await verifier.auth.signOut({ scope: "local" });
   await roleForm
     .getByRole("combobox", { name: "Base role", exact: true })
     .selectOption("doctor");

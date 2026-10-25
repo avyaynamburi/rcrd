@@ -9,16 +9,22 @@ import { saveAccessGrid } from "@/lib/actions/access-grid";
 import { useConnection } from "@/components/shell/connection-provider";
 import { Button } from "@/components/ui/button";
 import { en } from "@/lib/i18n/en";
-export function AccessGrid({
-  id,
-  initial,
-  protectedOwner,
-}: {
+type AccessGridProps = {
   id: string;
   initial: Grid;
   protectedOwner: boolean;
-}) {
+};
+
+export function AccessGrid({ id, initial, protectedOwner }: AccessGridProps) {
+  const serverVersion = JSON.stringify([id, initial, protectedOwner]);
+  const [previousVersion, setPreviousVersion] = useState(serverVersion);
   const [grid, setGrid] = useState(initial);
+  // Revalidation can change role defaults without changing the member ID.
+  // Reset before rendering stale grants, but preserve edits on unrelated refreshes.
+  if (previousVersion !== serverVersion) {
+    setPreviousVersion(serverVersion);
+    setGrid(initial);
+  }
   const [pending, setPending] = useState(false);
   const [message, setMessage] = useState("");
   const busy = useRef(false);
