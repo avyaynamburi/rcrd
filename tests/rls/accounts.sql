@@ -68,6 +68,11 @@ select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-0000000
 select extensions.throws_ok($$select public.set_login_access('30000000-0000-4000-8000-000000000002', true, true)$$, 'P0001', 'synthetic audit failure', 'Audit failure aborts the write');
 reset role;
 select extensions.is((select login_enabled from public.memberships where id = '30000000-0000-4000-8000-000000000002'), false, 'Failed audit rolls back login update');
+set local role authenticated;
+select extensions.throws_ok($$select public.set_member_role('30000000-0000-4000-8000-000000000002', 'doctor', '{consultant}')$$, 'P0001', 'synthetic audit failure', 'Audit failure aborts role and tags');
+reset role;
+select extensions.is((select base_role from public.memberships where id = '30000000-0000-4000-8000-000000000002'), 'staff', 'Failed role audit rolls back base role');
+select extensions.is((select cardinality(role_tags) from public.memberships where id = '30000000-0000-4000-8000-000000000002'), 0, 'Failed role audit rolls back tags');
 drop trigger reject_test_audit on public.access_audit;
 update public.memberships set deleted_at = now() where id = '30000000-0000-4000-8000-000000000002';
 set local role authenticated;

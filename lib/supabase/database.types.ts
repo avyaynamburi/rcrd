@@ -185,53 +185,53 @@ export type Database = {
       };
       memberships: {
         Row: {
+          base_role: string;
           created_at: string;
           created_by: string | null;
           deleted_at: string | null;
           external_id: string | null;
           external_source: string | null;
           id: string;
-          base_role: string;
-          role_tags: string[];
           is_owner: boolean;
           login_enabled: boolean;
           mobile_access_enabled: boolean;
           org_id: string;
+          role_tags: string[];
           updated_at: string;
           updated_by: string | null;
           user_id: string;
         };
         ComputedFields: never;
         Insert: {
+          base_role?: string;
           created_at?: string;
           created_by?: string | null;
           deleted_at?: string | null;
           external_id?: string | null;
           external_source?: string | null;
           id?: string;
-          base_role?: string;
-          role_tags?: string[];
           is_owner?: boolean;
           login_enabled?: boolean;
           mobile_access_enabled?: boolean;
           org_id: string;
+          role_tags?: string[];
           updated_at?: string;
           updated_by?: string | null;
           user_id: string;
         };
         Update: {
+          base_role?: string;
           created_at?: string;
           created_by?: string | null;
           deleted_at?: string | null;
           external_id?: string | null;
           external_source?: string | null;
           id?: string;
-          base_role?: string;
-          role_tags?: string[];
           is_owner?: boolean;
           login_enabled?: boolean;
           mobile_access_enabled?: boolean;
           org_id?: string;
+          role_tags?: string[];
           updated_at?: string;
           updated_by?: string | null;
           user_id?: string;
@@ -367,20 +367,24 @@ export type Database = {
       };
       list_member_roles: {
         Args: Record<PropertyKey, never>;
-        Returns: { id: string; base_role: string; role_tags: string[] }[];
-      };
-      set_member_role: {
-        Args: {
-          target_membership_id: string;
-          new_role: string;
-          new_tags: string[];
-        };
-        Returns: undefined;
+        Returns: {
+          base_role: string;
+          id: string;
+          role_tags: string[];
+        }[];
       };
       set_login_access: {
         Args: {
           enabled: boolean;
           mobile_enabled: boolean;
+          target_membership_id: string;
+        };
+        Returns: undefined;
+      };
+      set_member_role: {
+        Args: {
+          new_role: string;
+          new_tags: string[];
           target_membership_id: string;
         };
         Returns: undefined;
