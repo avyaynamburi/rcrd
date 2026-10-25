@@ -42,7 +42,7 @@ Tick a box only when the feature meets the Definition of Done in AGENTS.md §10.
 - [x] ACC-14 Owner-only by default  (02-users-roles-permissions.md)
 - [~] ACC-16 Advanced Security switch  (02-users-roles-permissions.md) — unavailable control and help; second-step, idle expiry and single-session enforcement remain BLOCKERS 16
 - [~] ACC-17 Appointment summary notification  (02-users-roles-permissions.md) — doctor-only unavailable control; appointment storage and daily delivery await P4/P8 (BLOCKERS 17)
-- [ ] ACC-18 Deleted people  (02-users-roles-permissions.md)
+- [x] ACC-18 Deleted people  (02-users-roles-permissions.md) — audited delete/restore, session denial, 249 database assertions and signed-in browser flow; Windows Chrome/Edge verified
 - [ ] UI-01 Standard list page  (07-shared-ui.md)
 - [ ] UI-02 Empty pages  (07-shared-ui.md)
 - [ ] UI-03 Inputs  (07-shared-ui.md)
