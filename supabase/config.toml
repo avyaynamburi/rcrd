@@ -258,7 +258,7 @@ otp_expiry = 3600
 
 [auth.sms]
 # Enable phone/password sign-in for individually provisioned identities.
-# Public registration remains disabled globally; no SMS provider sends messages.
+# Public registration remains disabled globally; password login sends no SMS.
 enable_signup = true
 # If enabled, users need to confirm their phone number before signing in.
 enable_confirmations = false
@@ -269,7 +269,7 @@ max_frequency = "5s"
 
 # Use pre-defined map of phone number to OTP for testing.
 # Keys are the phone number with country code and without the + prefix.
-# Local synthetic identity only; prevents CLI disabling phone auth without an SMS provider.
+# Local synthetic identity only; no external delivery for this test number.
 # Never copy test OTPs into hosted project configuration.
 [auth.sms.test_otp]
 919876543210 = "123456"
@@ -292,10 +292,12 @@ max_frequency = "5s"
 # uri = "pg-functions://<database>/<schema>/<hook_name>"
 
 # Configure one of the supported SMS providers: `twilio`, `twilio_verify`, `messagebird`, `textlocal`, `vonage`.
+# Local placeholder: CLI disables phone/password login without an enabled provider.
+# These are synthetic identifiers, never hosted credentials. Password login sends no SMS.
 [auth.sms.twilio]
-enabled = false
-account_sid = ""
-message_service_sid = ""
+enabled = true
+account_sid = "AC00000000000000000000000000000000"
+message_service_sid = "MG00000000000000000000000000000000"
 # DO NOT commit your Twilio auth token to git. Use environment variable substitution instead:
 auth_token = "env(SUPABASE_AUTH_SMS_TWILIO_AUTH_TOKEN)"
 

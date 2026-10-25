@@ -46,6 +46,9 @@ jobs:
           retention-days: 7
   database:
     runs-on: ubuntu-latest
+    env:
+      # Synthetic local provider placeholder, never a real Twilio credential.
+      SUPABASE_AUTH_SMS_TWILIO_AUTH_TOKEN: synthetic-local-only
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
