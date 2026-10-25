@@ -31,8 +31,6 @@ export async function signIn(input: unknown): Promise<AuthResult> {
       password: parsed.data.password,
     });
     if (error) {
-      if (process.env.RCRD_LIVE_AUTH === "1")
-        console.warn("Synthetic login denied", error.code);
       return failed();
     }
     if (!(await getAccount(client))) {

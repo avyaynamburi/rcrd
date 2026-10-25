@@ -87,6 +87,12 @@ test.beforeAll(async () => {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     { auth: { persistSession: false, autoRefreshToken: false } },
   );
+  const signup = await probe.auth.signUp({
+    email: "unprovisioned-synthetic@example.invalid",
+    password,
+  });
+  if (signup.error?.code !== "signup_disabled")
+    throw new Error("Public registration must stay disabled");
   const identity = await probe.auth.signInWithPassword({
     email: ownerEmail,
     password,
