@@ -13,7 +13,7 @@ Tick a box only when the feature meets the Definition of Done in AGENTS.md §10.
 ## P1 — Foundation: shell, logins, permissions, audit, shared UI
 - [x] SHELL-01 App window and installable app  (01-app-shell.md)
 - [x] SHELL-02 Icon rail  (01-app-shell.md)
-- [ ] SHELL-03 Logout confirmation  (01-app-shell.md)
+- [x] SHELL-03 Logout confirmation  (01-app-shell.md)
 - [ ] SHELL-04 User avatar menu  (01-app-shell.md)
 - [ ] SHELL-05 Top bar  (01-app-shell.md)
 - [ ] SHELL-06 Today's status circles  (01-app-shell.md)

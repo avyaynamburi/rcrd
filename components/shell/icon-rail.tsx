@@ -14,8 +14,8 @@ import {
   Bell,
   MessageCircle,
   Settings,
-  LogOut,
 } from "lucide-react";
+import { LogoutConfirmation } from "@/components/shell/logout-confirmation";
 import { en } from "@/lib/i18n/en";
 import {
   isNavigationActive,
@@ -149,15 +149,7 @@ export function IconRail({
           </span>
           <span>{en.userLabel}</span>
         </button>
-        <button
-          disabled
-          className="rail-item"
-          title={en.logoutUnavailable}
-          aria-label={en.logoutUnavailable}
-        >
-          <LogOut size={22} aria-hidden="true" />
-          <span>{en.logoutLabel}</span>
-        </button>
+        <LogoutConfirmation />
       </div>
       <span className="py-2 text-center text-xs">v{version}</span>
     </nav>

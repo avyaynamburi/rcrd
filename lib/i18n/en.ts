@@ -13,7 +13,7 @@ export const en = {
   },
   railHelp: "Using the main navigation",
   railHelpText:
-    "Use the navy rail to open tools. The current icon is orange. The connection dot is green when the app server responds and red when it cannot be reached. New on WhatsApp means setup needs attention. User and Logout become available with clinic sign-in. Use Tab and Enter to navigate.",
+    "Use the navy rail to open tools. The current icon is orange. The connection dot is green when the app server responds and red when it cannot be reached. New on WhatsApp means setup needs attention. The User menu becomes available with clinic sign-in. Logout opens a confirmation; No or Escape returns to your work. Yes currently shows that sign-in is not configured. Use Tab and Enter to navigate.",
   navigationLabel: "Main navigation",
   connectionChecking: "Checking server connection",
   connectionOnline: "Server reachable",
@@ -21,7 +21,11 @@ export const en = {
   newTag: "New",
   messagingSetup: "Messaging setup incomplete",
   userUnavailable: "User menu unavailable until sign-in is configured",
-  logoutUnavailable: "Logout unavailable until sign-in is configured",
+  logoutUnavailable:
+    "Sign-in is not configured yet. There is no clinic session to sign out of.",
+  logoutQuestion: "Are you sure you want to logout?",
+  no: "No",
+  yes: "Yes",
   userLabel: "User",
   logoutLabel: "Logout",
   featureUnavailable:

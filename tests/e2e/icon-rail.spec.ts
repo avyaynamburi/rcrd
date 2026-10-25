@@ -11,8 +11,8 @@ test("rail navigation, version and unfinished tools", async ({ page }) => {
   await expect(rail.getByText("New", { exact: true })).toBeVisible();
   await expect(rail.getByText(/^v\d+\.\d+\.\d+$/)).toBeVisible();
   await expect(
-    rail.getByRole("button", { name: /Logout unavailable/ }),
-  ).toBeDisabled();
+    rail.getByRole("button", { name: "Logout", exact: true }),
+  ).toBeEnabled();
   await rail.getByRole("link", { name: "Patients", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Patients" })).toBeVisible();
   await expect(

@@ -35,3 +35,8 @@ Status: open. Architecture keeps clinical AI calls and unverified providers disa
 Needed: free disk space and Microsoft Edge for local browser verification.
 Owner steps: free disk space with normal storage tools (only about 125 MiB was available), then install Microsoft Edge. Run `npm run test:e2e`. Windows Chrome/Edge verification is provided by the existing GitHub Actions matrix.
 Status: open. SHELL-02 passes `npm run check` and all five targeted Chrome tests with one worker and tracing disabled. The initial parallel run exhausted disk while saving traces; Edge could not launch because it is not installed. No system files were removed and no browser was installed by this run.
+
+## 6. Connect logout to clinic sessions (SHELL-03 / ACC-02)
+Needed: authenticated session implementation in ACC-02 before real sign-out can run.
+Owner steps: no action now; Codex must connect Yes to server-side sign-out when implementing ACC-02, disable repeat submits while pending, verify session revocation and handle failures without claiming success.
+Status: open. SHELL-03 confirmation/cancellation UI works; the preview explicitly reports that authentication is not configured.
