@@ -8,3 +8,5 @@
 - 2026-10-25 — P0-4: use native Next.js manifest support and a small owned worker with no fetch interception, response cache or write queue. Workers activate only on explicit request; pages never auto-reload. Use original geometric R icons, a manually dispatched preview-only Vercel pipeline and bom1 functions. Git deployment is disabled; hosted credentials/verification remain BLOCKERS 2.
 
 - 2026-10-25 — P0-4 local verification: checks and all five Chrome browser tests pass (including actual worker registration, manifest/icons, explicit updates and failed registration). Local Edge is unavailable; Windows Edge/Chrome verification is delegated to the existing CI matrix. No patient data or application mutation path is introduced. Hosted preview execution remains an owner configuration blocker.
+
+- 2026-10-25 — P0-4 CI follow-up: the first pushed run failed during npm ci because platform-optional WASM dependencies were incomplete in the lockfile after adding the CLI. Regenerate the lockfile from package.json in a clean directory without an existing install or lockfile, then rerun the full CI matrix.
