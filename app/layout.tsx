@@ -1,3 +1,5 @@
+import { HelpProvider } from "@/components/blocks/help-drawer";
+import { loadHelpArticles } from "@/lib/help";
 import { AssistantLauncher } from "@/components/shell/assistant-launcher";
 import { IconRail } from "@/components/shell/icon-rail";
 import { navigationItems } from "@/lib/shell-navigation";
@@ -14,7 +16,7 @@ export const metadata: Metadata = {
   description: en.description,
 };
 export const viewport: Viewport = { themeColor: "#1E2A4A" };
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
@@ -27,24 +29,26 @@ export default function RootLayout({
           {en.skip}
         </a>
         {/* Public construction preview only; no authenticated clinic data is exposed. */}
-        <IconRail
-          allowed={navigationItems.map((item) => item.id)}
-          version={version}
-          messagingNeedsSetup
-        />
-        <div className="min-w-0 pl-[70px]">
-          <AppTitle
-            controls={
-              <>
-                <StatusCircles />
-                <ClinicClock />
-              </>
-            }
+        <HelpProvider articles={await loadHelpArticles()}>
+          <IconRail
+            allowed={navigationItems.map((item) => item.id)}
+            version={version}
+            messagingNeedsSetup
           />
-          <UpdateNotice />
-          {children}
-          <AssistantLauncher />
-        </div>
+          <div className="min-w-0 pl-[70px]">
+            <AppTitle
+              controls={
+                <>
+                  <StatusCircles />
+                  <ClinicClock />
+                </>
+              }
+            />
+            <UpdateNotice />
+            {children}
+            <AssistantLauncher />
+          </div>
+        </HelpProvider>
       </body>
     </html>
   );

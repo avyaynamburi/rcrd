@@ -29,10 +29,8 @@ test("second menu supports multiple groups, page selection and remembered state"
   await expect(
     menu.getByRole("link", { name: "Clinic", exact: true }),
   ).toBeHidden();
-  await page.getByRole("link", { name: "Need Help?" }).click();
-  await expect(
-    page.getByRole("heading", { name: "Using the second menu" }),
-  ).toBeVisible();
+  await page.getByRole("button", { name: "Need Help?" }).click();
+  await expect(page.getByRole("dialog")).toBeVisible();
 });
 
 test("all second menus work when storage is denied and fit phone screens", async ({

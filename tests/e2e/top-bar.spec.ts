@@ -18,7 +18,7 @@ test("clinic top bar fits the shell and explains its setup state", async ({
     expect((bounds?.x ?? 0) + (bounds?.width ?? 0)).toBeLessThanOrEqual(width);
   }
   await page.goto("/");
-  await page.getByRole("link", { name: "Need Help?", exact: true }).click();
+  await page.getByRole("button", { name: "Need Help?", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Using the top bar" }),
   ).toBeVisible();

@@ -248,6 +248,9 @@ export const en = {
   setupTitle: "Your clinic workspace starts here",
   setupDescription:
     "Rcrd is being set up. Clinic sign-in and practice tools will appear here as they become available.",
+  helpClose: "Close help",
+  helpUnavailable:
+    "This help article is unavailable. Close help and try again later.",
   help: "Need Help?",
   helpTitle: "Workspace setup",
   helpText:

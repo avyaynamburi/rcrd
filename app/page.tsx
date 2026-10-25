@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { HelpLink } from "@/components/blocks/help-drawer";
 import { en } from "@/lib/i18n/en";
 export default function Home() {
   return (
@@ -9,11 +8,7 @@ export default function Home() {
     >
       <h1 className="text-3xl font-semibold">{en.setupTitle}</h1>
       <p className="max-w-xl text-muted-foreground">{en.setupDescription}</p>
-      <div>
-        <Button asChild variant="outline">
-          <Link href="/help/workspace">{en.help}</Link>
-        </Button>
-      </div>
+      <HelpLink helpKey="workspace" />
     </main>
   );
 }

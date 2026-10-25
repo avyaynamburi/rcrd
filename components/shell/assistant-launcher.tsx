@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { HelpLink } from "@/components/blocks/help-drawer";
 import { useEffect, useRef, useState } from "react";
 import { MessageCircle, Mic, X } from "lucide-react";
 import { en } from "@/lib/i18n/en";
@@ -103,13 +103,7 @@ export function AssistantLauncher({
             {en.assistantSend}
           </button>
         </div>
-        <Link
-          href="/help/assistant"
-          className="mt-6 inline-block text-[#a34d16] underline"
-          onClick={() => dialog.current?.close()}
-        >
-          {en.help}
-        </Link>
+        <HelpLink helpKey="assistant" />
       </dialog>
     </>
   );

@@ -7,11 +7,11 @@ test("workspace and help are available without clinic data", async ({
   await expect(
     page.getByRole("heading", { name: "Your clinic workspace starts here" }),
   ).toBeVisible();
-  await page.getByRole("link", { name: "Need Help?" }).click();
+  await page.getByRole("button", { name: "Need Help?" }).click();
   await expect(
     page.getByRole("heading", { name: "Workspace setup" }),
   ).toBeVisible();
-  await page.getByRole("link", { name: "Back to workspace" }).click();
+  await page.getByRole("button", { name: "Close help" }).click();
   await expect(page).toHaveURL("/");
 });
 test("workspace fits small screens and supports keyboard navigation", async ({

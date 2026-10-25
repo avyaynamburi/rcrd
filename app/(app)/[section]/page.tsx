@@ -1,5 +1,5 @@
 import { SecondMenu, type MenuSection } from "@/components/shell/second-menu";
-import Link from "next/link";
+import { HelpLink } from "@/components/blocks/help-drawer";
 import { notFound } from "next/navigation";
 import { en } from "@/lib/i18n/en";
 import { navigationItems } from "@/lib/shell-navigation";
@@ -51,9 +51,10 @@ export default async function Section({
             <p>{en.statusUnavailable}</p>
           </section>
         )}
-        <Link href="/help/workspace" className="underline">
-          {en.help}
-        </Link>
+        <HelpLink
+          helpKey="screen-preview"
+          title={selected ?? en.navigation[item.id]}
+        />
       </main>
     </div>
   );

@@ -19,9 +19,9 @@ test("rail navigation, version and unfinished tools", async ({ page }) => {
     rail.getByRole("link", { name: "Patients", exact: true }),
   ).toHaveAttribute("aria-current", "page");
   await expect(page.getByText(/This tool is not available yet/)).toBeVisible();
-  await page.getByRole("link", { name: "Need Help?" }).click();
+  await page.getByRole("button", { name: "Need Help?" }).click();
   await expect(
-    page.getByRole("heading", { name: "Workspace setup" }),
+    page.getByRole("dialog", { name: "Patients", exact: true }),
   ).toBeVisible();
 });
 

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { HelpLink } from "@/components/blocks/help-drawer";
 import { useId, useRef } from "react";
 import { en } from "@/lib/i18n/en";
 
@@ -67,13 +67,7 @@ export function UserMenu() {
             {en.userSwitchCenter}
           </button>
         </div>
-        <Link
-          href="/help/user-menu"
-          className="underline"
-          onClick={() => panel.current?.hidePopover()}
-        >
-          {en.help}
-        </Link>
+        <HelpLink helpKey="user-menu" />
         <button
           type="button"
           popoverTarget={id}

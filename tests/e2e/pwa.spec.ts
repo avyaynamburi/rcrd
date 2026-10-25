@@ -27,7 +27,7 @@ test("installs the worker and serves a standalone manifest without caching clini
   expect(await page.evaluate(() => caches.keys())).toEqual([]);
   const worker = await request.get("/sw.js");
   expect(worker.headers()["cache-control"]).toContain("no-store");
-  await page.getByRole("link", { name: "Need Help?" }).click();
+  await page.getByRole("button", { name: "Need Help?" }).click();
   await expect(
     page.getByRole("heading", { name: "Create an Rcrd shortcut" }),
   ).toBeVisible();
@@ -83,7 +83,7 @@ test("keeps the workspace usable when registration fails", async ({ page }) => {
   await expect(
     page.getByRole("status").filter({ hasText: "App updates are unavailable" }),
   ).toBeVisible();
-  await expect(page.getByRole("link", { name: "Need Help?" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Need Help?" })).toBeVisible();
 });
 
 test("shows the app identity and shortcut help at desktop size", async ({
@@ -94,7 +94,7 @@ test("shows the app identity and shortcut help at desktop size", async ({
   await expect(
     page.getByRole("banner", { name: "Clinic top bar" }),
   ).toContainText("Clinic not configured");
-  await page.getByRole("link", { name: "Need Help?" }).click();
+  await page.getByRole("button", { name: "Need Help?" }).click();
   await page
     .getByRole("link", { name: "How to create an Rcrd shortcut" })
     .click();

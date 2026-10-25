@@ -30,11 +30,12 @@ test("user account opens by keyboard, dismisses and links to help without a fabr
   await page.getByRole("heading", { name: "Patients", exact: true }).click();
   await expect(panel).not.toBeVisible();
   await trigger.click();
-  await panel.getByRole("link", { name: "Need Help?" }).click();
+  await panel.getByRole("button", { name: "Need Help?" }).click();
   await expect(
     page.getByRole("heading", { name: "Using your user menu" }),
   ).toBeVisible();
-  await expect(panel).not.toBeVisible();
+  await page.getByRole("button", { name: "Close help" }).click();
+  await page.keyboard.press("Escape");
   for (const width of [1920, 1366, 375]) {
     await page.setViewportSize({ width, height: 768 });
     await trigger.click();
