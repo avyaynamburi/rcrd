@@ -352,6 +352,11 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      list_center_access: { Args: Record<PropertyKey, never>; Returns: Json };
+      set_member_centers: {
+        Args: { target_membership_id: string; center_ids: string[] };
+        Returns: undefined;
+      };
       auth_org_id: { Args: Record<PropertyKey, never>; Returns: string };
       can_access_center: {
         Args: { target_center_id: string };

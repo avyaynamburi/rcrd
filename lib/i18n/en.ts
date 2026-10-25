@@ -1,4 +1,14 @@
 export const en = {
+  centerAccess: {
+    title: "Centers",
+    note: "Select the branches this person can work in. No selection means no branch access.",
+    self: "Another owner must change your branch access.",
+    empty: "No active centers are configured.",
+    save: "Save centers",
+    pending: "Saving centers…",
+    saved: "Center access saved.",
+    failed: "Center access could not be saved. Reload and try again.",
+  },
   accessGrid: {
     copyFrom: "Select Copy Access from",
     chooseSource: "Choose a person",

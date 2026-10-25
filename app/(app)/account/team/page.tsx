@@ -1,3 +1,5 @@
+import { CenterAccess } from "@/components/auth/center-access";
+import { centerAccessSchema } from "@/lib/permissions/center-access";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { getAccount } from "@/lib/auth/session";
@@ -28,6 +30,8 @@ export default async function Team() {
   if (!account?.member.is_owner) redirect("/login");
   const { data, error } = await account.client.rpc("list_login_accounts");
   const accounts = accountsSchema.safeParse(data);
+  const centersResult = await account.client.rpc("list_center_access");
+  const centers = centerAccessSchema.safeParse(centersResult.data);
   const rolesResult = await account.client.rpc("list_member_roles");
   const accessResult = await account.client.rpc("list_member_access");
   const access = z
@@ -51,6 +55,19 @@ export default async function Team() {
               account={person}
               self={person.id === account.member.id}
             />
+            {centers.success && !centersResult.error ? (
+              <CenterAccess
+                id={person.id}
+                centers={centers.data.centers}
+                initial={centers.data.grants
+                  .filter((g) => g.membershipId === person.id)
+                  .map((g) => g.centerId)
+                  .sort()}
+                self={person.id === account.member.id}
+              />
+            ) : (
+              <p role="alert">{en.auth.teamError}</p>
+            )}
             {roles.success &&
             !rolesResult.error &&
             roles.data.find((role) => role.id === person.id) ? (

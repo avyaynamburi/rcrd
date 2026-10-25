@@ -38,7 +38,7 @@ test.beforeAll(async () => {
           "ON_ERROR_STOP=1",
         ],
         {
-          input: `delete from public.access_audit where org_id = '11111111-1111-4111-8111-111111111111'; delete from public.memberships where org_id = '11111111-1111-4111-8111-111111111111'; delete from public.organisations where org_id = '11111111-1111-4111-8111-111111111111';`,
+          input: `delete from public.center_grants where org_id = '11111111-1111-4111-8111-111111111111'; delete from public.centers where org_id = '11111111-1111-4111-8111-111111111111'; delete from public.access_audit where org_id = '11111111-1111-4111-8111-111111111111'; delete from public.memberships where org_id = '11111111-1111-4111-8111-111111111111'; delete from public.organisations where org_id = '11111111-1111-4111-8111-111111111111';`,
           stdio: ["pipe", "pipe", "pipe"],
         },
       );
@@ -79,6 +79,7 @@ test.beforeAll(async () => {
     insert into public.memberships (id,org_id,user_id,login_enabled,is_owner,base_role) values
     ('22222222-2222-4222-8222-222222222221','11111111-1111-4111-8111-111111111111','${ownerId}',true,true,'owner'),
     ('22222222-2222-4222-8222-222222222222','11111111-1111-4111-8111-111111111111','${staffId}',true,false,'staff');
+    insert into public.centers(id,org_id,name) values ('33333333-3333-4333-8333-333333333333','11111111-1111-4111-8111-111111111111','Synthetic branch');
   `,
       stdio: ["pipe", "pipe", "pipe"],
     },
@@ -266,6 +267,28 @@ test("live login, access denial, mobile access, password change, recovery and lo
     roleForm.getByLabel("Billing / Invoices: Allow Edit", { exact: true }),
   ).toHaveValue("same");
   await roleForm.locator("summary").click();
+  await roleForm.getByLabel("Synthetic branch", { exact: true }).check();
+  await roleForm
+    .getByRole("button", { name: "Save centers", exact: true })
+    .click();
+  await expect(
+    roleForm.getByText("Center access saved.", { exact: true }),
+  ).toBeVisible();
+  await page.reload();
+  await expect(
+    roleForm.getByLabel("Synthetic branch", { exact: true }),
+  ).toBeChecked();
+  await roleForm.getByLabel("Synthetic branch", { exact: true }).uncheck();
+  await roleForm
+    .getByRole("button", { name: "Save centers", exact: true })
+    .click();
+  await expect(
+    roleForm.getByText("Center access saved.", { exact: true }),
+  ).toBeVisible();
+  await page.reload();
+  await expect(
+    roleForm.getByLabel("Synthetic branch", { exact: true }),
+  ).not.toBeChecked();
   const staffRow = page.getByRole("region", { name: staffEmail, exact: true });
   await staffRow.getByLabel("Enable Login", { exact: true }).uncheck();
   await staffRow.getByLabel("Enable Mobile Access", { exact: true }).uncheck();

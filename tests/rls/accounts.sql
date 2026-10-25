@@ -13,6 +13,43 @@ insert into public.memberships (id, org_id, user_id, login_enabled, is_owner, ba
  ('30000000-0000-4000-8000-000000000002', '10000000-0000-4000-8000-000000000001', '00000000-0000-4000-8000-000000000002', true, false, 'staff'),
  ('30000000-0000-4000-8000-000000000003', '10000000-0000-4000-8000-000000000002', '00000000-0000-4000-8000-000000000003', true, true, 'owner');
 
+-- ACC-08 synthetic branch grants and immediate revocation.
+insert into public.centers(id,org_id,name) values
+ ('20000000-0000-4000-8000-000000000001','10000000-0000-4000-8000-000000000001','Synthetic branch A'),
+ ('20000000-0000-4000-8000-000000000002','10000000-0000-4000-8000-000000000002','Synthetic branch B');
+set local role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select extensions.is(jsonb_array_length(public.list_center_access()->'centers'),1,'Owner lists only own clinic centers');
+select extensions.lives_ok($$select public.set_member_centers('30000000-0000-4000-8000-000000000002',array['20000000-0000-4000-8000-000000000001']::uuid[])$$,'Owner grants center');
+select extensions.throws_ok($$select public.set_member_centers('30000000-0000-4000-8000-000000000002',array['20000000-0000-4000-8000-000000000002']::uuid[])$$,'42501',null,'Cross-org center rejected');
+select extensions.throws_ok($$select public.set_member_centers('30000000-0000-4000-8000-000000000003','{}')$$,'42501',null,'Cross-org member rejected');
+select extensions.throws_ok($$select public.set_member_centers('30000000-0000-4000-8000-000000000001','{}')$$,'42501',null,'Self change rejected');
+select extensions.throws_ok($$select public.set_member_centers('30000000-0000-4000-8000-000000000002',null)$$,'P0001',null,'Null set rejected');
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000002","role":"authenticated"}', true);
+select extensions.ok(public.can_access_center('20000000-0000-4000-8000-000000000001'),'Granted branch visible');
+select extensions.is((select count(*)::integer from public.centers),1,'Only granted branch visible');
+select extensions.throws_ok('select public.list_center_access()','42501',null,'Staff cannot list all grants');
+select extensions.throws_ok($$select public.set_member_centers('30000000-0000-4000-8000-000000000002','{}')$$,'42501',null,'Staff cannot change grants');
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select public.set_member_centers('30000000-0000-4000-8000-000000000002','{}');
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000002","role":"authenticated"}', true);
+select extensions.ok(not public.can_access_center('20000000-0000-4000-8000-000000000001'),'Revocation immediate');
+select extensions.is((select count(*)::integer from public.centers),0,'No grants means no branch data');
+reset role;
+select extensions.ok(exists(select 1 from public.center_grants where deleted_at is not null),'Grant soft deleted');
+select extensions.is((select count(*)::integer from public.access_audit where action='set_member_centers'),2,'Only successful changes audited');
+set local role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select public.set_member_centers('30000000-0000-4000-8000-000000000002',array['20000000-0000-4000-8000-000000000001']::uuid[]);
+reset role;
+select extensions.is((select count(*)::integer from public.center_grants),1,'Regrant restores existing grant');
+update public.centers set deleted_at=now() where id='20000000-0000-4000-8000-000000000001';
+set local role authenticated;
+select extensions.throws_ok($$select public.set_member_centers('30000000-0000-4000-8000-000000000002',array['20000000-0000-4000-8000-000000000001']::uuid[])$$,'42501',null,'Archived branch rejected');
+reset role;
+
+delete from public.access_audit where action='set_member_centers';
+
 -- ACC-06 uses only synthetic members. The fixture contains every permission area.
 create temp table test_grid as select jsonb_object_agg(area, jsonb_build_object(
   'entry',jsonb_build_object('day','same','others',true),
