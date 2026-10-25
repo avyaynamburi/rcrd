@@ -1,3 +1,5 @@
+import { AppointmentVisibility } from "@/components/auth/appointment-visibility";
+import { memberVisibilitySchema } from "@/lib/permissions/appointment-visibility";
 import { CenterAccess } from "@/components/auth/center-access";
 import { centerAccessSchema } from "@/lib/permissions/center-access";
 import { redirect } from "next/navigation";
@@ -32,6 +34,10 @@ export default async function Team() {
   const accounts = accountsSchema.safeParse(data);
   const centersResult = await account.client.rpc("list_center_access");
   const centers = centerAccessSchema.safeParse(centersResult.data);
+  const visibilityResult = await account.client.rpc(
+    "list_appointment_visibility",
+  );
+  const visibility = memberVisibilitySchema.safeParse(visibilityResult.data);
   const rolesResult = await account.client.rpc("list_member_roles");
   const accessResult = await account.client.rpc("list_member_access");
   const access = z
@@ -75,6 +81,23 @@ export default async function Team() {
                 const role = roles.data.find((role) => role.id === person.id)!;
                 return (
                   <>
+                    {visibility.success &&
+                    !visibilityResult.error &&
+                    visibility.data.find((item) => item.id === person.id) ? (
+                      <AppointmentVisibility
+                        id={person.id}
+                        initial={
+                          visibility.data.find((item) => item.id === person.id)!
+                            .appointment_visibility
+                        }
+                        protectedOwner={
+                          role.base_role === "owner" ||
+                          role.base_role === "owner_doctor"
+                        }
+                      />
+                    ) : (
+                      <p role="alert">{en.auth.teamError}</p>
+                    )}
                     <MemberRole
                       id={person.id}
                       initialRole={role.base_role}

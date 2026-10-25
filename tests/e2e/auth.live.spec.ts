@@ -290,6 +290,22 @@ test("live login, access denial, mobile access, password change, recovery and lo
     roleForm.getByLabel("Synthetic branch", { exact: true }),
   ).not.toBeChecked();
   const staffRow = page.getByRole("region", { name: staffEmail, exact: true });
+  const visibilityRow = staffRow.locator("..");
+  await visibilityRow
+    .getByLabel("Allowed to see appointments", { exact: true })
+    .selectOption("own");
+  await visibilityRow
+    .getByRole("button", { name: "Save appointment visibility", exact: true })
+    .click();
+  await expect(
+    visibilityRow
+      .getByRole("status")
+      .filter({ hasText: "Appointment visibility saved." }),
+  ).toBeVisible();
+  await page.reload();
+  await expect(
+    visibilityRow.getByLabel("Allowed to see appointments", { exact: true }),
+  ).toHaveValue("own");
   await staffRow.getByLabel("Enable Login", { exact: true }).uncheck();
   await staffRow.getByLabel("Enable Mobile Access", { exact: true }).uncheck();
   await staffRow

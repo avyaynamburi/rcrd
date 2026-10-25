@@ -21,3 +21,9 @@ Extra role tags do not grant permissions automatically. Non-owner defaults do no
 To reuse permissions, open a person’s Access grid and choose another person in Select Copy Access from on the right. This copies their full saved grid (or role defaults) into the draft, including day and creator restrictions. Review and edit it, then Save access to apply it. Copying alone does not change access. Reloading discards the draft. Roles, tags, login settings and center access are not copied. Owner grids remain protected.
 
 Under Centers, select the branches a person can work in and choose Save centers. Clearing every branch removes all branch access. Changes are saved together and audited; removing a branch preserves its records and takes effect on the next database request. Another owner must change your own branch access. Only active branches from your clinic appear. Failed saves keep the draft for retry. Patients, appointments and bills remain restricted to authorized branches; cross-branch patient search is disabled pending clinic confirmation.
+
+### Appointment visibility
+
+An owner can choose **Allowed to see appointments → All / Own only** for each non-owner team member, then select **Save appointment visibility**. Changes are recorded in the access audit. Own only means appointments assigned to that person's individual doctor identity, including Calendar, Today and status counts. It does not mean appointments they created. Unassigned appointments are hidden under Own only. Both options still require access to the appointment's clinic and branch.
+
+The setting is available now; live Calendar, Today and status-count enforcement is connected when appointment storage is built in P4. Preview status circles continue to show unavailable counts. Owner settings are protected; offline changes cannot be submitted. On a save error, retry when connected.

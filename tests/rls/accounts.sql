@@ -13,6 +13,41 @@ insert into public.memberships (id, org_id, user_id, login_enabled, is_owner, ba
  ('30000000-0000-4000-8000-000000000002', '10000000-0000-4000-8000-000000000001', '00000000-0000-4000-8000-000000000002', true, false, 'staff'),
  ('30000000-0000-4000-8000-000000000003', '10000000-0000-4000-8000-000000000002', '00000000-0000-4000-8000-000000000003', true, true, 'owner');
 
+-- ACC-09: audited scope settings and fail-closed appointment predicate.
+insert into public.centers(id,org_id,name) values
+ ('20000000-0000-4000-8000-000000000009','10000000-0000-4000-8000-000000000001','Visibility branch');
+insert into public.center_grants(org_id,center_id,membership_id) values
+ ('10000000-0000-4000-8000-000000000001','20000000-0000-4000-8000-000000000009','30000000-0000-4000-8000-000000000002');
+set local role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select extensions.is((select count(*)::integer from public.list_appointment_visibility()),2,'Visibility list isolates organisation');
+select extensions.lives_ok($$select public.set_appointment_visibility('30000000-0000-4000-8000-000000000002','own')$$,'Owner sets own-only scope');
+select extensions.throws_ok($$select public.set_appointment_visibility('30000000-0000-4000-8000-000000000003','own')$$,'42501',null,'Cross-org visibility write rejected');
+select extensions.throws_ok($$select public.set_appointment_visibility('30000000-0000-4000-8000-000000000001','own')$$,'42501',null,'Owner scope protected');
+select extensions.throws_ok($$select public.set_appointment_visibility('30000000-0000-4000-8000-000000000002',null)$$,'P0001',null,'Null scope rejected');
+select extensions.throws_ok($$select public.set_appointment_visibility('30000000-0000-4000-8000-000000000002','bad')$$,'P0001',null,'Invalid scope rejected');
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000002","role":"authenticated"}', true);
+select extensions.ok(public.can_see_appointment('10000000-0000-4000-8000-000000000001','20000000-0000-4000-8000-000000000009',auth.uid()),'Own assigned appointment visible');
+select extensions.ok(not public.can_see_appointment('10000000-0000-4000-8000-000000000001','20000000-0000-4000-8000-000000000009','00000000-0000-4000-8000-000000000001'),'Another doctor hidden');
+select extensions.ok(not public.can_see_appointment('10000000-0000-4000-8000-000000000001','20000000-0000-4000-8000-000000000009',null),'Unassigned hidden for own-only');
+select extensions.ok(not public.can_see_appointment('10000000-0000-4000-8000-000000000002','20000000-0000-4000-8000-000000000009',auth.uid()),'Foreign org hidden');
+select extensions.ok(not public.can_see_appointment('10000000-0000-4000-8000-000000000001','20000000-0000-4000-8000-000000000001',auth.uid()),'Ungranted center hidden');
+select extensions.throws_ok('select public.list_appointment_visibility()','42501',null,'Staff cannot list scope settings');
+select extensions.throws_ok($$select public.set_appointment_visibility('30000000-0000-4000-8000-000000000002','all')$$,'42501',null,'Staff cannot widen scope');
+reset role;
+select extensions.is((select count(*)::integer from public.access_audit where action='set_appointment_visibility'),1,'Successful scope write audited once');
+select extensions.is((select before_data->>'appointment_visibility' from public.access_audit where action='set_appointment_visibility'),'all','Audit captures previous scope');
+select extensions.is((select after_data->>'appointment_visibility' from public.access_audit where action='set_appointment_visibility'),'own','Audit captures new scope');
+update public.memberships set appointment_visibility='all' where id='30000000-0000-4000-8000-000000000002';
+set local role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000002","role":"authenticated"}', true);
+select extensions.ok(public.can_see_appointment('10000000-0000-4000-8000-000000000001','20000000-0000-4000-8000-000000000009',null),'All scope includes unassigned');
+reset role;
+-- Remove this fixture before existing branch-count assertions.
+delete from public.access_audit where action='set_appointment_visibility';
+delete from public.center_grants where center_id='20000000-0000-4000-8000-000000000009';
+delete from public.centers where id='20000000-0000-4000-8000-000000000009';
+
 -- ACC-08 synthetic branch grants and immediate revocation.
 insert into public.centers(id,org_id,name) values
  ('20000000-0000-4000-8000-000000000001','10000000-0000-4000-8000-000000000001','Synthetic branch A'),

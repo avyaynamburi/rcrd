@@ -352,6 +352,23 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      list_appointment_visibility: {
+        Args: never;
+        Returns: { id: string; appointment_visibility: string }[];
+      };
+      set_appointment_visibility: {
+        Args: { target_membership_id: string; visibility: string };
+        Returns: undefined;
+      };
+      can_see_appointment: {
+        Args: {
+          appointment_org_id: string;
+          appointment_center_id: string;
+          doctor_user_id: string;
+        };
+        Returns: boolean;
+      };
+
       auth_org_id: { Args: Record<PropertyKey, never>; Returns: string };
       can_access_center: {
         Args: { target_center_id: string };

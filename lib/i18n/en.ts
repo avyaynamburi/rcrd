@@ -1,4 +1,15 @@
 export const en = {
+  appointmentVisibility: {
+    title: "Allowed to see appointments",
+    all: "All",
+    own: "Own only",
+    note: "Own only uses the assigned doctor's identity. Calendar, Today and status counts will use this setting when appointments are connected.",
+    save: "Save appointment visibility",
+    pending: "Saving…",
+    saved: "Appointment visibility saved.",
+    failed: "Unable to save appointment visibility. Try again.",
+    protected: "Owner appointment visibility is protected.",
+  },
   centerAccess: {
     title: "Centers",
     note: "Select the branches this person can work in. No selection means no branch access.",

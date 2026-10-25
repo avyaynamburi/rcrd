@@ -34,7 +34,7 @@ Tick a box only when the feature meets the Definition of Done in AGENTS.md §10.
 - [x] ACC-06 Detailed access grid  (02-users-roles-permissions.md)
 - [x] ACC-07 Copy access  (02-users-roles-permissions.md)
 - [x] ACC-08 Center access  (02-users-roles-permissions.md) — audited grant editor; 156 DB assertions, signed-in flow and Windows Chrome/Edge CI verified
-- [ ] ACC-09 Appointment visibility  (02-users-roles-permissions.md)
+- [~] ACC-09 Appointment visibility  (02-users-roles-permissions.md) — audited setting and SQL scope predicate; live Calendar/Today/count integration awaits P4 (BLOCKERS 13)
 - [ ] ACC-10 Export control  (02-users-roles-permissions.md)
 - [ ] ACC-11 Enforcement (security-critical — careful area, AGENTS.md §5)  (02-users-roles-permissions.md)
 - [ ] ACC-12 Access Audit (Admin → Team → Access Audit)*  (02-users-roles-permissions.md)
