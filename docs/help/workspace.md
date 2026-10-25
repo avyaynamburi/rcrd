@@ -39,3 +39,12 @@ These are navigation previews; clinic tools and clinic records remain unavailabl
 ## Reading screen help
 
 Select the orange Need Help? control to open instructions beside your current screen. Close help or press Escape to return to the same place. Help can be scrolled independently. If an article is unavailable, close help and retry later.
+
+
+## Colour meanings
+
+Navy marks headings, the navigation rail and main buttons. Orange marks the selected navigation item and Need Help?; on white, text uses a darker orange for readability.
+
+Green means Yes, checked out or connected. Red means No, checked in or an amount owed. Always read the accompanying status word, icon or accessible label: colour alone does not tell the full story. Appointment cards use the configured doctor or treatment-category colour; the default is pink. Light peach marks today's calendar column. Calendar and billing tools will use these colours as they become available.
+
+Status-circle outlines distinguish scheduled (grey), checked in (red), engaged (orange), checked out (green), missed (dark grey) and cancelled (light grey). Each circle has a named tooltip and an accessible label. A dash means counts are unavailable, not zero.

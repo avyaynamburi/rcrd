@@ -2,13 +2,13 @@ import Link from "next/link";
 import { en } from "@/lib/i18n/en";
 
 export const statusColors = {
-  all: "#1E2A4A",
-  scheduled: "#8A94A6",
-  checked_in: "#D64545",
-  engaged: "#E07B39",
-  checked_out: "#2E9E5B",
-  missed: "#4B5563",
-  cancelled: "#C7CCD4",
+  all: "var(--primary)",
+  scheduled: "var(--status-scheduled)",
+  checked_in: "var(--status-in)",
+  engaged: "var(--status-engaged)",
+  checked_out: "var(--status-out)",
+  missed: "var(--status-missed)",
+  cancelled: "var(--status-cancelled)",
 } as const;
 
 /** No counts are exposed until the authenticated appointment read path exists. */

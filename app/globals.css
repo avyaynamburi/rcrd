@@ -5,6 +5,20 @@
   --primary: #1e2a4a;
   --primary-foreground: #fff;
   --accent: #e07b39;
+  --accent-text: #a34d16;
+  --success: #2e9e5b;
+  --success-surface: #eaf6ef;
+  --danger: #d64545;
+  --warning: #f2c94c;
+  --warning-surface: #fff7db;
+  --today: #fff1e6;
+  --appointment: #c2417a;
+  --status-scheduled: #8a94a6;
+  --status-in: var(--danger);
+  --status-engaged: var(--accent);
+  --status-out: var(--success);
+  --status-missed: #4b5563;
+  --status-cancelled: #c7ccd4;
   --muted: #f6f7f9;
   --muted-foreground: #6b7280;
   --border: #e2e5ea;
@@ -17,6 +31,14 @@
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-accent: var(--accent);
+  --color-accent-text: var(--accent-text);
+  --color-success: var(--success);
+  --color-success-surface: var(--success-surface);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+  --color-warning-surface: var(--warning-surface);
+  --color-today: var(--today);
+  --color-appointment: var(--appointment);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
@@ -85,13 +107,13 @@ body {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #8a94a6;
+  background: var(--status-scheduled);
 }
 .connection-online {
-  background: #2e9e5b;
+  background: var(--success);
 }
 .connection-offline {
-  background: #d64545;
+  background: var(--danger);
 }
 .user-popover {
   position: fixed;
@@ -163,7 +185,7 @@ body {
   color: var(--muted-foreground);
 }
 .second-menu-link[aria-current="page"] {
-  color: #a34d16;
+  color: var(--accent-text);
   border-left: 3px solid var(--accent);
   font-weight: 600;
 }
@@ -202,10 +224,10 @@ body {
   width: 52px;
   height: 52px;
   flex-shrink: 0;
-  border: 1px solid #e07b39;
+  border: 1px solid var(--accent);
   border-radius: 50%;
-  background: #fff1e6;
-  color: #1e2a4a;
+  background: var(--today);
+  color: var(--primary);
 }
 .assistant-panel {
   position: fixed;
@@ -220,4 +242,14 @@ body {
   padding: 20px;
   background: white;
   color: var(--foreground);
+}
+
+/* Semantic fills are paired with readable text and explicit labels/icons. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--primary);
 }

@@ -131,7 +131,7 @@ export function HelpLink({
     <button
       type="button"
       aria-haspopup="dialog"
-      className="mt-6 block text-left text-[#a34d16] underline"
+      className="mt-6 block text-left text-accent-text underline"
       onClick={() => open(helpKey, title)}
     >
       {en.help}
