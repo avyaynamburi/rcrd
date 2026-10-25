@@ -1,3 +1,4 @@
+import { AssistantLauncher } from "@/components/shell/assistant-launcher";
 import { IconRail } from "@/components/shell/icon-rail";
 import { navigationItems } from "@/lib/shell-navigation";
 import { version } from "@/package.json";
@@ -42,6 +43,7 @@ export default function RootLayout({
           />
           <UpdateNotice />
           {children}
+          <AssistantLauncher />
         </div>
       </body>
     </html>

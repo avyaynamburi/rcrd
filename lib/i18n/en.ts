@@ -231,6 +231,18 @@ export const en = {
   topBarHelpTitle: "Using the top bar",
   topBarHelpText:
     "The white top bar shows your organisation name. Clinic not configured means clinic sign-in has not been connected. Forms and patient profiles will have a Back link before the name. The status circles link to Calendar Today filters; dashes mean live counts are not connected yet. The clock shows clinic-local time. Calendar controls will be added with the calendar features.",
+  assistantHelp:
+    "Use the round speech-bubble button at the bottom-right to open the assistant. Close the panel with Close assistant or Escape. Dismiss the greeting with its red close button; the preference is remembered for your user in this browser when storage is available.",
+  assistantTitle: "Rcrd Assistant",
+  assistantGreeting: "I'm Rcrd Assistant — ask me anything",
+  assistantDismiss: "Dismiss assistant greeting",
+  assistantOpen: "Open Rcrd Assistant",
+  assistantClose: "Close assistant",
+  assistantUnavailable:
+    "The assistant is not configured yet. Clinic sign-in, consent and an approved AI provider must be connected before you can send messages. No text or patient information is sent from this preview.",
+  assistantMessage: "Message the assistant",
+  assistantVoice: "Voice dictation",
+  assistantSend: "Send message",
   appName: "Rcrd",
   description: "Dental practice management for Indian clinics.",
   setupTitle: "Your clinic workspace starts here",
