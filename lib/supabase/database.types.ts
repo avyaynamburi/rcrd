@@ -185,6 +185,7 @@ export type Database = {
       };
       memberships: {
         Row: {
+          access_grid: Json | null;
           base_role: string;
           created_at: string;
           created_by: string | null;
@@ -203,6 +204,7 @@ export type Database = {
         };
         ComputedFields: never;
         Insert: {
+          access_grid?: Json | null;
           base_role?: string;
           created_at?: string;
           created_by?: string | null;
@@ -220,6 +222,7 @@ export type Database = {
           user_id: string;
         };
         Update: {
+          access_grid?: Json | null;
           base_role?: string;
           created_at?: string;
           created_by?: string | null;
@@ -365,6 +368,13 @@ export type Database = {
           mobile_access_enabled: boolean;
         }[];
       };
+      list_member_access: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          access_grid: Json;
+          id: string;
+        }[];
+      };
       list_member_roles: {
         Args: Record<PropertyKey, never>;
         Returns: {
@@ -379,6 +389,10 @@ export type Database = {
           mobile_enabled: boolean;
           target_membership_id: string;
         };
+        Returns: undefined;
+      };
+      set_member_access: {
+        Args: { new_grid: Json; target_membership_id: string };
         Returns: undefined;
       };
       set_member_role: {

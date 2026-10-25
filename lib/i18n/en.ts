@@ -1,5 +1,6 @@
 export const en = {
   accessGrid: {
+    loading: "Loading account access…",
     title: "Access",
     area: "Area",
     entry: "Allow Entry",
