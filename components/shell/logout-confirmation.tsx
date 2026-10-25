@@ -1,11 +1,13 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { useToast } from "@/components/blocks/toast-provider";
 import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { en } from "@/lib/i18n/en";
 
 export function LogoutConfirmation() {
+  const notify = useToast();
   const dialog = useRef<HTMLDialogElement>(null);
   const [unavailable, setUnavailable] = useState(false);
   return (
@@ -56,7 +58,13 @@ export function LogoutConfirmation() {
           <Button autoFocus type="submit" variant="outline">
             {en.no}
           </Button>
-          <Button type="button" onClick={() => setUnavailable(true)}>
+          <Button
+            type="button"
+            onClick={() => {
+              setUnavailable(true);
+              notify({ kind: "error", message: en.logoutUnavailable });
+            }}
+          >
             {en.yes}
           </Button>
         </form>

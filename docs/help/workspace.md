@@ -48,3 +48,9 @@ Navy marks headings, the navigation rail and main buttons. Orange marks the sele
 Green means Yes, checked out or connected. Red means No, checked in or an amount owed. Always read the accompanying status word, icon or accessible label: colour alone does not tell the full story. Appointment cards use the configured doctor or treatment-category colour; the default is pink. Light peach marks today's calendar column. Calendar and billing tools will use these colours as they become available.
 
 Status-circle outlines distinguish scheduled (grey), checked in (red), engaged (orange), checked out (green), missed (dark grey) and cancelled (light grey). Each circle has a named tooltip and an accessible label. A dash means counts are unavailable, not zero.
+
+## Success and error messages
+
+Notifications appear at the bottom right, above the assistant button. Green messages marked Success confirm completed work. Red messages marked Error explain why an action could not finish. Read the reason before trying again; an error never means your work was saved.
+
+Success messages close after eight seconds. Point at a message or focus its dismiss button to keep it open. Errors stay until you choose Dismiss notification. Messages remain while moving between workspace pages, but are cleared by a full reload. They are not a permanent record. The setup preview reports missing sign-in when you confirm Logout; it does not claim to sign you out.

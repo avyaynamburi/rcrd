@@ -1,3 +1,4 @@
+import { ToastProvider } from "@/components/blocks/toast-provider";
 import { HelpProvider } from "@/components/blocks/help-drawer";
 import { loadHelpArticles } from "@/lib/help";
 import { AssistantLauncher } from "@/components/shell/assistant-launcher";
@@ -29,26 +30,28 @@ export default async function RootLayout({
           {en.skip}
         </a>
         {/* Public construction preview only; no authenticated clinic data is exposed. */}
-        <HelpProvider articles={await loadHelpArticles()}>
-          <IconRail
-            allowed={navigationItems.map((item) => item.id)}
-            version={version}
-            messagingNeedsSetup
-          />
-          <div className="min-w-0 pl-[70px]">
-            <AppTitle
-              controls={
-                <>
-                  <StatusCircles />
-                  <ClinicClock />
-                </>
-              }
+        <ToastProvider>
+          <HelpProvider articles={await loadHelpArticles()}>
+            <IconRail
+              allowed={navigationItems.map((item) => item.id)}
+              version={version}
+              messagingNeedsSetup
             />
-            <UpdateNotice />
-            {children}
-            <AssistantLauncher />
-          </div>
-        </HelpProvider>
+            <div className="min-w-0 pl-[70px]">
+              <AppTitle
+                controls={
+                  <>
+                    <StatusCircles />
+                    <ClinicClock />
+                  </>
+                }
+              />
+              <UpdateNotice />
+              {children}
+              <AssistantLauncher />
+            </div>
+          </HelpProvider>
+        </ToastProvider>
       </body>
     </html>
   );

@@ -1,4 +1,10 @@
 export const en = {
+  toast: {
+    success: "Success",
+    error: "Error",
+    dismiss: "Dismiss notification",
+    notifications: "Notifications",
+  },
   secondMenu: {
     settings: [
       {

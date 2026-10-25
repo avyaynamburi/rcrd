@@ -22,7 +22,7 @@ Tick a box only when the feature meets the Definition of Done in AGENTS.md §10.
 - [x] SHELL-09 AI assistant button  (01-app-shell.md)
 - [x] SHELL-10 "Need Help?" links  (01-app-shell.md)
 - [x] SHELL-11 Colour meanings  (01-app-shell.md)
-- [ ] SHELL-12 Toast messages  (01-app-shell.md)
+- [x] SHELL-12 Toast messages  (01-app-shell.md)
 - [ ] SHELL-13 Phone and tablet layout*  (01-app-shell.md)
 - [ ] SHELL-14 Offline handling  (01-app-shell.md)
 - [ ] SHELL-15 Current center  (01-app-shell.md)
