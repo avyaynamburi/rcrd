@@ -40,3 +40,8 @@ Status: open. SHELL-02 passes `npm run check` and all five targeted Chrome tests
 Needed: authenticated session implementation in ACC-02 before real sign-out can run.
 Owner steps: no action now; Codex must connect Yes to server-side sign-out when implementing ACC-02, disable repeat submits while pending, verify session revocation and handle failures without claiming success.
 Status: open. SHELL-03 confirmation/cancellation UI works; the preview explicitly reports that authentication is not configured.
+
+## 7. Connect user menu to clinic identity (SHELL-04 / ACC-02 / ACC-08)
+Needed: authenticated identity and server-authorized center access before real account controls can run.
+Owner steps: no action now. Codex must populate initials/name/role/current center from the trusted session when building ACC-02, connect secure password changes, and list only permitted centers with server-side validation of any switch in ACC-08. Add allowed/denied and session failure tests then.
+Status: open. The menu and help work in the data-free preview; identity is explicitly unassigned and password/center controls are disabled.

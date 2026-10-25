@@ -15,6 +15,7 @@ import {
   MessageCircle,
   Settings,
 } from "lucide-react";
+import { UserMenu } from "@/components/shell/user-menu";
 import { LogoutConfirmation } from "@/components/shell/logout-confirmation";
 import { en } from "@/lib/i18n/en";
 import {
@@ -41,13 +42,11 @@ export function IconRail({
   version,
   unreadCount = 0,
   messagingNeedsSetup = false,
-  initials = "—",
 }: {
   allowed: readonly NavigationId[];
   version: string;
   unreadCount?: number;
   messagingNeedsSetup?: boolean;
-  initials?: string;
 }) {
   const pathname = usePathname();
   const [connection, setConnection] = useState<
@@ -138,17 +137,7 @@ export function IconRail({
       <div>{group("top")}</div>
       <div className="mt-auto pt-6">
         {group("bottom")}
-        <button
-          disabled
-          className="rail-item"
-          title={en.userUnavailable}
-          aria-label={en.userUnavailable}
-        >
-          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-primary">
-            {initials}
-          </span>
-          <span>{en.userLabel}</span>
-        </button>
+        <UserMenu />
         <LogoutConfirmation />
       </div>
       <span className="py-2 text-center text-xs">v{version}</span>
