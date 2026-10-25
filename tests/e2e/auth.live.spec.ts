@@ -114,6 +114,13 @@ test.beforeAll(async () => {
       `Synthetic organisation probe failed: ${org.error?.code ?? "missing"}`,
     );
   await probe.auth.signOut({ scope: "local" });
+  const phoneProbe = await probe.auth.signInWithPassword({
+    phone: "+919876543210",
+    password,
+  });
+  if (phoneProbe.error)
+    throw new Error(`Synthetic phone probe failed: ${phoneProbe.error.code}`);
+  await probe.auth.signOut({ scope: "local" });
 });
 
 test("live login, access denial, mobile access, password change, recovery and logout", async ({
@@ -176,6 +183,28 @@ test("live login, access denial, mobile access, password change, recovery and lo
     mobilePage.getByRole("alert").filter({ hasText: "Unable to sign in" }),
   ).toContainText("Unable to sign in");
   await mobileContext.close();
+  const direct = createClient(
+    local!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    { auth: { persistSession: false } },
+  );
+  const phoneSession = await direct.auth.signInWithPassword({
+    phone: "+919876543210",
+    password,
+  });
+  if (phoneSession.error)
+    throw new Error(
+      `Phone sign-in after access change: ${phoneSession.error.code}`,
+    );
+  const access = await direct
+    .from("memberships")
+    .select("login_enabled,mobile_access_enabled")
+    .single();
+  if (!access.data?.login_enabled)
+    throw new Error(
+      `Staff access was not reenabled: ${access.error?.code ?? "inactive"}`,
+    );
+  await direct.auth.signOut({ scope: "local" });
   await login(staffPage, "9876543210");
   await expect(staffPage).toHaveURL(/\/calendar$/);
   await staffPage.goto("/account/password");

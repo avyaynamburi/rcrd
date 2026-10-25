@@ -8,7 +8,7 @@ export default defineConfig({
   testIgnore: process.env.RCRD_LIVE_AUTH === "1" ? [] : ["**/*.live.spec.ts"],
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.RCRD_LIVE_AUTH === "1" ? 0 : process.env.CI ? 2 : 0,
   reporter: process.env.CI ? "github" : "list",
   use: {
     baseURL: "http://127.0.0.1:3000",
