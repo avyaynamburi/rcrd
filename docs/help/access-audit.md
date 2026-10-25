@@ -7,3 +7,5 @@ Filter by inclusive India-time dates, exact user ID, center ID, area or action. 
 The list shows 50 rows per page. Excel and PDF download only that page, with the same filters and access checks. Files contain sensitive audit values; store them securely. User and center IDs remain stable if people or branches are renamed.
 
 This history includes account and permission changes, audit downloads and provider authentication events attributable to a clinic member. Authentication failures for unknown identities stay in the provider log because they have no trusted clinic. Patient access, prints, AI and support events will be connected as those features are built. Raw authentication payloads, passwords and tokens are never copied here.
+
+Hosted setup must enable database authentication logs and the password verification hook (BLOCKERS 15). Until that setup is complete, failed-password history is unavailable. The local test configuration enables both event paths.

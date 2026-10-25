@@ -144,6 +144,10 @@ test("live login, access denial, mobile access, password change, recovery and lo
   }
   await page.goto("/patients");
   await expect(page).toHaveURL(/\/login$/);
+  await login(page, ownerEmail, "synthetic-wrong-password-123");
+  await expect(
+    page.getByRole("alert").filter({ hasText: "Unable to sign in" }),
+  ).toBeVisible();
   await login(page, ownerEmail);
   try {
     await expect(page).toHaveURL(/\/calendar$/);
@@ -160,6 +164,7 @@ test("live login, access denial, mobile access, password change, recovery and lo
   await page.getByLabel("Area", { exact: true }).fill("authentication");
   await page.getByRole("button", { name: "Apply filters" }).click();
   await expect(page.getByRole("table")).toContainText("auth_login");
+  await expect(page.getByRole("table")).toContainText("auth_login_failed");
   for (const format of ["xlsx", "pdf"]) {
     const response = await page.request.get(
       `/api/access-audit?area=authentication&format=${format}`,

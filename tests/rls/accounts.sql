@@ -14,6 +14,15 @@ insert into public.memberships (id, org_id, user_id, login_enabled, is_owner, ba
  ('30000000-0000-4000-8000-000000000003', '10000000-0000-4000-8000-000000000002', '00000000-0000-4000-8000-000000000003', true, true, 'owner');
 
 
+select extensions.is(public.audit_password_verification('{"user_id":"00000000-0000-4000-8000-000000000002","valid":false}')::text,'{"decision": "continue"}','Failed password hook leaves auth decision unchanged');
+select extensions.is((select count(*)::integer from public.access_audit where action='auth_login_failed'),1,'Failed password hook records clinic event');
+delete from public.access_audit where action='auth_login_failed';
+select public.audit_password_verification('{"user_id":"00000000-0000-4000-8000-000000000002","valid":true}');
+select extensions.is((select count(*)::integer from public.access_audit),0,'Valid password is not logged as failure');
+set local role authenticated;
+select extensions.throws_ok($$select public.audit_password_verification('{"user_id":"00000000-0000-4000-8000-000000000002","valid":false}')$$,'42501',null,'App callers cannot forge password outcomes');
+reset role;
+
 -- Provider-owned authentication events are attributed without raw payloads.
 insert into auth.audit_log_entries(id,payload) values
  ('90000000-0000-4000-8000-000000000001','{"action":"login_failed","actor_id":"00000000-0000-4000-8000-000000000002","secret":"must not copy"}');
