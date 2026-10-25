@@ -1,3 +1,7 @@
+import {
+  ConnectionProvider,
+  OfflineBanner,
+} from "@/components/shell/connection-provider";
 import { ToastProvider } from "@/components/blocks/toast-provider";
 import { HelpProvider } from "@/components/blocks/help-drawer";
 import { loadHelpArticles } from "@/lib/help";
@@ -30,28 +34,31 @@ export default async function RootLayout({
           {en.skip}
         </a>
         {/* Public construction preview only; no authenticated clinic data is exposed. */}
-        <ToastProvider>
-          <HelpProvider articles={await loadHelpArticles()}>
-            <IconRail
-              allowed={navigationItems.map((item) => item.id)}
-              version={version}
-              messagingNeedsSetup
-            />
-            <div className="app-workspace min-w-0">
-              <AppTitle
-                controls={
-                  <>
-                    <StatusCircles />
-                    <ClinicClock />
-                  </>
-                }
+        <ConnectionProvider>
+          <ToastProvider>
+            <HelpProvider articles={await loadHelpArticles()}>
+              <IconRail
+                allowed={navigationItems.map((item) => item.id)}
+                version={version}
+                messagingNeedsSetup
               />
-              <UpdateNotice />
-              {children}
-              <AssistantLauncher />
-            </div>
-          </HelpProvider>
-        </ToastProvider>
+              <div className="app-workspace min-w-0">
+                <AppTitle
+                  controls={
+                    <>
+                      <StatusCircles />
+                      <ClinicClock />
+                    </>
+                  }
+                />
+                <OfflineBanner />
+                <UpdateNotice />
+                {children}
+                <AssistantLauncher />
+              </div>
+            </HelpProvider>
+          </ToastProvider>
+        </ConnectionProvider>
       </body>
     </html>
   );

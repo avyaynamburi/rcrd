@@ -162,6 +162,8 @@ export const en = {
   railHelpText:
     "Use the navy rail to open tools. The current icon is orange. The connection dot is green when the app server responds and red when it cannot be reached. New on WhatsApp means setup needs attention. The User button opens your account details; the setup preview shows no signed-in identity. Logout opens a confirmation; No or Escape returns to your work. Yes currently shows that sign-in is not configured. Use Tab and Enter to navigate.",
   navigationLabel: "Main navigation",
+  offlineMessage:
+    "Changes can’t be saved right now. Keep this page open; your unsaved work will stay here until the connection returns.",
   connectionChecking: "Checking server connection",
   connectionOnline: "Server reachable",
   connectionOffline: "Server unavailable",

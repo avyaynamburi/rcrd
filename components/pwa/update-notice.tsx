@@ -62,6 +62,7 @@ export function UpdateNotice() {
       <p role="status">{applying ? en.pwaActivated : en.pwaReady}</p>
       {!applying && (
         <Button
+          type="button"
           className="mt-2"
           onClick={() => {
             waiting?.postMessage({ type: "ACTIVATE_UPDATE" });

@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { useConnection } from "@/components/shell/connection-provider";
 import { usePathname } from "next/navigation";
-import { useEffect, useState, useId, useRef } from "react";
+import { useId, useRef } from "react";
 import {
   LayoutDashboard,
   CalendarDays,
@@ -52,43 +53,7 @@ export function IconRail({
   const pathname = usePathname();
   const moreId = useId();
   const morePanel = useRef<HTMLDivElement>(null);
-  const [connection, setConnection] = useState<
-    "checking" | "online" | "offline"
-  >("checking");
-  useEffect(() => {
-    let active = true;
-    let controller: AbortController | undefined;
-    async function check() {
-      controller?.abort();
-      const current = new AbortController();
-      controller = current;
-      try {
-        const response = await fetch("/api/health", {
-          cache: "no-store",
-          signal: AbortSignal.any([current.signal, AbortSignal.timeout(5000)]),
-        });
-        if (active && !current.signal.aborted)
-          setConnection(response.ok ? "online" : "offline");
-      } catch {
-        if (active && !current.signal.aborted) setConnection("offline");
-      }
-    }
-    function offline() {
-      controller?.abort();
-      setConnection("offline");
-    }
-    void check();
-    const interval = setInterval(() => void check(), 30000);
-    window.addEventListener("online", check);
-    window.addEventListener("offline", offline);
-    return () => {
-      active = false;
-      controller?.abort();
-      clearInterval(interval);
-      window.removeEventListener("online", check);
-      window.removeEventListener("offline", offline);
-    };
-  }, []);
+  const connection = useConnection();
   const status = {
     checking: en.connectionChecking,
     online: en.connectionOnline,

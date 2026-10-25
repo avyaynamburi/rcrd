@@ -55,7 +55,12 @@ export function LogoutConfirmation() {
           </p>
         )}
         <form method="dialog" className="mt-6 flex justify-end gap-3">
-          <Button autoFocus type="submit" variant="outline">
+          <Button
+            autoFocus
+            type="button"
+            variant="outline"
+            onClick={() => dialog.current?.close()}
+          >
             {en.no}
           </Button>
           <Button

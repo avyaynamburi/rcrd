@@ -1,3 +1,6 @@
+"use client";
+
+import { useConnection } from "@/components/shell/connection-provider";
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -20,15 +23,25 @@ function Button({
   variant,
   size,
   asChild = false,
+  disabled,
+  type,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & { asChild?: boolean }) {
+  const connection = useConnection();
+  const blocksSave =
+    !asChild &&
+    type !== "button" &&
+    type !== "reset" &&
+    connection !== "online";
   const Comp = asChild ? Slot : "button";
   return (
     <Comp
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
+      type={type}
+      disabled={disabled || blocksSave}
     />
   );
 }
