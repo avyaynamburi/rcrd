@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import type { Database } from "./database.types";
 
 export function authConfigured() {
   return Boolean(
@@ -11,7 +12,7 @@ export function authConfigured() {
 export async function createAuthClient() {
   if (!authConfigured()) return null;
   const store = await cookies();
-  return createServerClient(
+  return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {

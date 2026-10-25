@@ -36,7 +36,7 @@ export default async function RootLayout({
         >
           {en.skip}
         </a>
-        {/* Public construction preview only; no authenticated clinic data is exposed. */}
+        {/* Domain routes remain data-free previews; account access is checked separately. */}
         <ConnectionProvider>
           <ToastProvider>
             <HelpProvider articles={await loadHelpArticles()}>

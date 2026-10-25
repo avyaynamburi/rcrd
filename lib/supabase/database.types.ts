@@ -9,6 +9,64 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      access_audit: {
+        Row: {
+          action: string;
+          actor_id: string;
+          after_data: Json | null;
+          area: string;
+          before_data: Json | null;
+          center_id: string | null;
+          created_at: string;
+          id: string;
+          org_id: string;
+          record_id: string;
+          source: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          action: string;
+          actor_id: string;
+          after_data?: Json | null;
+          area?: string;
+          before_data?: Json | null;
+          center_id?: string | null;
+          created_at?: string;
+          id?: string;
+          org_id: string;
+          record_id: string;
+          source?: string;
+        };
+        Update: {
+          action?: string;
+          actor_id?: string;
+          after_data?: Json | null;
+          area?: string;
+          before_data?: Json | null;
+          center_id?: string | null;
+          created_at?: string;
+          id?: string;
+          org_id?: string;
+          record_id?: string;
+          source?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "access_audit_org_id_center_id_fkey";
+            columns: ["org_id", "center_id"];
+            isOneToOne: false;
+            referencedRelation: "centers";
+            referencedColumns: ["org_id", "id"];
+          },
+          {
+            foreignKeyName: "access_audit_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: false;
+            referencedRelation: "organisations";
+            referencedColumns: ["org_id"];
+          },
+        ];
+      };
       center_grants: {
         Row: {
           center_id: string;
@@ -133,7 +191,9 @@ export type Database = {
           external_id: string | null;
           external_source: string | null;
           id: string;
+          is_owner: boolean;
           login_enabled: boolean;
+          mobile_access_enabled: boolean;
           org_id: string;
           updated_at: string;
           updated_by: string | null;
@@ -147,7 +207,9 @@ export type Database = {
           external_id?: string | null;
           external_source?: string | null;
           id?: string;
+          is_owner?: boolean;
           login_enabled?: boolean;
+          mobile_access_enabled?: boolean;
           org_id: string;
           updated_at?: string;
           updated_by?: string | null;
@@ -160,7 +222,9 @@ export type Database = {
           external_id?: string | null;
           external_source?: string | null;
           id?: string;
+          is_owner?: boolean;
           login_enabled?: boolean;
+          mobile_access_enabled?: boolean;
           org_id?: string;
           updated_at?: string;
           updated_by?: string | null;
@@ -283,6 +347,25 @@ export type Database = {
       can_access_center: {
         Args: { target_center_id: string };
         Returns: boolean;
+      };
+      can_manage_logins: { Args: Record<PropertyKey, never>; Returns: boolean };
+      list_login_accounts: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          email: string;
+          id: string;
+          is_owner: boolean;
+          login_enabled: boolean;
+          mobile_access_enabled: boolean;
+        }[];
+      };
+      set_login_access: {
+        Args: {
+          enabled: boolean;
+          mobile_enabled: boolean;
+          target_membership_id: string;
+        };
+        Returns: undefined;
       };
     };
     Enums: {

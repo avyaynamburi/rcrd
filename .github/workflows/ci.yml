@@ -53,7 +53,7 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - run: npm run db:start
+      - run: npm run db:start -- --exclude studio,imgproxy,realtime,storage-api,edge-runtime,logflare,vector,supavisor
       - run: npm run db:reset
       - run: npm run db:test
       - run: npm run db:types

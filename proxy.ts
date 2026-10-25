@@ -1,4 +1,5 @@
 import { createServerClient } from "@supabase/ssr";
+import type { Database } from "@/lib/supabase/database.types";
 import { NextResponse, type NextRequest } from "next/server";
 import { isMobileDevice } from "@/lib/auth/validation";
 import { authConfigured } from "@/lib/supabase/server";
@@ -6,7 +7,7 @@ import { authConfigured } from "@/lib/supabase/server";
 export async function proxy(request: NextRequest) {
   if (!authConfigured()) return NextResponse.next();
   let response = NextResponse.next({ request });
-  const client = createServerClient(
+  const client = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {

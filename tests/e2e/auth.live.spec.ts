@@ -82,6 +82,32 @@ test.beforeAll(async () => {
       stdio: ["pipe", "pipe", "pipe"],
     },
   );
+  const probe = createClient(
+    local!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    { auth: { persistSession: false, autoRefreshToken: false } },
+  );
+  const identity = await probe.auth.signInWithPassword({
+    email: ownerEmail,
+    password,
+  });
+  if (identity.error)
+    throw new Error(`Synthetic identity probe failed: ${identity.error.code}`);
+  const member = await probe
+    .from("memberships")
+    .select("*")
+    .eq("user_id", ownerId)
+    .single();
+  if (member.error || !member.data?.login_enabled)
+    throw new Error(
+      `Synthetic membership probe failed: ${member.error?.code ?? "inactive"}`,
+    );
+  const org = await probe.from("organisations").select("name").single();
+  if (org.error || !org.data)
+    throw new Error(
+      `Synthetic organisation probe failed: ${org.error?.code ?? "missing"}`,
+    );
+  await probe.auth.signOut({ scope: "local" });
 });
 
 test("live login, access denial, mobile access, password change, recovery and logout", async ({

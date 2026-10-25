@@ -30,7 +30,11 @@ export async function signIn(input: unknown): Promise<AuthResult> {
       ...identity,
       password: parsed.data.password,
     });
-    if (error) return failed();
+    if (error) {
+      if (process.env.RCRD_LIVE_AUTH === "1")
+        console.warn("Synthetic login denied", error.code);
+      return failed();
+    }
     if (!(await getAccount(client))) {
       await client.auth.signOut({ scope: "local" });
       return failed();

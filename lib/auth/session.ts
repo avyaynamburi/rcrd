@@ -12,13 +12,21 @@ export async function getAccount(
       data: { user },
       error,
     } = await client.auth.getUser();
-    if (error || !user) return null;
-    const { data: member } = await client
+    if (error || !user) {
+      if (process.env.RCRD_LIVE_AUTH === "1")
+        console.warn("Synthetic account: identity denied", error?.code);
+      return null;
+    }
+    const { data: member, error: memberError } = await client
       .from("memberships")
       .select("*")
       .eq("user_id", user.id)
       .single();
-    if (!member?.login_enabled || member.deleted_at) return null;
+    if (!member?.login_enabled || member.deleted_at) {
+      if (process.env.RCRD_LIVE_AUTH === "1")
+        console.warn("Synthetic account: membership denied", memberError?.code);
+      return null;
+    }
     if (!("mobile_access_enabled" in member) || !("is_owner" in member))
       return null;
     if (
@@ -26,12 +34,16 @@ export async function getAccount(
       isMobileDevice((await headers()).get("user-agent") ?? "")
     )
       return null;
-    const { data: org } = await client
+    const { data: org, error: orgError } = await client
       .from("organisations")
       .select("name")
       .eq("org_id", member.org_id)
       .single();
-    if (!org) return null;
+    if (!org) {
+      if (process.env.RCRD_LIVE_AUTH === "1")
+        console.warn("Synthetic account: organisation denied", orgError?.code);
+      return null;
+    }
     return { client, user, member, org };
   } catch {
     return null;

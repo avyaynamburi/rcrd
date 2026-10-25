@@ -1,6 +1,6 @@
 # Permissions
 
-Planned enforcement for ACC-01–ACC-16. This is a design contract; P1 implements it.
+Design contract for ACC-01–ACC-16. ACC-01 implements tenancy reads; ACC-02/03 implements active-account checks and the narrow owner capability for account access. Detailed presets and domain/navigation permissions remain ACC-04/06/11; authenticated navigation defaults to no destinations until implemented.
 
 Supabase Auth establishes identity. Active org membership and center grants come
 from database records, never browser-provided org IDs or user-editable JWT
