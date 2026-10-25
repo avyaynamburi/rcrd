@@ -53,9 +53,14 @@ test("all second menus work when storage is denied and fit phone screens", async
     const menu = page.getByRole("navigation", { name: "Section navigation" });
     await menu.getByRole("button", { name: group, exact: true }).click();
     await menu.getByRole("link", { name: item, exact: true }).click();
-    await expect(
-      page.getByRole("heading", { name: item, exact: true }),
-    ).toBeVisible();
+    if (item === "Access Audit") {
+      // The former preview is now an owner-only screen.
+      await expect(page).toHaveURL(/\/login$/);
+    } else {
+      await expect(
+        page.getByRole("heading", { name: item, exact: true }),
+      ).toBeVisible();
+    }
   }
   await page.setViewportSize({ width: 375, height: 812 });
   await expect

@@ -161,7 +161,9 @@ test("live login, access denial, mobile access, password change, recovery and lo
   await expect(
     page.getByRole("heading", { name: "Access Audit", exact: true }),
   ).toBeVisible();
-  await page.getByLabel("Area", { exact: true }).fill("authentication");
+  await page
+    .getByRole("textbox", { name: "Area", exact: true })
+    .fill("authentication");
   await page.getByRole("button", { name: "Apply filters" }).click();
   await expect(page.getByRole("table")).toContainText("auth_login");
   await expect(page.getByRole("table")).toContainText("auth_login_failed");
@@ -176,7 +178,9 @@ test("live login, access denial, mobile access, password change, recovery and lo
     );
     expect(response.headers()["cache-control"]).toContain("no-store");
   }
-  await page.getByLabel("Area", { exact: true }).fill("no_such_area");
+  await page
+    .getByRole("textbox", { name: "Area", exact: true })
+    .fill("no_such_area");
   await page.getByRole("button", { name: "Apply filters" }).click();
   await expect(
     page.getByRole("status").filter({ hasText: "No activity matches" }),
