@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAccount } from "@/lib/auth/session";
 import { redirect } from "next/navigation";
+import { formatAuditTime } from "@/lib/audit/filters";
 import { readAudit } from "@/lib/audit/read";
 import { en } from "@/lib/i18n/en";
 import { HelpLink } from "@/components/blocks/help-drawer";
@@ -91,11 +92,7 @@ export default async function AccessAudit({
                   {result.rows.map((row) => (
                     <tr key={row.id}>
                       <td className="border-b p-2 whitespace-nowrap">
-                        {new Intl.DateTimeFormat("en-IN", {
-                          timeZone: "Asia/Kolkata",
-                          dateStyle: "medium",
-                          timeStyle: "medium",
-                        }).format(new Date(row.created_at))}
+                        {formatAuditTime(row.created_at)}
                       </td>
                       <td className="border-b p-2">{row.actor_id}</td>
                       <td className="border-b p-2">

@@ -26,3 +26,11 @@ export function nextDay(date: string) {
     .toISOString()
     .slice(0, 10);
 }
+
+export function formatAuditTime(value: string) {
+  return new Intl.DateTimeFormat("en-IN", {
+    timeZone: "Asia/Kolkata",
+    dateStyle: "medium",
+    timeStyle: "medium",
+  }).format(new Date(value));
+}

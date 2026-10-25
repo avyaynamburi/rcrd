@@ -1,11 +1,11 @@
 import { recordAuditExport } from "@/lib/actions/access-audit";
+import { formatAuditTime } from "@/lib/audit/filters";
 import { readAudit } from "@/lib/audit/read";
 import ExcelJS from "exceljs";
 import { createElement as h } from "react";
 import { Document, Page, Text, renderToBuffer } from "@react-pdf/renderer";
 import { en } from "@/lib/i18n/en";
 export const runtime = "nodejs";
-export const preferredRegion = "bom1";
 export async function GET(request: Request) {
   try {
     const params = Object.fromEntries(new URL(request.url).searchParams);
@@ -32,7 +32,7 @@ export async function GET(request: Request) {
       ]);
       for (const row of rows)
         sheet.addRow([
-          row.created_at,
+          formatAuditTime(row.created_at),
           row.actor_id,
           row.center_id,
           row.area,
@@ -60,7 +60,7 @@ export async function GET(request: Request) {
           h(
             Text,
             { key: row.id, style: { marginBottom: 12 } },
-            `${row.created_at} | ${row.actor_id} | ${row.center_id ?? en.audit.organization}\n${row.area} | ${row.action} | ${row.source} | ${row.record_id}\n${JSON.stringify({ before: row.before_data, after: row.after_data })}`,
+            `${formatAuditTime(row.created_at)} | ${row.actor_id} | ${row.center_id ?? en.audit.organization}\n${row.area} | ${row.action} | ${row.source} | ${row.record_id}\n${JSON.stringify({ before: row.before_data, after: row.after_data })}`,
           ),
         ),
       ),
