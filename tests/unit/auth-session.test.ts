@@ -10,6 +10,7 @@ const member = {
   deleted_at: null,
   mobile_access_enabled: true,
   is_owner: false,
+  base_role: "doctor",
 };
 let membership = { ...member };
 const getUser = vi.fn();
@@ -40,7 +41,11 @@ beforeEach(() => {
 });
 describe("live account authorization", () => {
   it("requires an Auth server verified identity and active membership", async () => {
-    expect((await getAccount())?.org.name).toBe("Synthetic clinic");
+    const account = await getAccount();
+    expect(account?.org.name).toBe("Synthetic clinic");
+    expect(account?.permissions.appointmentVisibility).toBe("own");
+    expect(account?.permissions.areas.billing.scope).toBe("own_treatment");
+    expect(account?.permissions.areas.settings.entry).toBe(false);
     membership.login_enabled = false;
     expect(await getAccount()).toBeNull();
   });

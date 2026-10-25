@@ -30,7 +30,7 @@ Tick a box only when the feature meets the Definition of Done in AGENTS.md §10.
 - [x] ACC-02 Individual logins  (02-users-roles-permissions.md)
 - [x] ACC-03 Mobile access  (02-users-roles-permissions.md)
 - [x] ACC-04 Roles and role tags  (02-users-roles-permissions.md)
-- [ ] ACC-05 Default permission presets  (02-users-roles-permissions.md)
+- [x] ACC-05 Default permission presets  (02-users-roles-permissions.md)
 - [ ] ACC-06 Detailed access grid  (02-users-roles-permissions.md)
 - [ ] ACC-07 Copy access  (02-users-roles-permissions.md)
 - [ ] ACC-08 Center access  (02-users-roles-permissions.md)

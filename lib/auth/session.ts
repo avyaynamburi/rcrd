@@ -1,3 +1,4 @@
+import { getDefaultPermissions } from "@/lib/permissions/presets";
 import { headers } from "next/headers";
 import { createAuthClient } from "@/lib/supabase/server";
 import { isMobileDevice } from "./validation";
@@ -38,7 +39,13 @@ export async function getAccount(
     if (!org) {
       return null;
     }
-    return { client, user, member, org };
+    return {
+      client,
+      user,
+      member,
+      org,
+      permissions: getDefaultPermissions(member.base_role),
+    };
   } catch {
     return null;
   }
