@@ -25,7 +25,7 @@ Tick a box only when the feature meets the Definition of Done in AGENTS.md §10.
 - [x] SHELL-12 Toast messages  (01-app-shell.md)
 - [x] SHELL-13 Phone and tablet layout*  (01-app-shell.md)
 - [x] SHELL-14 Offline handling  (01-app-shell.md)
-- [~] SHELL-15 Current center  (01-app-shell.md) — Calendar setup state and shared resolver; secure per-user persistence awaits ACC-01/02/08 (BLOCKERS 10)
+- [ ] SHELL-15 Current center  (01-app-shell.md)
 - [x] ACC-01 Tenancy model  (02-users-roles-permissions.md) — schema, RLS and 82 database assertions verified in CI; generated types committed
 - [x] ACC-02 Individual logins  (02-users-roles-permissions.md)
 - [x] ACC-03 Mobile access  (02-users-roles-permissions.md)
