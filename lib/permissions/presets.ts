@@ -33,6 +33,21 @@ export const permissionAreas = [
   "plan_purchases",
 ] as const;
 export type PermissionArea = (typeof permissionAreas)[number];
+
+/** ACC-14: default restrictions only; persisted owner-approved grids may differ.
+ * ACC-05 explicitly grants accountants accounting and financial reports.
+ */
+export const ownerDefaultAreas = [
+  "treatment_settings",
+  "settings",
+  "access_audit",
+  "users",
+  "ai_settings",
+  "import",
+  "patient_merge",
+  "plan_purchases",
+] as const satisfies readonly PermissionArea[];
+
 export const permissionActions = [
   "view",
   "entry",
@@ -158,6 +173,17 @@ export function getDefaultPermissions(role: unknown): PermissionPreset {
     };
     preset.financialReports = true;
     preset.exportReports = true;
+  }
+  if (!isOwnerRole(parsed.data)) {
+    for (const area of ownerDefaultAreas)
+      areas[area] = {
+        view: false,
+        entry: false,
+        edit: false,
+        delete: false,
+        report: false,
+        scope: "none",
+      };
   }
   return preset;
 }
