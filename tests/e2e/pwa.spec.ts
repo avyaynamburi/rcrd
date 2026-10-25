@@ -90,15 +90,10 @@ test("shows the app identity and shortcut help at desktop size", async ({
   page,
 }) => {
   await page.goto("/");
-  const title = page.getByRole("banner");
+  await expect(page).toHaveTitle("Rcrd");
   await expect(
-    title.getByRole("link", { name: "Rcrd", exact: true }),
-  ).toBeVisible();
-  const logo = title.locator("img");
-  await expect(logo).toBeVisible();
-  expect(
-    await logo.evaluate((element: HTMLImageElement) => element.naturalWidth),
-  ).toBeGreaterThan(0);
+    page.getByRole("banner", { name: "Clinic top bar" }),
+  ).toContainText("Clinic not configured");
   await page.getByRole("link", { name: "Need Help?" }).click();
   await page
     .getByRole("link", { name: "How to create an Rcrd shortcut" })

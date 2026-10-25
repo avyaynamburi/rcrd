@@ -45,3 +45,8 @@ Status: open. SHELL-03 confirmation/cancellation UI works; the preview explicitl
 Needed: authenticated identity and server-authorized center access before real account controls can run.
 Owner steps: no action now. Codex must populate initials/name/role/current center from the trusted session when building ACC-02, connect secure password changes, and list only permitted centers with server-side validation of any switch in ACC-08. Add allowed/denied and session failure tests then.
 Status: open. The menu and help work in the data-free preview; identity is explicitly unassigned and password/center controls are disabled.
+
+## 8. Connect top bar to trusted clinic context (SHELL-05 / ACC-02)
+Needed: authenticated organisation context before displaying the actual clinic name.
+Owner steps: no action now. Codex must pass the session-authorized organisation display name into AppTitle when implementing authenticated tenancy; forms/profiles must pass their explicit parent back destination, and calendar/status features must populate the controls slot.
+Status: open. The public preview displays “Clinic not configured”; no clinic identity or status count is invented.

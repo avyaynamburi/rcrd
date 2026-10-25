@@ -70,6 +70,12 @@ export const en = {
     "In Chrome, open the browser menu and choose Cast, save and share, then Install page as app. In Edge, open the browser menu, choose Apps, then Install this site as an app. Confirm Install to create a shortcut. If Rcrd is already installed, use its existing shortcut. Installation needs HTTPS or localhost.",
   installUpdateHelp:
     "When an update is ready, save your work and choose Apply update. Reopen Rcrd afterwards. Updates never reload your work automatically. An internet connection is required to use clinic tools.",
+  topBarLabel: "Clinic top bar",
+  clinicNotConfigured: "Clinic not configured",
+  back: "Back",
+  topBarHelpTitle: "Using the top bar",
+  topBarHelpText:
+    "The white top bar shows your organisation name. Clinic not configured means clinic sign-in has not been connected. Forms and patient profiles will have a Back link before the name. Calendar controls, today’s status counts and the clock will be added with their respective features.",
   appName: "Rcrd",
   description: "Dental practice management for Indian clinics.",
   setupTitle: "Your clinic workspace starts here",
