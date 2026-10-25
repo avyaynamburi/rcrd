@@ -191,6 +191,8 @@ export type Database = {
           external_id: string | null;
           external_source: string | null;
           id: string;
+          base_role: string;
+          role_tags: string[];
           is_owner: boolean;
           login_enabled: boolean;
           mobile_access_enabled: boolean;
@@ -207,6 +209,8 @@ export type Database = {
           external_id?: string | null;
           external_source?: string | null;
           id?: string;
+          base_role?: string;
+          role_tags?: string[];
           is_owner?: boolean;
           login_enabled?: boolean;
           mobile_access_enabled?: boolean;
@@ -222,6 +226,8 @@ export type Database = {
           external_id?: string | null;
           external_source?: string | null;
           id?: string;
+          base_role?: string;
+          role_tags?: string[];
           is_owner?: boolean;
           login_enabled?: boolean;
           mobile_access_enabled?: boolean;
@@ -358,6 +364,18 @@ export type Database = {
           login_enabled: boolean;
           mobile_access_enabled: boolean;
         }[];
+      };
+      list_member_roles: {
+        Args: Record<PropertyKey, never>;
+        Returns: { id: string; base_role: string; role_tags: string[] }[];
+      };
+      set_member_role: {
+        Args: {
+          target_membership_id: string;
+          new_role: string;
+          new_tags: string[];
+        };
+        Returns: undefined;
       };
       set_login_access: {
         Args: {

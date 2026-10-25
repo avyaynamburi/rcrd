@@ -1,4 +1,30 @@
 export const en = {
+  roles: {
+    title: "Role and list tags",
+    base: "Base role",
+    tags: "Extra role tags",
+    save: "Save role",
+    saved: "Role and tags saved.",
+    failed: "Could not save role and tags. Try again.",
+    pending: "Saving…",
+    self: "Another owner must change your role.",
+    platform:
+      "Platform Admin is reserved for Rcrd staff in the company console.",
+    names: {
+      owner: "Owner",
+      owner_doctor: "Owner and Doctor",
+      doctor: "Doctor",
+      staff: "Staff (front desk)",
+      accountant: "Accountant",
+    },
+    tagNames: {
+      consultant: "Consultant",
+      orthodontist: "Orthodontist",
+      tele_caller: "Tele-caller",
+      marketing: "Marketing",
+      accountant: "Accountant",
+    },
+  },
   auth: {
     login: "Sign in",
     identifier: "Email or mobile number",

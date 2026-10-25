@@ -75,9 +75,9 @@ test.beforeAll(async () => {
     {
       input: `
     insert into public.organisations (id,org_id,name) values ('11111111-1111-4111-8111-111111111111','11111111-1111-4111-8111-111111111111','Synthetic auth clinic');
-    insert into public.memberships (id,org_id,user_id,login_enabled,is_owner) values
-    ('22222222-2222-4222-8222-222222222221','11111111-1111-4111-8111-111111111111','${ownerId}',true,true),
-    ('22222222-2222-4222-8222-222222222222','11111111-1111-4111-8111-111111111111','${staffId}',true,false);
+    insert into public.memberships (id,org_id,user_id,login_enabled,is_owner,base_role) values
+    ('22222222-2222-4222-8222-222222222221','11111111-1111-4111-8111-111111111111','${ownerId}',true,true,'owner'),
+    ('22222222-2222-4222-8222-222222222222','11111111-1111-4111-8111-111111111111','${staffId}',true,false,'staff');
   `,
       stdio: ["pipe", "pipe", "pipe"],
     },
@@ -152,6 +152,32 @@ test("live login, access denial, mobile access, password change, recovery and lo
   }
   await expect(page.getByRole("banner")).toContainText("Synthetic auth clinic");
   await page.goto("/account/team");
+  const roleForm = page
+    .locator("section")
+    .filter({
+      has: page.getByRole("heading", { name: staffEmail, exact: true }),
+    })
+    .filter({
+      has: page.getByRole("button", { name: "Save role", exact: true }),
+    })
+    .first();
+  await roleForm
+    .getByLabel("Base role", { exact: true })
+    .selectOption("doctor");
+  await roleForm.getByLabel("Consultant", { exact: true }).check();
+  await roleForm
+    .getByRole("button", { name: "Save role", exact: true })
+    .click();
+  await expect(
+    roleForm.getByText("Role and tags saved.", { exact: true }),
+  ).toBeVisible();
+  await page.reload();
+  await expect(roleForm.getByLabel("Base role", { exact: true })).toHaveValue(
+    "doctor",
+  );
+  await expect(
+    roleForm.getByLabel("Consultant", { exact: true }),
+  ).toBeChecked();
   const staffRow = page.getByRole("region", { name: staffEmail, exact: true });
   await staffRow.getByLabel("Enable Login", { exact: true }).uncheck();
   await staffRow.getByLabel("Enable Mobile Access", { exact: true }).uncheck();

@@ -8,10 +8,10 @@ insert into auth.users (id, email) values
 insert into public.organisations (id, org_id, name) values
  ('10000000-0000-4000-8000-000000000001', '10000000-0000-4000-8000-000000000001', 'Synthetic A'),
  ('10000000-0000-4000-8000-000000000002', '10000000-0000-4000-8000-000000000002', 'Synthetic B');
-insert into public.memberships (id, org_id, user_id, login_enabled, is_owner) values
- ('30000000-0000-4000-8000-000000000001', '10000000-0000-4000-8000-000000000001', '00000000-0000-4000-8000-000000000001', true, true),
- ('30000000-0000-4000-8000-000000000002', '10000000-0000-4000-8000-000000000001', '00000000-0000-4000-8000-000000000002', true, false),
- ('30000000-0000-4000-8000-000000000003', '10000000-0000-4000-8000-000000000002', '00000000-0000-4000-8000-000000000003', true, true);
+insert into public.memberships (id, org_id, user_id, login_enabled, is_owner, base_role) values
+ ('30000000-0000-4000-8000-000000000001', '10000000-0000-4000-8000-000000000001', '00000000-0000-4000-8000-000000000001', true, true, 'owner'),
+ ('30000000-0000-4000-8000-000000000002', '10000000-0000-4000-8000-000000000001', '00000000-0000-4000-8000-000000000002', true, false, 'staff'),
+ ('30000000-0000-4000-8000-000000000003', '10000000-0000-4000-8000-000000000002', '00000000-0000-4000-8000-000000000003', true, true, 'owner');
 
 select extensions.ok(not has_table_privilege(r, 'access_audit', p), r || ' cannot ' || p || ' audit')
 from unnest(array['anon','authenticated','service_role']) r
@@ -25,6 +25,7 @@ set local role authenticated;
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000002","user_metadata":{"is_owner":true}}', true);
 select extensions.ok(not public.can_manage_logins(), 'JWT cannot grant owner capability');
 select extensions.throws_ok('select * from public.list_login_accounts()', '42501', null, 'Staff cannot list accounts');
+select extensions.throws_ok($$select public.set_member_role('30000000-0000-4000-8000-000000000001', 'staff', '{}')$$, '42501', null, 'Staff cannot assign roles');
 select extensions.throws_ok($$select public.set_login_access('30000000-0000-4000-8000-000000000003', false, false)$$, '42501', null, 'Staff cannot manage accounts');
 select extensions.throws_ok('update public.memberships set is_owner = true', '42501', null, 'No direct owner escalation');
 
@@ -32,6 +33,19 @@ select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-0000000
 select extensions.is((select count(*)::int from public.list_login_accounts()), 2, 'Owner lists only own organisation');
 select extensions.throws_ok($$select public.set_login_access('30000000-0000-4000-8000-000000000003', false, false)$$, '42501', null, 'Owner cannot change other organisation');
 select extensions.throws_ok($$select public.set_login_access('30000000-0000-4000-8000-000000000001', false, false)$$, '42501', null, 'Owner cannot disable own access');
+
+select extensions.is((select count(*)::int from public.list_member_roles()), 2, 'Roles list stays within organisation');
+select extensions.throws_ok($$select public.set_member_role('30000000-0000-4000-8000-000000000003', 'doctor', '{}')$$, '42501', null, 'Cross-org role change denied');
+select extensions.throws_ok($$select public.set_member_role('30000000-0000-4000-8000-000000000001', 'staff', '{}')$$, '42501', null, 'Self role change denied');
+select extensions.throws_ok($$select public.set_member_role('30000000-0000-4000-8000-000000000002', 'platform_admin', '{}')$$, '22023', null, 'Clinic cannot assign platform admin');
+select extensions.throws_ok($$select public.set_member_role('30000000-0000-4000-8000-000000000002', 'staff', '{consultant,consultant}')$$, '22023', null, 'Duplicate tags rejected');
+select extensions.lives_ok($$select public.set_member_role('30000000-0000-4000-8000-000000000002', 'owner_doctor', '{consultant,orthodontist}')$$, 'Owner assigns role and tags');
+reset role;
+select extensions.ok((select is_owner and base_role = 'owner_doctor' and role_tags = array['consultant','orthodontist'] from public.memberships where id = '30000000-0000-4000-8000-000000000002'), 'Owner capability follows role');
+select extensions.is((select count(*)::int from public.access_audit where action = 'set_member_role'), 1, 'Role change audited once');
+delete from public.access_audit where action = 'set_member_role';
+update public.memberships set is_owner = false, base_role = 'staff', role_tags = '{}' where id = '30000000-0000-4000-8000-000000000002';
+set local role authenticated;
 select extensions.lives_ok($$select public.set_login_access('30000000-0000-4000-8000-000000000002', false, false)$$, 'Owner can disable staff login/mobile');
 reset role;
 select extensions.is((select login_enabled from public.memberships where id = '30000000-0000-4000-8000-000000000002'), false, 'Login change persists');
