@@ -186,6 +186,7 @@ export type Database = {
       memberships: {
         Row: {
           access_grid: Json | null;
+          appointment_visibility: string;
           base_role: string;
           created_at: string;
           created_by: string | null;
@@ -205,6 +206,7 @@ export type Database = {
         ComputedFields: never;
         Insert: {
           access_grid?: Json | null;
+          appointment_visibility?: string;
           base_role?: string;
           created_at?: string;
           created_by?: string | null;
@@ -223,6 +225,7 @@ export type Database = {
         };
         Update: {
           access_grid?: Json | null;
+          appointment_visibility?: string;
           base_role?: string;
           created_at?: string;
           created_by?: string | null;
@@ -352,29 +355,27 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      list_appointment_visibility: {
-        Args: never;
-        Returns: { id: string; appointment_visibility: string }[];
-      };
-      set_appointment_visibility: {
-        Args: { target_membership_id: string; visibility: string };
-        Returns: undefined;
-      };
-      can_see_appointment: {
-        Args: {
-          appointment_org_id: string;
-          appointment_center_id: string;
-          doctor_user_id: string;
-        };
-        Returns: boolean;
-      };
-
       auth_org_id: { Args: Record<PropertyKey, never>; Returns: string };
       can_access_center: {
         Args: { target_center_id: string };
         Returns: boolean;
       };
       can_manage_logins: { Args: Record<PropertyKey, never>; Returns: boolean };
+      can_see_appointment: {
+        Args: {
+          appointment_center_id: string;
+          appointment_org_id: string;
+          doctor_user_id: string;
+        };
+        Returns: boolean;
+      };
+      list_appointment_visibility: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          appointment_visibility: string;
+          id: string;
+        }[];
+      };
       list_center_access: { Args: Record<PropertyKey, never>; Returns: Json };
       list_login_accounts: {
         Args: Record<PropertyKey, never>;
@@ -400,6 +401,10 @@ export type Database = {
           id: string;
           role_tags: string[];
         }[];
+      };
+      set_appointment_visibility: {
+        Args: { target_membership_id: string; visibility: string };
+        Returns: undefined;
       };
       set_login_access: {
         Args: {
