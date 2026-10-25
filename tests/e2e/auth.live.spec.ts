@@ -129,6 +129,7 @@ test("live login, access denial, mobile access, password change, recovery and lo
   page,
   browser,
 }) => {
+  test.setTimeout(90_000);
   async function login(
     target: typeof page,
     identifier: string,
@@ -506,5 +507,64 @@ test("live login, access denial, mobile access, password change, recovery and lo
   ).toBeVisible();
   await staffPage.goto(recovery);
   await expect(staffPage).toHaveURL(/\/forgot-password\?invalid=1$/);
+  // ACC-18: cancellation, soft delete, live session denial and deliberate restore.
+  await login(staffPage, staffEmail, password);
+  await expect(staffPage).toHaveURL(/\/calendar$/);
+  await page.goto("/account/team");
+  await staffRow
+    .locator("..")
+    .getByRole("button", { name: "Delete person", exact: true })
+    .click();
+  await page
+    .getByRole("dialog")
+    .getByRole("button", { name: "Cancel", exact: true })
+    .click();
+  await expect(staffRow).toBeVisible();
+  await staffRow
+    .locator("..")
+    .getByRole("button", { name: "Delete person", exact: true })
+    .click();
+  await page
+    .getByRole("dialog")
+    .getByRole("button", { name: "Confirm", exact: true })
+    .click();
+  await expect(staffRow).toHaveCount(0);
+  const deletedStaff = page.getByRole("region", {
+    name: "Deleted Staff List",
+    exact: true,
+  });
+  await expect(deletedStaff).toContainText(staffEmail);
+  await staffPage.goto("/patients");
+  await expect(staffPage).toHaveURL(/\/login$/);
+  await login(staffPage, staffEmail, password);
+  await expect(
+    staffPage.getByRole("alert").filter({ hasText: "Unable to sign in" }),
+  ).toBeVisible();
+  await deletedStaff
+    .getByRole("button", { name: "Restore person", exact: true })
+    .click();
+  await expect(page.getByRole("dialog")).toContainText("Login stays disabled");
+  await page
+    .getByRole("dialog")
+    .getByRole("button", { name: "Confirm", exact: true })
+    .click();
+  await expect(staffRow).toBeVisible();
+  await expect(
+    staffRow.getByLabel("Enable Login", { exact: true }),
+  ).not.toBeChecked();
+  await expect(deletedStaff).toContainText("No deleted people.");
+  await login(staffPage, staffEmail, password);
+  await expect(
+    staffPage.getByRole("alert").filter({ hasText: "Unable to sign in" }),
+  ).toBeVisible();
+  await staffRow.getByLabel("Enable Login", { exact: true }).check();
+  await staffRow
+    .getByRole("button", { name: "Save access", exact: true })
+    .click();
+  await expect(staffRow.getByRole("status")).toHaveText(
+    "Account access saved.",
+  );
+  await login(staffPage, staffEmail, password);
+  await expect(staffPage).toHaveURL(/\/calendar$/);
   await staffContext.close();
 });

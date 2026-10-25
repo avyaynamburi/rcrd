@@ -72,9 +72,11 @@ export function SecondMenu({
               <li key={page}>
                 <Link
                   href={
-                    page === "Access Audit"
-                      ? "/admin/access-audit"
-                      : `/${section}?page=${encodeURIComponent(page)}`
+                    section === "settings" && page === "Clinic"
+                      ? "/settings/clinic"
+                      : page === "Access Audit"
+                        ? "/admin/access-audit"
+                        : `/${section}?page=${encodeURIComponent(page)}`
                   }
                   aria-current={selected === page ? "page" : undefined}
                   className="second-menu-link"

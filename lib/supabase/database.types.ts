@@ -358,6 +358,12 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      list_deleted_people: { Args: never; Returns: Json };
+      set_person_deleted: {
+        Args: { target_membership_id: string; deleted: boolean };
+        Returns: undefined;
+      };
+
       audit_password_verification: { Args: { event: Json }; Returns: Json };
       auth_org_id: { Args: Record<PropertyKey, never>; Returns: string };
       can_access_center: {

@@ -57,6 +57,12 @@ describe("live account authorization", () => {
     mocks.client.mockRejectedValue(new Error("offline"));
     expect(await getAccount()).toBeNull();
   });
+  it("denies an existing identity whose membership was soft deleted", async () => {
+    single.mockResolvedValue({
+      data: { ...member, deleted_at: "2026-10-25T10:00:00Z" },
+    });
+    expect(await getAccount()).toBeNull();
+  });
   it("rejects phones/tablets when disabled, including existing sessions", async () => {
     membership.mobile_access_enabled = false;
     for (const ua of ["iPhone", "Android", "iPad"]) {

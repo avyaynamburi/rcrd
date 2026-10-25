@@ -1,3 +1,6 @@
+import { DeletedPeople } from "@/components/auth/deleted-people";
+import { PersonDeletion } from "@/components/auth/person-deletion";
+import { deletedPeopleSchema } from "@/lib/permissions/deleted-people";
 import { RecordStampMenu } from "@/components/blocks/record-stamps";
 import Link from "next/link";
 import { ExportControl } from "@/components/auth/export-control";
@@ -62,6 +65,8 @@ export default async function Team() {
       }),
     )
     .safeParse(stampsResult.data);
+  const deletedResult = await account.client.rpc("list_deleted_people");
+  const deletedPeople = deletedPeopleSchema.safeParse(deletedResult.data);
   const users = {};
   return (
     <main id="main" className="mx-auto max-w-3xl space-y-5 px-6 py-10">
@@ -145,6 +150,23 @@ export default async function Team() {
                     ) : (
                       <p role="alert">{en.auth.teamError}</p>
                     )}
+                    {(role.base_role === "doctor" ||
+                      role.base_role === "owner_doctor") && (
+                      <section className="space-y-2 border-t border-border pt-3">
+                        <label>
+                          <input
+                            type="checkbox"
+                            disabled
+                            checked={false}
+                            readOnly
+                          />{" "}
+                          {en.summaryNotification.title}
+                        </label>
+                        <p role="status">
+                          {en.summaryNotification.unavailable}
+                        </p>
+                      </section>
+                    )}
                     <MemberRole
                       id={person.id}
                       initialRole={role.base_role}
@@ -191,11 +213,20 @@ export default async function Team() {
             ) : (
               <p role="alert">{en.auth.teamError}</p>
             )}
+            <PersonDeletion
+              id={person.id}
+              label={person.email ?? en.auth.account}
+              self={person.id === account.member.id}
+            />
           </section>
         ))
       ) : (
         <p>{en.auth.empty}</p>
       )}
+      <DeletedPeople
+        people={deletedPeople.success ? deletedPeople.data : []}
+        failed={Boolean(deletedResult.error) || !deletedPeople.success}
+      />
       <HelpLink helpKey="accounts" />
     </main>
   );

@@ -1,4 +1,36 @@
 export const en = {
+  advancedSecurity: {
+    general: "General Details",
+    title: "Advanced Security",
+    explainer: "About Advanced Security",
+    description:
+      "Requires a second verification step at sign-in, shorter sessions and one active session per person. The planned inactivity limit is 30 minutes by default, adjustable by the owner.",
+    unavailable:
+      "Not available yet. Two-step verification, inactivity sign-out and single-session enforcement have not been connected. Password sign-in alone does not provide these protections. Contact the owner before clinic use.",
+  },
+  summaryNotification: {
+    title: "Send Appointment Summary",
+    unavailable:
+      "Daily doctor summaries are not available yet. Appointment data and message delivery must be connected first. No summaries are being sent.",
+  },
+  people: {
+    doctors: "Deleted Owner & Doctor List",
+    staff: "Deleted Staff List",
+    remove: "Delete person",
+    restore: "Restore person",
+    confirm: "Confirm",
+    cancel: "Cancel",
+    deleteNote:
+      "Move this person to the deleted list and block clinic access immediately? Historical records and branch permissions are kept.",
+    restoreNote:
+      "Restore this person to the active list? Login stays disabled. Review their permissions and enable login separately.",
+    self: "Another owner must delete your account.",
+    empty: "No deleted people.",
+    loadFailed: "Deleted people could not be loaded. Reload to try again.",
+    failed: "The person could not be updated. Reload and try again.",
+    deleted: "Person moved to the deleted list.",
+    restored: "Person restored. Login remains disabled.",
+  },
   stamps: {
     menu: "Record details",
     created: "Created",
