@@ -30,3 +30,8 @@ Status: open. `npm run db:seed:preview` produces stable synthetic fixtures (two 
 Needed: owner/counsel-reviewed notices, purpose/channel consent text, data-request and retention policy, incident contacts, and documented India-only processing for every clinical-data processor (including AI inference, fallback, messaging, telemetry and backups).
 Owner steps: have counsel review `docs/architecture/privacy.md`; provide approved policy versions and retention categories through the normal project process, designate incident contacts, and obtain written processor region/subprocessor assurances. Configure only processors that satisfy the residency rule. Do not paste patient records or credentials into chat.
 Status: open. Architecture keeps clinical AI calls and unverified providers disabled; log-only messaging is the safe default. This entry does not block architecture documentation or synthetic development.
+
+## 5. Local browser test capacity (SHELL-02)
+Needed: free disk space and Microsoft Edge for local browser verification.
+Owner steps: free disk space with normal storage tools (only about 125 MiB was available), then install Microsoft Edge. Run `npm run test:e2e`. Windows Chrome/Edge verification is provided by the existing GitHub Actions matrix.
+Status: open. SHELL-02 passes `npm run check` and all five targeted Chrome tests with one worker and tracing disabled. The initial parallel run exhausted disk while saving traces; Edge could not launch because it is not installed. No system files were removed and no browser was installed by this run.

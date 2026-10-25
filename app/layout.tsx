@@ -1,3 +1,6 @@
+import { IconRail } from "@/components/shell/icon-rail";
+import { navigationItems } from "@/lib/shell-navigation";
+import { version } from "@/package.json";
 import { AppTitle } from "@/components/shell/app-title";
 import { UpdateNotice } from "@/components/pwa/update-notice";
 import type { Metadata, Viewport } from "next";
@@ -20,9 +23,17 @@ export default function RootLayout({
         >
           {en.skip}
         </a>
-        <AppTitle />
-        <UpdateNotice />
-        {children}
+        {/* Public construction preview only; no authenticated clinic data is exposed. */}
+        <IconRail
+          allowed={navigationItems.map((item) => item.id)}
+          version={version}
+          messagingNeedsSetup
+        />
+        <div className="min-w-0 pl-[70px]">
+          <AppTitle />
+          <UpdateNotice />
+          {children}
+        </div>
       </body>
     </html>
   );
