@@ -1,8 +1,26 @@
 # Data model
 
-This is the implementation plan for P1 onward, not a claim that these tables exist.
-The current app has no application schema. Migrations and generated public types
-ship with the owning feature; fake seed loading remains blocked (BLOCKERS 3).
+ACC-01 now supplies a draft migration for organisations, centers, operatories,
+memberships and center grants. It has not been applied locally because Docker
+cannot start (BLOCKERS 11). No generated types or live database integration is
+claimed. Other entities below remain plans; fake seed loading is BLOCKERS 3.
+
+The initial schema is read-only for authenticated identities. An identity belongs
+to exactly one organisation; multi-organisation identities require an explicit,
+server-authorized selection design later. Login defaults off. Trusted membership
+and active center grants drive fixed-search-path RLS helpers; user-editable JWT
+metadata cannot select a tenant. Deleted organisations, memberships, grants and
+parent centers fail closed. Users see only their own membership and grants.
+There is no implicit owner or platform bypass. The platform is the company-level
+boundary, not a clinic data row. No platform identity gains clinic access.
+
+No application role (including service_role) has direct mutation grants. No write
+RPC or provisioning endpoint exists yet; these must arrive with permission checks
+and atomic audit. Thus the migration introduces no unaudited application write
+path. `has_permission` and area permissions arrive with ACC-05/06/11; these tables
+contain only the caller's tenancy context, not clinical or team-directory data.
+Run `npm run db:test` for the rollback-only synthetic pgTAP isolation suite after
+`npm run db:reset`. CI runs these checks and uploads generated type definitions.
 
 ## Ownership and keys
 

@@ -44,3 +44,23 @@ jobs:
           name: playwright-${{ matrix.os }}-${{ matrix.browser }}
           path: test-results/
           retention-days: 7
+  database:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run db:start
+      - run: npm run db:reset
+      - run: npm run db:test
+      - run: npm run db:types
+      - uses: actions/upload-artifact@v4
+        with:
+          name: database-types
+          path: lib/supabase/database.types.ts
+          retention-days: 7
+      - if: always()
+        run: npm run db:stop

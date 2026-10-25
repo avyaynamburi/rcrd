@@ -1,7 +1,7 @@
 # Database migrations
 
 Create timestamped SQL migrations with `npx supabase migration new <name>`.
-No application tables exist yet. Tenancy, RLS helpers and audit arrive with ACC-01/ACC-11; never add a patient or clinic table without RLS and isolation tests.
+ACC-01 supplies the initial read-only tenancy migration and `tests/rls/tenancy.sql`. It remains unverified locally (BLOCKERS 11). Audited write RPCs and area permissions arrive in later access features; no application mutations are granted. Never add a patient or clinic table without RLS and isolation tests.
 
 Apply and verify locally with `npm run db:reset`, then `npm run db:types`.
 Commit migrations and the resulting `lib/supabase/database.types.ts` together.
