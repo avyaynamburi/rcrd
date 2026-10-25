@@ -185,6 +185,10 @@ test("live login, access denial, mobile access, password change, recovery and lo
   await expect(
     page.getByRole("status").filter({ hasText: "No activity matches" }),
   ).toBeVisible();
+  await page.getByRole("link", { name: "Clear filters", exact: true }).click();
+  await expect(
+    page.getByRole("textbox", { name: "Area", exact: true }),
+  ).toHaveValue("");
   await page.goto("/account/team");
   const roleForm = page
     .locator("section")

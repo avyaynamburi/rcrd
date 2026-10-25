@@ -33,7 +33,7 @@ export default async function AccessAudit({
     <main id="main" className="space-y-5 p-6 min-w-0">
       <h1 className="text-2xl font-semibold">{en.audit.title}</h1>
       <p>{en.audit.description}</p>
-      <form className="flex flex-wrap gap-3">
+      <form key={params.toString()} className="flex flex-wrap gap-3">
         {(["from", "to", "user", "center", "area", "action"] as const).map(
           (key) => (
             <label key={key} className="flex flex-col gap-1">
