@@ -1,11 +1,16 @@
 "use client";
 
 import { HelpLink } from "@/components/blocks/help-drawer";
+import Link from "next/link";
 import { useId, useRef } from "react";
 import { en } from "@/lib/i18n/en";
 
 /** Data-free preview. Authenticated identity and center changes belong to ACC-02/08. */
-export function UserMenu() {
+export function UserMenu({
+  account,
+}: {
+  account?: { email: string; owner: boolean };
+}) {
   const id = useId();
   const panel = useRef<HTMLDivElement>(null);
   return (
@@ -35,11 +40,11 @@ export function UserMenu() {
         <dl className="mt-3 space-y-2">
           <div>
             <dt className="text-muted-foreground">{en.userName}</dt>
-            <dd>{en.userNotSignedIn}</dd>
+            <dd>{account?.email ?? en.userNotSignedIn}</dd>
           </div>
           <div>
             <dt className="text-muted-foreground">{en.userRole}</dt>
-            <dd>{en.userNotAssigned}</dd>
+            <dd>{account?.owner ? en.auth.owner : en.userNotAssigned}</dd>
           </div>
           <div>
             <dt className="text-muted-foreground">{en.userCenter}</dt>
@@ -47,17 +52,36 @@ export function UserMenu() {
           </div>
         </dl>
         <p id={`${id}-notice`} className="mt-3">
-          {en.userSetupNotice}
+          {account ? en.auth.noShared : en.userSetupNotice}
         </p>
         <div className="my-3 flex flex-col gap-2">
-          <button
-            type="button"
-            disabled
-            aria-describedby={`${id}-notice`}
-            className="rounded border border-border p-2 text-left text-muted-foreground disabled:cursor-not-allowed"
-          >
-            {en.userChangePassword}
-          </button>
+          {account ? (
+            <Link
+              href="/account/password"
+              className="underline"
+              onClick={() => panel.current?.hidePopover()}
+            >
+              {en.userChangePassword}
+            </Link>
+          ) : (
+            <button
+              type="button"
+              disabled
+              aria-describedby={`${id}-notice`}
+              className="rounded border border-border p-2 text-left text-muted-foreground disabled:cursor-not-allowed"
+            >
+              {en.userChangePassword}
+            </button>
+          )}
+          {account?.owner && (
+            <Link
+              href="/account/team"
+              className="underline"
+              onClick={() => panel.current?.hidePopover()}
+            >
+              {en.auth.manage}
+            </Link>
+          )}
           <button
             type="button"
             disabled

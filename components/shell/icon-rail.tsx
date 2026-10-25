@@ -40,11 +40,13 @@ const icons = {
 };
 
 export function IconRail({
+  account,
   allowed,
   version,
   unreadCount = 0,
   messagingNeedsSetup = false,
 }: {
+  account?: { email: string; owner: boolean };
   allowed: readonly NavigationId[];
   version: string;
   unreadCount?: number;
@@ -114,7 +116,7 @@ export function IconRail({
         <div>{group("top")}</div>
         <div className="mt-auto pt-6">
           {group("bottom")}
-          <UserMenu />
+          <UserMenu account={account} />
           <LogoutConfirmation />
         </div>
         <span className="py-2 text-center text-xs">v{version}</span>
@@ -135,7 +137,7 @@ export function IconRail({
           <h2 className="px-3 py-2 font-semibold">{en.moreNavigation}</h2>
           <div className="mobile-more-items">
             {group("more")}
-            <UserMenu />
+            <UserMenu account={account} />
             <LogoutConfirmation />
           </div>
           <p className="px-3 py-2 text-xs">

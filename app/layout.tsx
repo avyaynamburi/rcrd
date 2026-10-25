@@ -15,6 +15,8 @@ import { AppTitle } from "@/components/shell/app-title";
 import { UpdateNotice } from "@/components/pwa/update-notice";
 import type { Metadata, Viewport } from "next";
 import { en } from "@/lib/i18n/en";
+import { getAccount } from "@/lib/auth/session";
+import { authConfigured } from "@/lib/supabase/server";
 import "./globals.css";
 export const metadata: Metadata = {
   title: en.appName,
@@ -24,6 +26,7 @@ export const viewport: Viewport = { themeColor: "#1E2A4A" };
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const account = authConfigured() ? await getAccount() : null;
   return (
     <html lang="en">
       <body>
@@ -38,12 +41,26 @@ export default async function RootLayout({
           <ToastProvider>
             <HelpProvider articles={await loadHelpArticles()}>
               <IconRail
-                allowed={navigationItems.map((item) => item.id)}
+                account={
+                  account
+                    ? {
+                        email:
+                          account.user.email ??
+                          account.user.phone ??
+                          en.auth.account,
+                        owner: account.member.is_owner,
+                      }
+                    : undefined
+                }
+                allowed={
+                  authConfigured() ? [] : navigationItems.map((item) => item.id)
+                }
                 version={version}
                 messagingNeedsSetup
               />
               <div className="app-workspace min-w-0">
                 <AppTitle
+                  organisationName={account?.org.name}
                   controls={
                     <>
                       <StatusCircles />

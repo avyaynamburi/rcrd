@@ -1,4 +1,53 @@
 export const en = {
+  auth: {
+    login: "Sign in",
+    identifier: "Email or mobile number",
+    password: "Password",
+    forgot: "Forgot password?",
+    recovery: "Reset your password",
+    email: "Email",
+    sendLink: "Send reset link",
+    back: "Back to sign in",
+    change: "Change password",
+    newPassword: "New password",
+    confirmPassword: "Confirm new password",
+    savePassword: "Save password",
+    unavailable:
+      "Sign-in is not configured or is temporarily unavailable. Please contact the clinic owner.",
+    failed:
+      "Unable to sign in. Check your details or contact the clinic owner about account access.",
+    invalidEmail: "Enter a valid email address.",
+    passwordRule:
+      "Use 12 to 128 characters and enter the same password in both fields.",
+    passwordFailed:
+      "The password could not be changed. Request a fresh recovery link or try again.",
+    passwordRevokeFailed:
+      "Password changed, but other sessions could not be revoked. Contact the clinic owner.",
+    passwordChanged:
+      "Password changed. Other refresh sessions have been revoked.",
+    resetSent:
+      "If this email has an account, a password reset link will arrive shortly. Check your inbox and spam folder.",
+    resetInvalid:
+      "The recovery link is invalid or expired. Request a new link.",
+    pending: "Please wait…",
+    noShared: "Use your own clinic account. Never share passwords.",
+    team: "Account access",
+    enabled: "Enable Login",
+    mobile: "Enable Mobile Access",
+    owner: "Owner",
+    account: "Account",
+    saveAccess: "Save access",
+    accessSaved: "Account access saved.",
+    ownAccess: "Your own access cannot be changed here.",
+    empty: "No clinic accounts are available.",
+    teamError: "Account access could not be loaded. Try again later.",
+    resetOther: "Set New Password",
+    resetExplain:
+      "Send a recovery link so this person can set their own password.",
+    manage: "Manage account access",
+    mobileLimit:
+      "Phone and tablet detection is best effort. Some browsers can identify themselves as desktop computers.",
+  },
   mobileNavigation: "Mobile navigation",
   moreNavigation: "More",
   closeNavigation: "Close navigation",

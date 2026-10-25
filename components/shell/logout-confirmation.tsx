@@ -4,19 +4,22 @@ import { useRef, useState } from "react";
 import { useToast } from "@/components/blocks/toast-provider";
 import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { signOut } from "@/lib/actions/auth";
 import { en } from "@/lib/i18n/en";
 
 export function LogoutConfirmation() {
   const notify = useToast();
   const dialog = useRef<HTMLDialogElement>(null);
-  const [unavailable, setUnavailable] = useState(false);
+  const [error, setError] = useState("");
+  const [pending, setPending] = useState(false);
+  const submitting = useRef(false);
   return (
     <>
       <button
         type="button"
         className="rail-item"
         onClick={() => {
-          setUnavailable(false);
+          setError("");
           dialog.current?.showModal();
         }}
       >
@@ -49,9 +52,9 @@ export function LogoutConfirmation() {
         <p id="logout-question" className="mt-3">
           {en.logoutQuestion}
         </p>
-        {unavailable && (
+        {error && (
           <p role="alert" className="mt-3">
-            {en.logoutUnavailable}
+            {error}
           </p>
         )}
         <form method="dialog" className="mt-6 flex justify-end gap-3">
@@ -65,9 +68,21 @@ export function LogoutConfirmation() {
           </Button>
           <Button
             type="button"
-            onClick={() => {
-              setUnavailable(true);
-              notify({ kind: "error", message: en.logoutUnavailable });
+            disabled={pending}
+            onClick={async () => {
+              if (submitting.current) return;
+              submitting.current = true;
+              setPending(true);
+              try {
+                const result = await signOut();
+                setError(result.message);
+                notify({ kind: "error", message: result.message });
+              } catch {
+                setError(en.auth.unavailable);
+              } finally {
+                submitting.current = false;
+                setPending(false);
+              }
             }}
           >
             {en.yes}

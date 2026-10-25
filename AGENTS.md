@@ -200,6 +200,8 @@ appointment default card colour #C2417A (doctor/category colours from a 10-colou
 
 ## 11. Ask the clinic (open questions — keep this list current)
 
+- ACC-02 [DESIGN]: review the login/recovery screens and confirm owner “Set New Password” sends a recovery link so each person chooses their own password.
+
 - SHELL-04 [DESIGN] avatar menu: confirm name, role, current center, password and center-switch controls in the draft before polishing.
 - SHELL-13 [DESIGN]: confirm Dashboard/Calendar/Patients plus More below 768 px; retain the rail on wider tablets.
 - CAL-02 group-of-people icon on the calendar top bar: what does it open?

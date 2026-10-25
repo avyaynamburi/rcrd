@@ -57,6 +57,8 @@ jobs:
       - run: npm run db:reset
       - run: npm run db:test
       - run: npm run db:types
+      - run: npx playwright install --with-deps chrome
+      - run: node scripts/test-live-auth.ts
       - uses: actions/upload-artifact@v4
         with:
           name: database-types

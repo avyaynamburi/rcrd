@@ -39,7 +39,7 @@ Status: open. SHELL-02 passes `npm run check` and all five targeted Chrome tests
 ## 6. Connect logout to clinic sessions (SHELL-03 / ACC-02)
 Needed: authenticated session implementation in ACC-02 before real sign-out can run.
 Owner steps: no action now; Codex must connect Yes to server-side sign-out when implementing ACC-02, disable repeat submits while pending, verify session revocation and handle failures without claiming success.
-Status: open. SHELL-03 confirmation/cancellation UI works; the preview explicitly reports that authentication is not configured.
+Status: done. ACC-02 connects Yes to global Supabase sign-out, prevents duplicate submits, and redirects only on success. Missing configuration and provider failures preserve the screen with a clear error. Synthetic live-session verification runs in CI.
 
 ## 7. Connect user menu to clinic identity (SHELL-04 / ACC-02 / ACC-08)
 Needed: authenticated identity and server-authorized center access before real account controls can run.
@@ -49,7 +49,7 @@ Status: open. The menu and help work in the data-free preview; identity is expli
 ## 8. Connect top bar to trusted clinic context (SHELL-05 / ACC-02)
 Needed: authenticated organisation context before displaying the actual clinic name.
 Owner steps: no action now. Codex must pass the session-authorized organisation display name into AppTitle when implementing authenticated tenancy; forms/profiles must pass their explicit parent back destination, and calendar/status features must populate the controls slot.
-Status: open. The public preview displays “Clinic not configured”; no clinic identity or status count is invented.
+Status: done for organisation identity. ACC-02 passes the RLS-authorized organisation name to AppTitle. Forms/profiles and calendar controls remain their respective later features. The data-free preview still displays “Clinic not configured”.
 
 ## 9. Connect live appointment counts (SHELL-06 / ACC-02 / P4)
 Needed: authenticated center access, appointments schema with RLS, and a permission-checked read path before status totals or realtime subscriptions can run.
@@ -60,3 +60,8 @@ Status: open. Seven accessible preview circles and validated Calendar filter des
 Needed: apply the tenancy migration, execute database isolation tests and generate actual schema types despite the local Docker failure.
 Owner steps: none for ACC-01. BLOCKERS 1 still applies to local development; recover Docker/storage before running local database commands.
 Status: done. GitHub Actions run 40180232194 applied the migration with `db:reset`, passed all 82 pgTAP assertions and generated types from that schema. The resulting artifact was retrieved and committed; lint/typecheck/unit and Ubuntu Chrome plus Windows Chrome/Edge jobs passed. No hosted database was touched. Local Docker remains unavailable; there is no application provisioning or mutation endpoint until audited actions exist.
+
+## 12. Hosted individual accounts and recovery email (ACC-02/03)
+Needed: owner-created Mumbai Supabase projects, environment configuration and approved recovery email delivery before clinic use. No live credentials are needed for synthetic CI verification.
+Owner steps: follow `docs/architecture/authentication.md`; set the two public Supabase environment values and the fixed AUTH_SITE_URL; disable public signup, require 12-character passwords, configure the recovery token-hash email template and exact callback allowlist. Provision the first individual owner identity and membership through the trusted admin process (is_owner/login_enabled), verify email/phone identifiers, and test delivery with your own non-patient account. Never paste passwords or tokens into chat. Review the login draft and recovery-link decision with the clinic.
+Status: open for hosted onboarding. Synthetic accounts, account-access auditing and local Auth recovery are tested in CI. Full role/navigation configuration remains ACC-04/06; center preferences and switching remain ACC-08/SHELL-15.

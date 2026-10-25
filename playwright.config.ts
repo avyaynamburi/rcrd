@@ -1,6 +1,11 @@
 import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
   testDir: "./tests/e2e",
+  testMatch:
+    process.env.RCRD_LIVE_AUTH === "1"
+      ? "**/auth.live.spec.ts"
+      : "**/*.spec.ts",
+  testIgnore: process.env.RCRD_LIVE_AUTH === "1" ? [] : ["**/*.live.spec.ts"],
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
