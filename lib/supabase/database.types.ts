@@ -389,10 +389,6 @@ export type Database = {
           id: string;
         }[];
       };
-      list_member_stamps: {
-        Args: never;
-        Returns: Json;
-      };
       list_login_accounts: {
         Args: Record<PropertyKey, never>;
         Returns: {
@@ -418,6 +414,7 @@ export type Database = {
           role_tags: string[];
         }[];
       };
+      list_member_stamps: { Args: Record<PropertyKey, never>; Returns: Json };
       record_audit_export: {
         Args: { export_format: string; page_number: number };
         Returns: undefined;
