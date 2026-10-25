@@ -8,6 +8,9 @@ import { en } from "@/lib/i18n/en";
 import { MemberRole } from "@/components/auth/member-role";
 import { roleSchema, roleTagsSchema } from "@/lib/permissions/roles";
 
+import { AccessGrid } from "@/components/auth/access-grid";
+import { accessGridSchema, defaultGrid } from "@/lib/permissions/access-grid";
+
 const memberRolesSchema = z.array(
   z.object({ id: z.uuid(), base_role: roleSchema, role_tags: roleTagsSchema }),
 );
@@ -26,6 +29,10 @@ export default async function Team() {
   const { data, error } = await account.client.rpc("list_login_accounts");
   const accounts = accountsSchema.safeParse(data);
   const rolesResult = await account.client.rpc("list_member_roles");
+  const accessResult = await account.client.rpc("list_member_access");
+  const access = z
+    .array(z.object({ id: z.uuid(), access_grid: accessGridSchema.nullable() }))
+    .safeParse(accessResult.data);
   const roles = memberRolesSchema.safeParse(rolesResult.data);
   return (
     <main id="main" className="mx-auto max-w-3xl space-y-5 px-6 py-10">
@@ -50,12 +57,29 @@ export default async function Team() {
               (() => {
                 const role = roles.data.find((role) => role.id === person.id)!;
                 return (
-                  <MemberRole
-                    id={person.id}
-                    initialRole={role.base_role}
-                    initialTags={role.role_tags}
-                    self={person.id === account.member.id}
-                  />
+                  <>
+                    <MemberRole
+                      id={person.id}
+                      initialRole={role.base_role}
+                      initialTags={role.role_tags}
+                      self={person.id === account.member.id}
+                    />
+                    {access.success && !accessResult.error ? (
+                      <AccessGrid
+                        id={person.id}
+                        initial={
+                          access.data.find((item) => item.id === person.id)
+                            ?.access_grid ?? defaultGrid(role.base_role)
+                        }
+                        protectedOwner={
+                          role.base_role === "owner" ||
+                          role.base_role === "owner_doctor"
+                        }
+                      />
+                    ) : (
+                      <p role="alert">{en.auth.teamError}</p>
+                    )}
+                  </>
                 );
               })()
             ) : (

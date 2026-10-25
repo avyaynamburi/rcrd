@@ -13,6 +13,29 @@ insert into public.memberships (id, org_id, user_id, login_enabled, is_owner, ba
  ('30000000-0000-4000-8000-000000000002', '10000000-0000-4000-8000-000000000001', '00000000-0000-4000-8000-000000000002', true, false, 'staff'),
  ('30000000-0000-4000-8000-000000000003', '10000000-0000-4000-8000-000000000002', '00000000-0000-4000-8000-000000000003', true, true, 'owner');
 
+-- ACC-06 uses only synthetic members. The fixture contains every permission area.
+create temp table test_grid as select jsonb_object_agg(area, jsonb_build_object(
+  'entry',jsonb_build_object('day','same','others',true),
+  'edit',jsonb_build_object('day','same','others',false),
+  'delete',jsonb_build_object('day','none','others',false),
+  'report',jsonb_build_object('day','none','others',false))) as grid
+from unnest(array['patient','appointment','treatment_settings','clinical_notes','treatment_plan','treatment_done','prescription','files','charting','billing','receipts','credit_notes','expenses','accounting','inventory','lab','tasks','crm','messaging','reports','settings','nabh','membership','ai','access_audit','users','ai_settings','import','patient_merge','plan_purchases']) area;
+grant select on test_grid to authenticated;
+set local role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select extensions.lives_ok($$select public.set_member_access('30000000-0000-4000-8000-000000000002',(select grid from test_grid))$$, 'Owner saves full grid');
+select extensions.is((select access_grid from public.list_member_access() where id='30000000-0000-4000-8000-000000000002'), (select grid from test_grid), 'Grid persists');
+reset role;
+select extensions.ok(exists(select 1 from public.access_audit where action='set_member_access'), 'Grid save audited');
+delete from public.access_audit where action='set_member_access';
+set local role authenticated;
+select extensions.throws_ok($$select public.set_member_access('30000000-0000-4000-8000-000000000003',(select grid from test_grid))$$, '42501', null, 'Cross-org save denied');
+select extensions.throws_ok($$select public.set_member_access('30000000-0000-4000-8000-000000000001',(select grid from test_grid))$$, '42501', null, 'Self-owner save denied');
+select extensions.throws_ok($$select public.set_member_access('30000000-0000-4000-8000-000000000002','{}')$$, 'P0001', null, 'Incomplete grid denied');
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000002","role":"authenticated"}', true);
+select extensions.throws_ok($$select public.set_member_access('30000000-0000-4000-8000-000000000002',(select grid from test_grid))$$, '42501', null, 'Staff cannot change access');
+select extensions.throws_ok('select * from public.list_member_access()', '42501', null, 'Staff cannot list access grids');
+reset role;
 select extensions.ok(not has_table_privilege(r, 'access_audit', p), r || ' cannot ' || p || ' audit')
 from unnest(array['anon','authenticated','service_role']) r
 cross join unnest(array['INSERT','UPDATE','DELETE','TRUNCATE']) p;

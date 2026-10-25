@@ -178,6 +178,22 @@ test("live login, access denial, mobile access, password change, recovery and lo
   await expect(
     roleForm.getByLabel("Consultant", { exact: true }),
   ).toBeChecked();
+  await roleForm.locator("summary").click();
+  await roleForm
+    .getByLabel("Billing / Invoices: Allow Edit", { exact: true })
+    .selectOption("same");
+  await roleForm
+    .getByRole("button", { name: "Save access", exact: true })
+    .click();
+  await expect(
+    roleForm.getByText("Access saved.", { exact: true }),
+  ).toBeVisible();
+  await page.reload();
+  await roleForm.locator("summary").click();
+  await expect(
+    roleForm.getByLabel("Billing / Invoices: Allow Edit", { exact: true }),
+  ).toHaveValue("same");
+  await roleForm.locator("summary").click();
   const staffRow = page.getByRole("region", { name: staffEmail, exact: true });
   await staffRow.getByLabel("Enable Login", { exact: true }).uncheck();
   await staffRow.getByLabel("Enable Mobile Access", { exact: true }).uncheck();
