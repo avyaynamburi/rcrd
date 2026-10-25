@@ -162,7 +162,7 @@ test("live login, access denial, mobile access, password change, recovery and lo
     })
     .first();
   await roleForm
-    .getByLabel("Base role", { exact: true })
+    .getByRole("combobox", { name: "Base role", exact: true })
     .selectOption("doctor");
   await roleForm.getByLabel("Consultant", { exact: true }).check();
   await roleForm
@@ -172,9 +172,9 @@ test("live login, access denial, mobile access, password change, recovery and lo
     roleForm.getByText("Role and tags saved.", { exact: true }),
   ).toBeVisible();
   await page.reload();
-  await expect(roleForm.getByLabel("Base role", { exact: true })).toHaveValue(
-    "doctor",
-  );
+  await expect(
+    roleForm.getByRole("combobox", { name: "Base role", exact: true }),
+  ).toHaveValue("doctor");
   await expect(
     roleForm.getByLabel("Consultant", { exact: true }),
   ).toBeChecked();
