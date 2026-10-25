@@ -83,3 +83,37 @@ test("keeps the workspace usable when registration fails", async ({ page }) => {
   );
   await expect(page.getByRole("link", { name: "Need Help?" })).toBeVisible();
 });
+
+test("shows the app identity and shortcut help at desktop size", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const title = page.getByRole("banner");
+  await expect(
+    title.getByRole("link", { name: "Rcrd", exact: true }),
+  ).toBeVisible();
+  const logo = title.locator("img");
+  await expect(logo).toBeVisible();
+  expect(
+    await logo.evaluate((element: HTMLImageElement) => element.naturalWidth),
+  ).toBeGreaterThan(0);
+  await page.getByRole("link", { name: "Need Help?" }).click();
+  await page
+    .getByRole("link", { name: "How to create an Rcrd shortcut" })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "How to create an Rcrd shortcut" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Chrome", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Edge", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "If installation is unavailable" }),
+  ).toBeVisible();
+  await expect(page.getByText(/Windows or Mac/)).toBeVisible();
+  await page.getByRole("link", { name: "Back to workspace" }).click();
+  await expect(page).toHaveURL("/");
+});

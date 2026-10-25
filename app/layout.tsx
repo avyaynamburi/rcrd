@@ -1,3 +1,4 @@
+import { AppTitle } from "@/components/shell/app-title";
 import { UpdateNotice } from "@/components/pwa/update-notice";
 import type { Metadata, Viewport } from "next";
 import { en } from "@/lib/i18n/en";
@@ -19,6 +20,7 @@ export default function RootLayout({
         >
           {en.skip}
         </a>
+        <AppTitle />
         <UpdateNotice />
         {children}
       </body>

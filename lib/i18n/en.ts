@@ -7,6 +7,20 @@ export const en = {
     "Update requested. Reopen Rcrd after finishing your work to use the latest version.",
   pwaFailed:
     "App updates are unavailable. You can keep using Rcrd in this browser. Reopen it when connected to retry.",
+  shortcutTitle: "How to create an Rcrd shortcut",
+  shortcutIntro:
+    "Install Rcrd from Chrome or Edge on Windows or Mac. Open the installed app from your desktop, Start menu or Applications folder to work in its own window without a browser bar.",
+  shortcutChrome: "Chrome",
+  shortcutEdge: "Edge",
+  shortcutChromeSteps:
+    "Open Rcrd in Chrome. Open the three-dot browser menu, choose Cast, save and share, then Install page as app. Confirm Install. You may also see an install icon in the address bar.",
+  shortcutEdgeSteps:
+    "Open Rcrd in Edge. Open the three-dot browser menu, choose Apps, then Install this site as an app. Confirm Install. You may also see an install icon in the address bar.",
+  shortcutMissingTitle: "If installation is unavailable",
+  shortcutMissing:
+    "Browser labels can vary. Use an up-to-date Chrome or Edge window and an HTTPS address (localhost works for development). If Rcrd is already installed, open its existing shortcut. If your clinic manages browser installation, ask your administrator to enable it. You can continue using Rcrd in a browser.",
+  shortcutWindow:
+    "Use your operating system’s minimise, restore and close controls. Save your work before closing the app. Installing Rcrd does not store patient records for offline use.",
   installHelp: "Create an Rcrd shortcut",
   installInstructions:
     "In Chrome, open the browser menu and choose Cast, save and share, then Install page as app. In Edge, open the browser menu, choose Apps, then Install this site as an app. Confirm Install to create a shortcut. If Rcrd is already installed, use its existing shortcut. Installation needs HTTPS or localhost.",

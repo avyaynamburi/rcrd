@@ -7,6 +7,9 @@ export default function Help() {
       <p>{en.helpText}</p>
       <h2 className="text-xl font-semibold">{en.installHelp}</h2>
       <p>{en.installInstructions}</p>
+      <Link className="underline" href="/help/create-shortcut">
+        {en.shortcutTitle}
+      </Link>
       <p>{en.installUpdateHelp}</p>
       <Link className="underline" href="/">
         {en.home}

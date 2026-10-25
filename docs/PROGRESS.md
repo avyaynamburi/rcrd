@@ -11,7 +11,7 @@ Tick a box only when the feature meets the Definition of Done in AGENTS.md §10.
 - [x] P0-6 `docs/architecture/` written by Codex: data model, permission model, action layer, AI and messaging adapters
 
 ## P1 — Foundation: shell, logins, permissions, audit, shared UI
-- [ ] SHELL-01 App window and installable app  (01-app-shell.md)
+- [x] SHELL-01 App window and installable app  (01-app-shell.md)
 - [ ] SHELL-02 Icon rail  (01-app-shell.md)
 - [ ] SHELL-03 Logout confirmation  (01-app-shell.md)
 - [ ] SHELL-04 User avatar menu  (01-app-shell.md)
