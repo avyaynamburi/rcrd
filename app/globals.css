@@ -145,3 +145,36 @@ body {
     display: none;
   }
 }
+.section-workspace {
+  display: flex;
+  min-height: calc(100dvh - 60px);
+  background: white;
+}
+.second-menu {
+  width: 290px;
+  flex: 0 0 290px;
+  border-right: 1px solid var(--border);
+  background: white;
+}
+.second-menu-link {
+  display: block;
+  min-height: 32px;
+  padding: 6px 24px;
+  color: var(--muted-foreground);
+}
+.second-menu-link[aria-current="page"] {
+  color: #a34d16;
+  border-left: 3px solid var(--accent);
+  font-weight: 600;
+}
+@media (max-width: 700px) {
+  .section-workspace {
+    flex-direction: column;
+  }
+  .second-menu {
+    width: 100%;
+    flex-basis: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+}

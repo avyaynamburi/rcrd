@@ -1,3 +1,4 @@
+import { SecondMenu, type MenuSection } from "@/components/shell/second-menu";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { en } from "@/lib/i18n/en";
@@ -8,31 +9,52 @@ export default async function Section({
   searchParams,
 }: {
   params: Promise<{ section: string }>;
-  searchParams: Promise<{ todayStatus?: string }>;
+  searchParams: Promise<{ todayStatus?: string; page?: string }>;
 }) {
   const { section } = await params;
   const item = navigationItems.find((item) => item.href === `/${section}`);
   if (!item) notFound();
-  const { todayStatus } = await searchParams;
+  const { todayStatus, page } = await searchParams;
   const status =
     todayStatus && Object.hasOwn(en.statusLabels, todayStatus)
       ? en.statusLabels[todayStatus as keyof typeof en.statusLabels]
       : en.statusLabels.all;
+  const menuSection = Object.hasOwn(en.secondMenu, section)
+    ? (section as MenuSection)
+    : undefined;
+  const selected =
+    menuSection &&
+    en.secondMenu[menuSection].some((group) =>
+      group.pages.some((name) => name === page),
+    )
+      ? page
+      : undefined;
   return (
-    <main id="main" className="mx-auto max-w-3xl space-y-6 px-6 py-12">
-      <h1 className="text-2xl font-semibold">{en.navigation[item.id]}</h1>
-      <p>{en.featureUnavailable}</p>
-      {section === "calendar" && (
-        <section id="today-panel" aria-label={en.todayFilter}>
-          <h2>
-            {en.todayFilter}: {status}
-          </h2>
-          <p>{en.statusUnavailable}</p>
-        </section>
+    <div className="section-workspace">
+      {menuSection && (
+        <SecondMenu
+          key={menuSection}
+          section={menuSection}
+          selected={selected}
+        />
       )}
-      <Link href="/help/workspace" className="underline">
-        {en.help}
-      </Link>
-    </main>
+      <main id="main" className="min-w-0 flex-1 space-y-6 px-6 py-12">
+        <h1 className="text-2xl font-semibold">
+          {selected ?? en.navigation[item.id]}
+        </h1>
+        <p>{en.featureUnavailable}</p>
+        {section === "calendar" && (
+          <section id="today-panel" aria-label={en.todayFilter}>
+            <h2>
+              {en.todayFilter}: {status}
+            </h2>
+            <p>{en.statusUnavailable}</p>
+          </section>
+        )}
+        <Link href="/help/workspace" className="underline">
+          {en.help}
+        </Link>
+      </main>
+    </div>
   );
 }

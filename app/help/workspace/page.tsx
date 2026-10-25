@@ -5,6 +5,8 @@ export default function Help() {
     <main id="main" className="mx-auto max-w-3xl space-y-6 px-6 py-12">
       <h1 className="text-2xl font-semibold">{en.helpTitle}</h1>
       <p>{en.helpText}</p>
+      <h2 className="text-xl font-semibold">{en.secondMenuHelpTitle}</h2>
+      <p>{en.secondMenuHelpText}</p>
       <h2 className="text-xl font-semibold">{en.topBarHelpTitle}</h2>
       <p>{en.topBarHelpText}</p>
       <h2 className="text-xl font-semibold">{en.statusHelpTitle}</h2>

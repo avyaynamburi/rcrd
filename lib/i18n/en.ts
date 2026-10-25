@@ -1,4 +1,142 @@
 export const en = {
+  secondMenu: {
+    settings: [
+      {
+        title: "Practice",
+        pages: [
+          "Clinic",
+          "Centers",
+          "Owner & Doctor",
+          "Staff",
+          "Holiday",
+          "Operatory",
+          "WA / SMS / Emails",
+          "My Gallery",
+          "Appointment Series",
+          "Project",
+        ],
+      },
+      {
+        title: "Payment Mode",
+        pages: [
+          "Bank Account",
+          "Card Swiping Machine",
+          "Cash",
+          "Credit Card",
+          "Wallet",
+          "Others",
+        ],
+      },
+      {
+        title: "Practice Growth Setup",
+        pages: [
+          "Branding",
+          "Social Media Integration",
+          "Repeat Visit Generator",
+          "Membership",
+          "Rate Cards & Corp Tie-ups",
+          "Packages",
+          "PROWA",
+          "Interaction Call Statuses",
+        ],
+      },
+      { title: "Specialist Fees", pages: ["Specialist Fees"] },
+      {
+        title: "Electronic Medical Records",
+        pages: [
+          "Clinical Notes",
+          "Treatment Category",
+          "Treatment",
+          "Sitting Note Template",
+          "Drug Master",
+          "Instructions",
+          "Perio Charting",
+          "Insurance",
+          "Insurance Master",
+          "Prescription Template",
+        ],
+      },
+      { title: "Orthodontics", pages: ["Goals", "Limitations"] },
+      {
+        title: "Patient Profile",
+        pages: [
+          "Medical Conditions",
+          "Dental Conditions",
+          "Group",
+          "Source",
+          "Source Type",
+          "Referral",
+          "General Practitioner",
+          "Email Domains",
+        ],
+      },
+      { title: "Templates", pages: ["WA Messages", "Email", "Letter"] },
+      {
+        title: "Inventory & Accounting",
+        pages: ["Vendor", "Inventory Category", "Inventory Item", "Accounts"],
+      },
+      {
+        title: "Utilities",
+        pages: ["Patient Merge", "Clear Cache And Logout"],
+      },
+    ],
+    admin: [
+      { title: "Team", pages: ["Doctor Unavailability", "Access Audit"] },
+      {
+        title: "NABH",
+        pages: [
+          "About NABH",
+          "Biomedical Waste",
+          "Fumigation",
+          "Sterilization",
+          "Spore Test",
+          "Equipment Master",
+          "Equipment Maintenance",
+          "Equipment Breakdown",
+        ],
+      },
+      {
+        title: "Accounting",
+        pages: [
+          "Credit Notes",
+          "Settlements",
+          "Payment Receive",
+          "Payment Gateway Transactions",
+          "Payment Made",
+          "Cash/Bank",
+          "Journal",
+          "Opening Balances",
+        ],
+      },
+      { title: "Inventory", pages: ["Purchase", "Consume", "Transfer"] },
+      { title: "Lab", pages: ["Lab Bill", "Give & Receive Lab Work"] },
+      { title: "Tasks", pages: ["Recurring Task"] },
+      { title: "SMS/WA", pages: ["SMS/WA Transfer"] },
+    ],
+    crm: [
+      { title: "Practice Growth", pages: ["Patient Tracker"] },
+      {
+        title: "CRM",
+        pages: ["Prospect", "Enquiries", "Campaign Widget", "Opportunity"],
+      },
+      {
+        title: "Communications",
+        pages: [
+          "Emails",
+          "SMS/WA Usage Detailed",
+          "WABA Usage Detailed",
+          "SMS/WA Usage Summary",
+        ],
+      },
+    ],
+    notifications: [
+      { title: "Alert", pages: ["Application Update", "Recent Features"] },
+    ],
+  },
+  secondMenuLabel: "Section navigation",
+  secondMenuHelpTitle: "Using the second menu",
+  secondMenuHelpText:
+    "Settings, Admin, CRM and Notifications open a second menu. Select a group to expand or collapse it; several groups can stay open. Select a page to open it. Open groups are remembered in this browser for your account. In the setup preview, preferences use a separate preview identity. If browser storage is unavailable, menus still work for this visit. Clinic tools remain unavailable until configured.",
   navigation: {
     dashboard: "Dashboard",
     calendar: "Calendar",

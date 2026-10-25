@@ -18,7 +18,7 @@ Tick a box only when the feature meets the Definition of Done in AGENTS.md §10.
 - [x] SHELL-05 Top bar  (01-app-shell.md)
 - [~] SHELL-06 Today's status circles  (01-app-shell.md)
 - [x] SHELL-07 Date and time  (01-app-shell.md)
-- [ ] SHELL-08 Work area and second menu  (01-app-shell.md)
+- [x] SHELL-08 Work area and second menu  (01-app-shell.md)
 - [ ] SHELL-09 AI assistant button  (01-app-shell.md)
 - [ ] SHELL-10 "Need Help?" links  (01-app-shell.md)
 - [ ] SHELL-11 Colour meanings  (01-app-shell.md)
