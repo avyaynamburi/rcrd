@@ -201,6 +201,7 @@ appointment default card colour #C2417A (doctor/category colours from a 10-colou
 ## 11. Ask the clinic (open questions — keep this list current)
 
 - SHELL-04 [DESIGN] avatar menu: confirm name, role, current center, password and center-switch controls in the draft before polishing.
+- SHELL-13 [DESIGN]: confirm Dashboard/Calendar/Patients plus More below 768 px; retain the rail on wider tablets.
 - CAL-02 group-of-people icon on the calendar top bar: what does it open?
 - SHELL-06 dark-grey status circle: confirm missed; [DESIGN] confirm circle click opens Calendar Today filtered by status.
 - CAL-33 "Auto Billing" tick box: exact behaviour?

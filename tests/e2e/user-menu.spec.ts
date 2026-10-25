@@ -8,7 +8,7 @@ test("user account opens by keyboard, dismisses and links to help without a fabr
     name: "User account",
     exact: true,
   });
-  const panel = page.locator("[popover]");
+  const panel = page.locator(".user-popover").filter({ visible: true });
   await trigger.focus();
   await page.keyboard.press("Enter");
   await expect(panel).toBeVisible();
@@ -38,6 +38,8 @@ test("user account opens by keyboard, dismisses and links to help without a fabr
   await page.keyboard.press("Escape");
   for (const width of [1920, 1366, 375]) {
     await page.setViewportSize({ width, height: 768 });
+    if (width < 768)
+      await page.getByRole("button", { name: "More", exact: true }).click();
     await trigger.click();
     await expect(panel).toBeInViewport({ ratio: 1 });
     await expect(

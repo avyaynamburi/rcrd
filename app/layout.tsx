@@ -37,7 +37,7 @@ export default async function RootLayout({
               version={version}
               messagingNeedsSetup
             />
-            <div className="min-w-0 pl-[70px]">
+            <div className="app-workspace min-w-0">
               <AppTitle
                 controls={
                   <>

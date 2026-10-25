@@ -1,4 +1,7 @@
 export const en = {
+  mobileNavigation: "Mobile navigation",
+  moreNavigation: "More",
+  closeNavigation: "Close navigation",
   toast: {
     success: "Success",
     error: "Error",

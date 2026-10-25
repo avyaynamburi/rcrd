@@ -54,3 +54,9 @@ Status-circle outlines distinguish scheduled (grey), checked in (red), engaged (
 Notifications appear at the bottom right, above the assistant button. Green messages marked Success confirm completed work. Red messages marked Error explain why an action could not finish. Read the reason before trying again; an error never means your work was saved.
 
 Success messages close after eight seconds. Point at a message or focus its dismiss button to keep it open. Errors stay until you choose Dismiss notification. Messages remain while moving between workspace pages, but are cleared by a full reload. They are not a permanent record. The setup preview reports missing sign-in when you confirm Logout; it does not claim to sign you out.
+
+## Phone and tablet navigation
+
+Below 768 pixels wide, use the bottom bar for Dashboard, Calendar and Patients. More opens the remaining tools, account menu, Logout, connection status and app version. Choose Close navigation, tap outside or press Escape to dismiss it. At wider tablet sizes the left rail remains available. Settings and other second menus stack above the page on small screens.
+
+The current setup preview contains no clinic records. Once clinic sign-in is available, phone access will require Enable Mobile Access in your account permissions. Forms will use one column and data tables will use labelled cards on narrow screens as those clinic screens are built.

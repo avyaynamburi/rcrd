@@ -7,10 +7,9 @@ test("shell uses semantic colours with named status indicators and help", async 
   await expect(
     page.getByRole("navigation", { name: "Main navigation" }),
   ).toHaveCSS("background-color", "rgb(30, 42, 74)");
-  await expect(page.locator('.rail-item[aria-current="page"] svg')).toHaveCSS(
-    "color",
-    "rgb(224, 123, 57)",
-  );
+  await expect(
+    page.locator('.icon-rail .rail-item[aria-current="page"] svg'),
+  ).toHaveCSS("color", "rgb(224, 123, 57)");
   await expect(page.getByRole("heading", { level: 1 })).toHaveCSS(
     "color",
     "rgb(30, 42, 74)",

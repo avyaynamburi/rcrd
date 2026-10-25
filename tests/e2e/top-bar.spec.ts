@@ -14,7 +14,7 @@ test("clinic top bar fits the shell and explains its setup state", async ({
     ).toHaveCount(0);
     const bounds = await bar.boundingBox();
     expect(bounds?.height).toBe(60);
-    expect(bounds?.x).toBe(70);
+    expect(bounds?.x).toBe(width < 768 ? 0 : 70);
     expect((bounds?.x ?? 0) + (bounds?.width ?? 0)).toBeLessThanOrEqual(width);
   }
   await page.goto("/");

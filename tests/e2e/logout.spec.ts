@@ -38,6 +38,7 @@ test("logout confirms, cancels safely and reports missing authentication", async
   await expect(page).toHaveURL(/\/patients$/);
   await dialog.getByRole("button", { name: "No", exact: true }).click();
   await page.setViewportSize({ width: 375, height: 812 });
+  await page.getByRole("button", { name: "More", exact: true }).click();
   await logout.click();
   await expect(dialog.getByRole("alert")).toHaveCount(0);
   await expect(dialog).toBeInViewport();
