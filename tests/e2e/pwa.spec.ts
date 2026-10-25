@@ -59,7 +59,9 @@ test("offers a waiting update without reloading current work", async ({
   const apply = page.getByRole("button", { name: "Apply update" });
   await expect(apply).toBeVisible();
   await apply.click();
-  await expect(page.getByRole("status")).toContainText("Update requested");
+  await expect(
+    page.getByRole("status").filter({ hasText: "Update requested" }),
+  ).toBeVisible();
   await expect(page.locator("html")).toHaveAttribute(
     "data-update-requested",
     "true",
@@ -78,9 +80,9 @@ test("keeps the workspace usable when registration fails", async ({ page }) => {
     });
   });
   await page.goto("/");
-  await expect(page.getByRole("status")).toContainText(
-    "App updates are unavailable",
-  );
+  await expect(
+    page.getByRole("status").filter({ hasText: "App updates are unavailable" }),
+  ).toBeVisible();
   await expect(page.getByRole("link", { name: "Need Help?" })).toBeVisible();
 });
 
