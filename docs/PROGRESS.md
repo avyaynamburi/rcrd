@@ -4,9 +4,9 @@ Tick a box only when the feature meets the Definition of Done in AGENTS.md §10.
 
 ## P0 — Project setup
 - [x] P0-1 Next.js + TypeScript app, Tailwind, shadcn/ui, ESLint/Prettier, Vitest, Playwright
-- [ ] P0-2 Supabase projects: dev (local CLI), staging and production in the Mumbai region; migrations folder; generated types
+- [~] P0-2 Supabase projects: dev (local CLI), staging and production in the Mumbai region; migrations folder; generated types
 - [x] P0-3 GitHub Actions: lint + typecheck + unit tests on Ubuntu; Playwright on Windows (Edge and Chrome) and Ubuntu
-- [ ] P0-4 PWA basics (manifest, icons, service worker update flow) and deploy pipeline (Vercel, region bom1/Mumbai)
+- [x] P0-4 PWA basics (manifest, icons, service worker update flow) and deploy pipeline (Vercel, region bom1/Mumbai)
 - [ ] P0-5 Seed script with a fake demo clinic (two centers, five doctors, three staff, fake patients) — never real data
 - [ ] P0-6 `docs/architecture/` written by Codex: data model, permission model, action layer, AI and messaging adapters
 

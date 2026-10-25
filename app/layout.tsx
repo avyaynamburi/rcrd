@@ -1,10 +1,12 @@
-import type { Metadata } from "next";
+import { UpdateNotice } from "@/components/pwa/update-notice";
+import type { Metadata, Viewport } from "next";
 import { en } from "@/lib/i18n/en";
 import "./globals.css";
 export const metadata: Metadata = {
   title: en.appName,
   description: en.description,
 };
+export const viewport: Viewport = { themeColor: "#1E2A4A" };
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -17,6 +19,7 @@ export default function RootLayout({
         >
           {en.skip}
         </a>
+        <UpdateNotice />
         {children}
       </body>
     </html>

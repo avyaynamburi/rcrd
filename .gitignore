@@ -17,3 +17,6 @@ imports/
 .autopilot/
 
 *.tsbuildinfo
+
+.cache/
+supabase/.branches/

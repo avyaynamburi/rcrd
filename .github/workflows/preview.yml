@@ -1,0 +1,32 @@
+name: Preview deployment
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    environment: preview
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Check preview configuration
+        shell: bash
+        run: |
+          if [[ -z "$VERCEL_TOKEN" || -z "$VERCEL_ORG_ID" || -z "$VERCEL_PROJECT_ID" ]]; then
+            echo "Preview hosting is not configured. Follow docs/architecture/deployment.md."
+            exit 1
+          fi
+      - run: npm ci
+      - run: npm run check
+      - run: npm run test:e2e -- --project=chrome
+      - run: npx --yes vercel@65.2.0 pull --yes --environment=preview --token="$VERCEL_TOKEN"
+      - run: npx --yes vercel@65.2.0 build --token="$VERCEL_TOKEN"
+      - run: npx --yes vercel@65.2.0 deploy --prebuilt --token="$VERCEL_TOKEN"

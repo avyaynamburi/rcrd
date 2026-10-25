@@ -8,6 +8,7 @@ export default defineConfig([
   prettier,
   globalIgnores([
     ".next/**",
+    ".cache/**",
     "out/**",
     "coverage/**",
     "playwright-report/**",

@@ -10,9 +10,13 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "format": "prettier --write app components lib tests *.ts *.mjs components.json package.json tsconfig.json .prettierrc.json .github/workflows/*.yml",
-    "format:check": "prettier --check app components lib tests *.ts *.mjs components.json package.json tsconfig.json .prettierrc.json .github/workflows/*.yml",
-    "check": "npm run lint && npm run typecheck && npm test && npm run format:check"
+    "format": "prettier --write app components lib tests scripts/*.ts public/*.js vercel.json *.ts *.mjs components.json package.json tsconfig.json .prettierrc.json .github/workflows/*.yml",
+    "format:check": "prettier --check app components lib tests scripts/*.ts public/*.js vercel.json *.ts *.mjs components.json package.json tsconfig.json .prettierrc.json .github/workflows/*.yml",
+    "check": "npm run lint && npm run typecheck && npm test && npm run format:check",
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:reset": "supabase db reset --local",
+    "db:types": "node scripts/database-types.ts"
   },
   "repository": {
     "type": "git",
@@ -46,6 +50,7 @@
     "eslint-config-next": "^16.4.3",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.9.10",
+    "supabase": "2.122.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
     "vitest": "^5.0.5"
