@@ -15,3 +15,5 @@ imports/
 !supabase/seed/**/*.csv
 .DS_Store
 .autopilot/
+
+*.tsbuildinfo
