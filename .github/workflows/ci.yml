@@ -35,7 +35,8 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - run: npx playwright install --with-deps ${{ matrix.browser == 'edge' && 'msedge' || 'chrome' }}
+      - if: runner.os == 'Linux'
+        run: npx playwright install --with-deps ${{ matrix.browser == 'edge' && 'msedge' || 'chrome' }}
       - run: npm run test:e2e -- --project=${{ matrix.browser }}
       - uses: actions/upload-artifact@v4
         if: failure()
