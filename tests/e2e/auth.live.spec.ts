@@ -153,6 +153,29 @@ test("live login, access denial, mobile access, password change, recovery and lo
     );
   }
   await expect(page.getByRole("banner")).toContainText("Synthetic auth clinic");
+  await page.goto("/admin/access-audit");
+  await expect(
+    page.getByRole("heading", { name: "Access Audit", exact: true }),
+  ).toBeVisible();
+  await page.getByLabel("Area", { exact: true }).fill("authentication");
+  await page.getByRole("button", { name: "Apply filters" }).click();
+  await expect(page.getByRole("table")).toContainText("auth_login");
+  for (const format of ["xlsx", "pdf"]) {
+    const response = await page.request.get(
+      `/api/access-audit?area=authentication&format=${format}`,
+    );
+    expect(response.status()).toBe(200);
+    const bytes = await response.body();
+    expect(bytes.subarray(0, format === "pdf" ? 4 : 2).toString()).toBe(
+      format === "pdf" ? "%PDF" : "PK",
+    );
+    expect(response.headers()["cache-control"]).toContain("no-store");
+  }
+  await page.getByLabel("Area", { exact: true }).fill("no_such_area");
+  await page.getByRole("button", { name: "Apply filters" }).click();
+  await expect(
+    page.getByRole("status").filter({ hasText: "No activity matches" }),
+  ).toBeVisible();
   await page.goto("/account/team");
   const roleForm = page
     .locator("section")
@@ -376,6 +399,11 @@ test("live login, access denial, mobile access, password change, recovery and lo
   await direct.auth.signOut({ scope: "local" });
   await login(staffPage, "9876543210");
   await expect(staffPage).toHaveURL(/\/calendar$/);
+  await staffPage.goto("/admin/access-audit");
+  await expect(staffPage).toHaveURL(/\/login$/);
+  expect(
+    (await staffPage.request.get("/api/access-audit?format=xlsx")).status(),
+  ).toBe(403);
   await staffPage.goto("/account/password");
   await staffPage.getByLabel("New password", { exact: true }).fill(newPassword);
   await staffPage.getByLabel("Confirm new password").fill(newPassword);

@@ -200,6 +200,8 @@ appointment default card colour #C2417A (doctor/category colours from a 10-colou
 
 ## 11. Ask the clinic (open questions — keep this list current)
 
+- ACC-12 [DESIGN]: review ID-based audit filters, India-time dates and 50-row current-page Excel/PDF exports.
+
 - ACC-06 [DESIGN]: review the expanded 24-area Access grid, creator restrictions and protected owner rows.
 
 - ACC-02 [DESIGN]: review the login/recovery screens and confirm owner “Set New Password” sends a recovery link so each person chooses their own password.

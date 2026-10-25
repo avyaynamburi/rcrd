@@ -3,6 +3,7 @@ import path from "node:path";
 
 // Explicit public documentation allowlist; never resolve a user-supplied path.
 export const helpKeys = [
+  "access-audit",
   "workspace",
   "accounts",
   "offline",

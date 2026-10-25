@@ -14,6 +14,33 @@ insert into public.memberships (id, org_id, user_id, login_enabled, is_owner, ba
  ('30000000-0000-4000-8000-000000000003', '10000000-0000-4000-8000-000000000002', '00000000-0000-4000-8000-000000000003', true, true, 'owner');
 
 
+-- Provider-owned authentication events are attributed without raw payloads.
+insert into auth.audit_log_entries(id,payload) values
+ ('90000000-0000-4000-8000-000000000001','{"action":"login_failed","actor_id":"00000000-0000-4000-8000-000000000002","secret":"must not copy"}');
+select extensions.is((select count(*)::integer from public.access_audit where action='auth_login_failed'),1,'Known authentication failure mirrored');
+select extensions.ok((select after_data is null and before_data is null from public.access_audit where action='auth_login_failed'),'Auth payload never copied');
+delete from public.access_audit where action='auth_login_failed';
+
+-- ACC-12: table reads require owner capability and never allow mutation.
+insert into public.access_audit(org_id,actor_id,action,record_id) values
+ ('10000000-0000-4000-8000-000000000001','00000000-0000-4000-8000-000000000001','audit_test','00000000-0000-4000-8000-000000000001'),
+ ('10000000-0000-4000-8000-000000000002','00000000-0000-4000-8000-000000000003','audit_test','00000000-0000-4000-8000-000000000003');
+set local role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select extensions.is((select count(*)::integer from public.access_audit),1,'Owner sees only own organization audit');
+select extensions.lives_ok($$select public.record_audit_export('xlsx',1)$$,'Owner export audited');
+select extensions.is((select count(*)::integer from public.access_audit where action='export'),1,'Export has audit event');
+select extensions.throws_ok($$select public.record_audit_export('invalid',1)$$,'P0001',null,'Invalid export rejected');
+select extensions.throws_ok($$update public.access_audit set action='tamper'$$,'42501',null,'Owner cannot edit history');
+select extensions.throws_ok($$delete from public.access_audit$$,'42501',null,'Owner cannot delete history');
+select extensions.throws_ok($$insert into public.access_audit(org_id,actor_id,action,record_id) values ('10000000-0000-4000-8000-000000000001','00000000-0000-4000-8000-000000000001','forged','00000000-0000-4000-8000-000000000001')$$,'42501',null,'Owner cannot forge events directly');
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000002","role":"authenticated"}', true);
+select extensions.is((select count(*)::integer from public.access_audit),0,'Staff cannot read audit');
+select extensions.throws_ok($$select public.record_audit_export('pdf',1)$$,'42501',null,'Staff cannot export audit');
+reset role;
+
+delete from public.access_audit where action in ('audit_test','export');
+
 -- ACC-10: restrictions are organization-isolated, audited, and checked fresh.
 set local role authenticated;
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
@@ -75,6 +102,22 @@ delete from public.centers where id='20000000-0000-4000-8000-000000000009';
 insert into public.centers(id,org_id,name) values
  ('20000000-0000-4000-8000-000000000001','10000000-0000-4000-8000-000000000001','Synthetic branch A'),
  ('20000000-0000-4000-8000-000000000002','10000000-0000-4000-8000-000000000002','Synthetic branch B');
+insert into public.access_audit(org_id,center_id,actor_id,action,record_id) values
+ ('10000000-0000-4000-8000-000000000001','20000000-0000-4000-8000-000000000001','00000000-0000-4000-8000-000000000001','center_audit_test','00000000-0000-4000-8000-000000000001');
+set local role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select extensions.is((select count(*)::integer from public.access_audit where action='center_audit_test'),0,'Owner without branch grant cannot read branch audit');
+reset role;
+insert into public.center_grants(org_id,membership_id,center_id) values
+ ('10000000-0000-4000-8000-000000000001','30000000-0000-4000-8000-000000000001','20000000-0000-4000-8000-000000000001');
+set local role authenticated;
+select extensions.is((select count(*)::integer from public.access_audit where action='center_audit_test'),1,'Granted owner reads branch audit');
+reset role;
+delete from public.center_grants where membership_id='30000000-0000-4000-8000-000000000001';
+set local role authenticated;
+select extensions.is((select count(*)::integer from public.access_audit where action='center_audit_test'),0,'Branch revocation removes audit visibility');
+reset role;
+delete from public.access_audit where action='center_audit_test';
 set local role authenticated;
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
 select extensions.is(jsonb_array_length(public.list_center_access()->'centers'),1,'Owner lists only own clinic centers');

@@ -1,4 +1,33 @@
 export const en = {
+  audit: {
+    title: "Access Audit",
+    description:
+      "Read-only activity history. Times are shown in India time. User and center filters use exact IDs.",
+    from: "From date",
+    to: "To date",
+    user: "User ID",
+    center: "Center ID",
+    area: "Area",
+    action: "Action",
+    source: "Source",
+    time: "Time (IST)",
+    values: "Before / after",
+    record: "Record ID",
+    organization: "Organization",
+    viaAI: "via AI",
+    filter: "Apply filters",
+    reset: "Clear filters",
+    error: "Unable to load activity. Check the filters and try again.",
+    empty: "No activity matches these filters.",
+    loading: "Loading activity…",
+    excel: "Excel",
+    pdf: "PDF",
+    pageSize: "50 rows per page. Exports contain the current page only.",
+    pagination: "Audit pages",
+    previous: "Previous",
+    next: "Next",
+  },
+
   exportControl: {
     title: "Disable export to Excel/PDF in reports",
     note: "Also blocks print and list exports. Record access permissions still apply.",

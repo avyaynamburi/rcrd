@@ -358,6 +358,11 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      record_audit_export: {
+        Args: { export_format: string; page_number: number };
+        Returns: undefined;
+      };
+
       auth_org_id: { Args: Record<PropertyKey, never>; Returns: string };
       can_access_center: {
         Args: { target_center_id: string };

@@ -37,7 +37,7 @@ Tick a box only when the feature meets the Definition of Done in AGENTS.md §10.
 - [~] ACC-09 Appointment visibility  (02-users-roles-permissions.md) — audited setting and SQL scope predicate; live Calendar/Today/count integration awaits P4 (BLOCKERS 13)
 - [~] ACC-10 Export control  (02-users-roles-permissions.md) — audited switch and fail-closed server guard; report/list integration awaits UI-07/P11 (BLOCKERS 14)
 - [x] ACC-11 Enforcement (security-critical — careful area, AGENTS.md §5)  (02-users-roles-permissions.md) — current tables use RLS and audited RPCs; shared server guard enforces persisted grid, center, day and creator restrictions; new domain endpoints require their own SQL scope checks
-- [ ] ACC-12 Access Audit (Admin → Team → Access Audit)*  (02-users-roles-permissions.md)
+- [x] ACC-12 Access Audit (Admin → Team → Access Audit)*  (02-users-roles-permissions.md)
 - [ ] ACC-13 Created/updated stamps  (02-users-roles-permissions.md)
 - [ ] ACC-14 Owner-only by default  (02-users-roles-permissions.md)
 - [ ] ACC-16 Advanced Security switch  (02-users-roles-permissions.md)
