@@ -57,12 +57,18 @@ jobs:
       - run: npm run db:reset
       - run: npm run db:test
       - run: npm run db:types
-      - run: npx playwright install --with-deps chrome
-      - run: node scripts/test-live-auth.ts
       - uses: actions/upload-artifact@v4
         with:
           name: database-types
           path: lib/supabase/database.types.ts
+          retention-days: 7
+      - run: npx playwright install --with-deps chrome
+      - run: node scripts/test-live-auth.ts
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: auth-live-failure
+          path: test-results/
           retention-days: 7
       - if: always()
         run: npm run db:stop

@@ -31,7 +31,7 @@ export async function signIn(input: unknown): Promise<AuthResult> {
       password: parsed.data.password,
     });
     if (error) return failed();
-    if (!(await getAccount())) {
+    if (!(await getAccount(client))) {
       await client.auth.signOut({ scope: "local" });
       return failed();
     }

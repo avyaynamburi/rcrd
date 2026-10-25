@@ -2,11 +2,11 @@ import { headers } from "next/headers";
 import { createAuthClient } from "@/lib/supabase/server";
 import { isMobileDevice } from "./validation";
 
-import { cache } from "react";
-
-export const getAccount = cache(async function getAccount() {
+export async function getAccount(
+  clientOverride?: Awaited<ReturnType<typeof createAuthClient>>,
+) {
   try {
-    const client = await createAuthClient();
+    const client = clientOverride ?? (await createAuthClient());
     if (!client) return null;
     const {
       data: { user },
@@ -36,4 +36,4 @@ export const getAccount = cache(async function getAccount() {
   } catch {
     return null;
   }
-});
+}

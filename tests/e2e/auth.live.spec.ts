@@ -20,6 +20,30 @@ test.beforeAll(async () => {
   const admin = createClient(local!, process.env.SUPABASE_SERVICE_ROLE_KEY, {
     auth: { autoRefreshToken: false, persistSession: false },
   });
+  // This job owns a reset local database. Recreate only these two synthetic identities on retry.
+  const existing = await admin.auth.admin.listUsers();
+  for (const user of existing.data.users) {
+    if ([ownerEmail, staffEmail].includes(user.email ?? "")) {
+      execFileSync(
+        "docker",
+        [
+          "exec",
+          "-i",
+          "supabase_db_rcrd",
+          "psql",
+          "-U",
+          "postgres",
+          "-v",
+          "ON_ERROR_STOP=1",
+        ],
+        {
+          input: `delete from public.access_audit where org_id = '11111111-1111-4111-8111-111111111111'; delete from public.memberships where org_id = '11111111-1111-4111-8111-111111111111'; delete from public.organisations where org_id = '11111111-1111-4111-8111-111111111111';`,
+          stdio: ["pipe", "pipe", "pipe"],
+        },
+      );
+      await admin.auth.admin.deleteUser(user.id);
+    }
+  }
   const owner = await admin.auth.admin.createUser({
     email: ownerEmail,
     password,
@@ -80,7 +104,13 @@ test("live login, access denial, mobile access, password change, recovery and lo
   await page.goto("/patients");
   await expect(page).toHaveURL(/\/login$/);
   await login(page, ownerEmail);
-  await expect(page).toHaveURL(/\/calendar$/);
+  try {
+    await expect(page).toHaveURL(/\/calendar$/);
+  } catch {
+    throw new Error(
+      `Synthetic owner login UI: ${await page.locator("main").innerText()}`,
+    );
+  }
   await expect(page.getByRole("banner")).toContainText("Synthetic auth clinic");
   await page.goto("/account/team");
   const staffRow = page.getByRole("region", { name: staffEmail, exact: true });
