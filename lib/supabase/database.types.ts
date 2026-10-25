@@ -185,6 +185,7 @@ export type Database = {
       };
       memberships: {
         Row: {
+          export_disabled: boolean;
           access_grid: Json | null;
           appointment_visibility: string;
           base_role: string;
@@ -205,6 +206,7 @@ export type Database = {
         };
         ComputedFields: never;
         Insert: {
+          export_disabled?: boolean;
           access_grid?: Json | null;
           appointment_visibility?: string;
           base_role?: string;
@@ -224,6 +226,7 @@ export type Database = {
           user_id: string;
         };
         Update: {
+          export_disabled?: boolean;
           access_grid?: Json | null;
           appointment_visibility?: string;
           base_role?: string;
@@ -368,6 +371,15 @@ export type Database = {
           doctor_user_id: string;
         };
         Returns: boolean;
+      };
+      can_export: { Args: never; Returns: boolean };
+      list_export_disabled: {
+        Args: never;
+        Returns: { id: string; export_disabled: boolean }[];
+      };
+      set_export_disabled: {
+        Args: { target_membership_id: string; disabled: boolean };
+        Returns: undefined;
       };
       list_appointment_visibility: {
         Args: Record<PropertyKey, never>;

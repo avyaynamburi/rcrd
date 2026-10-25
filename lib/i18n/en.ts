@@ -1,4 +1,13 @@
 export const en = {
+  exportControl: {
+    title: "Disable export to Excel/PDF in reports",
+    note: "Also blocks print and list exports. Record access permissions still apply.",
+    save: "Save export restriction",
+    pending: "Saving…",
+    saved: "Export restriction saved.",
+    failed: "Unable to save export restriction. Try again.",
+    protected: "Owner export access is protected.",
+  },
   appointmentVisibility: {
     title: "Allowed to see appointments",
     all: "All",

@@ -13,6 +13,27 @@ insert into public.memberships (id, org_id, user_id, login_enabled, is_owner, ba
  ('30000000-0000-4000-8000-000000000002', '10000000-0000-4000-8000-000000000001', '00000000-0000-4000-8000-000000000002', true, false, 'staff'),
  ('30000000-0000-4000-8000-000000000003', '10000000-0000-4000-8000-000000000002', '00000000-0000-4000-8000-000000000003', true, true, 'owner');
 
+
+-- ACC-10: restrictions are organization-isolated, audited, and checked fresh.
+set local role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select extensions.is((select count(*)::integer from public.list_export_disabled()),2,'Export list isolates org');
+select extensions.lives_ok($$select public.set_export_disabled('30000000-0000-4000-8000-000000000002',true)$$,'Owner disables export');
+select extensions.throws_ok($$select public.set_export_disabled('30000000-0000-4000-8000-000000000003',true)$$,'42501',null,'Foreign restriction denied');
+select extensions.throws_ok($$select public.set_export_disabled('30000000-0000-4000-8000-000000000001',true)$$,'42501',null,'Owner export protected');
+select extensions.throws_ok($$select public.set_export_disabled('30000000-0000-4000-8000-000000000002',null)$$,'P0001',null,'Null restriction rejected');
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000002","role":"authenticated"}', true);
+select extensions.ok(not public.can_export(),'Restricted staff denied exports');
+select extensions.throws_ok('select public.list_export_disabled()','42501',null,'Staff cannot enumerate export settings');
+select extensions.throws_ok($$select public.set_export_disabled('30000000-0000-4000-8000-000000000002',false)$$,'42501',null,'Staff cannot restore own exports');
+reset role;
+select extensions.is((select count(*)::integer from public.access_audit where action='set_export_disabled'),1,'Restriction is audited');
+set local role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select public.set_export_disabled('30000000-0000-4000-8000-000000000002',false);
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000002","role":"authenticated"}', true);
+select extensions.ok(public.can_export(),'Restored staff can export authorized records');
+reset role;
 -- ACC-09: audited scope settings and fail-closed appointment predicate.
 insert into public.centers(id,org_id,name) values
  ('20000000-0000-4000-8000-000000000009','10000000-0000-4000-8000-000000000001','Visibility branch');
@@ -176,6 +197,10 @@ set local role authenticated;
 select extensions.throws_ok($$select public.set_appointment_visibility('30000000-0000-4000-8000-000000000002','own')$$,'P0001','synthetic audit failure','Audit failure aborts visibility update');
 reset role;
 select extensions.is((select appointment_visibility from public.memberships where id='30000000-0000-4000-8000-000000000002'),'all','Failed audit rolls back visibility');
+set local role authenticated;
+select extensions.throws_ok($$select public.set_export_disabled('30000000-0000-4000-8000-000000000002',true)$$,'P0001','synthetic audit failure','Export audit failure aborts write');
+reset role;
+select extensions.ok(not (select export_disabled from public.memberships where id='30000000-0000-4000-8000-000000000002'),'Export restriction rolls back on audit failure');
 drop trigger reject_test_audit on public.access_audit;
 update public.memberships set deleted_at = now() where id = '30000000-0000-4000-8000-000000000002';
 set local role authenticated;

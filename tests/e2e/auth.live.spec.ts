@@ -292,6 +292,22 @@ test("live login, access denial, mobile access, password change, recovery and lo
   const staffRow = page.getByRole("region", { name: staffEmail, exact: true });
   const visibilityRow = staffRow.locator("..");
   await visibilityRow
+    .getByLabel("Disable export to Excel/PDF in reports")
+    .check();
+  await visibilityRow
+    .getByRole("button", { name: "Save export restriction", exact: true })
+    .click();
+  await expect(
+    visibilityRow
+      .getByRole("status")
+      .filter({ hasText: "Export restriction saved." }),
+  ).toBeVisible();
+  await page.reload();
+  await expect(
+    visibilityRow.getByLabel("Disable export to Excel/PDF in reports"),
+  ).toBeChecked();
+
+  await visibilityRow
     .getByLabel("Allowed to see appointments", { exact: true })
     .selectOption("own");
   await visibilityRow

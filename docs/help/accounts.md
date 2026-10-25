@@ -27,3 +27,5 @@ Under Centers, select the branches a person can work in and choose Save centers.
 An owner can choose **Allowed to see appointments → All / Own only** for each non-owner team member, then select **Save appointment visibility**. Changes are recorded in the access audit. Own only means appointments assigned to that person's individual doctor identity, including Calendar, Today and status counts. It does not mean appointments they created. Unassigned appointments are hidden under Own only. Both options still require access to the appointment's clinic and branch.
 
 The setting is available now; live Calendar, Today and status-count enforcement is connected when appointment storage is built in P4. Preview status circles continue to show unavailable counts. Owner settings are protected; offline changes cannot be submitted. On a save error, retry when connected.
+
+Owners can disable Excel, PDF and print exports for an individual in Team. Save the export restriction separately from other access changes. Owner accounts are protected. This restriction does not grant access to records. Report and list export controls will use it when those screens are built.

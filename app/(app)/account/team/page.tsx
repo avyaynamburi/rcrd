@@ -1,3 +1,5 @@
+import { ExportControl } from "@/components/auth/export-control";
+import { memberExportSchema } from "@/lib/permissions/export-control";
 import { AppointmentVisibility } from "@/components/auth/appointment-visibility";
 import { memberVisibilitySchema } from "@/lib/permissions/appointment-visibility";
 import { CenterAccess } from "@/components/auth/center-access";
@@ -38,6 +40,8 @@ export default async function Team() {
     "list_appointment_visibility",
   );
   const visibility = memberVisibilitySchema.safeParse(visibilityResult.data);
+  const exportResult = await account.client.rpc("list_export_disabled");
+  const exports = memberExportSchema.safeParse(exportResult.data);
   const rolesResult = await account.client.rpc("list_member_roles");
   const accessResult = await account.client.rpc("list_member_access");
   const access = z
@@ -89,6 +93,23 @@ export default async function Team() {
                         initial={
                           visibility.data.find((item) => item.id === person.id)!
                             .appointment_visibility
+                        }
+                        protectedOwner={
+                          role.base_role === "owner" ||
+                          role.base_role === "owner_doctor"
+                        }
+                      />
+                    ) : (
+                      <p role="alert">{en.auth.teamError}</p>
+                    )}
+                    {exports.success &&
+                    !exportResult.error &&
+                    exports.data.find((item) => item.id === person.id) ? (
+                      <ExportControl
+                        id={person.id}
+                        initial={
+                          exports.data.find((item) => item.id === person.id)!
+                            .export_disabled
                         }
                         protectedOwner={
                           role.base_role === "owner" ||

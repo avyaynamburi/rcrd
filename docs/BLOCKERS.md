@@ -70,3 +70,8 @@ Status: open for hosted onboarding. Synthetic accounts, account-access auditing 
 Needed: appointment tables, assigned doctor identity mapping, Calendar/Today reads and count sources from P4.
 Owner steps: none now. Codex must use `can_see_appointment(org_id, center_id, doctor_user_id)` in appointment SELECT RLS, keep aggregate and realtime reads under the same policy, and prove All/Own only filtering for calendar, Today and status counts including another doctor's, unassigned and revoked-center appointments. Do not expose live data before these checks pass.
 Status: open. Owner-only audited All/Own only editor and SQL visibility predicate are implemented and tested independently; there is no appointment table or live appointment read to enforce yet. ACC-09 remains blocked for the full feature.
+
+## 14. Apply export restriction to report/list output (ACC-10 / UI-07 / P11)
+Needed: report/list export and print endpoints and their record-level read authorization.
+Owner steps: none now. Codex must use the current server-side `can_export()` result to hide Excel/PDF/print controls and call `requireExport()` before loading/rendering export records; independently enforce area, organization and center scope. Add direct endpoint denial tests for restricted users and fresh revocation, including print. Never authorize from role defaults or a browser-provided flag.
+Status: open. Owner-only audited switch, atomic rollback tests, server guard and signed-in editor test exist. There are no record export endpoints or buttons yet; ACC-10 remains blocked for integration.
