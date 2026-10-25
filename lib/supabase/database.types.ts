@@ -358,12 +358,6 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      list_deleted_people: { Args: never; Returns: Json };
-      set_person_deleted: {
-        Args: { target_membership_id: string; deleted: boolean };
-        Returns: undefined;
-      };
-
       audit_password_verification: { Args: { event: Json }; Returns: Json };
       auth_org_id: { Args: Record<PropertyKey, never>; Returns: string };
       can_access_center: {
@@ -388,6 +382,7 @@ export type Database = {
         }[];
       };
       list_center_access: { Args: Record<PropertyKey, never>; Returns: Json };
+      list_deleted_people: { Args: Record<PropertyKey, never>; Returns: Json };
       list_export_disabled: {
         Args: Record<PropertyKey, never>;
         Returns: {
@@ -455,6 +450,10 @@ export type Database = {
           new_tags: string[];
           target_membership_id: string;
         };
+        Returns: undefined;
+      };
+      set_person_deleted: {
+        Args: { deleted: boolean; target_membership_id: string };
         Returns: undefined;
       };
     };

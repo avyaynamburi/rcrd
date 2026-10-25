@@ -511,6 +511,13 @@ test("live login, access denial, mobile access, password change, recovery and lo
   await login(staffPage, staffEmail, password);
   await expect(staffPage).toHaveURL(/\/calendar$/);
   await page.goto("/account/team");
+  // This identity was changed to Doctor earlier in this same workflow.
+  await expect(
+    roleForm.getByRole("combobox", { name: "Base role", exact: true }),
+  ).toHaveValue("doctor");
+  await expect(
+    roleForm.getByLabel("Send Appointment Summary", { exact: true }),
+  ).toBeDisabled();
   await staffRow
     .locator("..")
     .getByRole("button", { name: "Delete person", exact: true })
@@ -529,18 +536,18 @@ test("live login, access denial, mobile access, password change, recovery and lo
     .getByRole("button", { name: "Confirm", exact: true })
     .click();
   await expect(staffRow).toHaveCount(0);
-  const deletedStaff = page.getByRole("region", {
-    name: "Deleted Staff List",
+  const deletedDoctors = page.getByRole("region", {
+    name: "Deleted Owner & Doctor List",
     exact: true,
   });
-  await expect(deletedStaff).toContainText(staffEmail);
+  await expect(deletedDoctors).toContainText(staffEmail);
   await staffPage.goto("/patients");
   await expect(staffPage).toHaveURL(/\/login$/);
   await login(staffPage, staffEmail, password);
   await expect(
     staffPage.getByRole("alert").filter({ hasText: "Unable to sign in" }),
   ).toBeVisible();
-  await deletedStaff
+  await deletedDoctors
     .getByRole("button", { name: "Restore person", exact: true })
     .click();
   await expect(page.getByRole("dialog")).toContainText("Login stays disabled");
@@ -552,7 +559,7 @@ test("live login, access denial, mobile access, password change, recovery and lo
   await expect(
     staffRow.getByLabel("Enable Login", { exact: true }),
   ).not.toBeChecked();
-  await expect(deletedStaff).toContainText("No deleted people.");
+  await expect(deletedDoctors).toContainText("No deleted people.");
   await login(staffPage, staffEmail, password);
   await expect(
     staffPage.getByRole("alert").filter({ hasText: "Unable to sign in" }),
