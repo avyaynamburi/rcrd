@@ -352,17 +352,13 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      list_center_access: { Args: Record<PropertyKey, never>; Returns: Json };
-      set_member_centers: {
-        Args: { target_membership_id: string; center_ids: string[] };
-        Returns: undefined;
-      };
       auth_org_id: { Args: Record<PropertyKey, never>; Returns: string };
       can_access_center: {
         Args: { target_center_id: string };
         Returns: boolean;
       };
       can_manage_logins: { Args: Record<PropertyKey, never>; Returns: boolean };
+      list_center_access: { Args: Record<PropertyKey, never>; Returns: Json };
       list_login_accounts: {
         Args: Record<PropertyKey, never>;
         Returns: {
@@ -398,6 +394,10 @@ export type Database = {
       };
       set_member_access: {
         Args: { new_grid: Json; target_membership_id: string };
+        Returns: undefined;
+      };
+      set_member_centers: {
+        Args: { center_ids: string[]; target_membership_id: string };
         Returns: undefined;
       };
       set_member_role: {
