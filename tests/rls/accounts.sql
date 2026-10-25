@@ -34,6 +34,8 @@ select public.set_export_disabled('30000000-0000-4000-8000-000000000002',false);
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-000000000002","role":"authenticated"}', true);
 select extensions.ok(public.can_export(),'Restored staff can export authorized records');
 reset role;
+delete from public.access_audit where action='set_export_disabled';
+
 -- ACC-09: audited scope settings and fail-closed appointment predicate.
 insert into public.centers(id,org_id,name) values
  ('20000000-0000-4000-8000-000000000009','10000000-0000-4000-8000-000000000001','Visibility branch');
