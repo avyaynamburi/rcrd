@@ -1,9 +1,10 @@
 # Data model
 
-ACC-01 now supplies a draft migration for organisations, centers, operatories,
-memberships and center grants. It has not been applied locally because Docker
-cannot start (BLOCKERS 11). No generated types or live database integration is
-claimed. Other entities below remain plans; fake seed loading is BLOCKERS 3.
+ACC-01 supplies the migration for organisations, centers, operatories, memberships
+and center grants. CI run 40180232194 applied it, passed 82 database assertions
+and generated the committed types. Local Docker remains unavailable (BLOCKERS 1).
+No application runtime database integration is exposed yet. Other entities below
+remain plans; fake seed loading is BLOCKERS 3.
 
 The initial schema is read-only for authenticated identities. An identity belongs
 to exactly one organisation; multi-organisation identities require an explicit,
