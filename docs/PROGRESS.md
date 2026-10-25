@@ -1,6 +1,6 @@
 # Progress tracker
 
-Tick a box only when the feature meets the Definition of Done in AGENTS.md §10. Features are grouped by build phase; build phases in order unless the owner says otherwise. `*` = designed by us (not shown in the recordings) — confirm with the clinic. `?` = meaning unclear in BestoSys — confirm with the clinic.
+Tick a box only when the feature meets the Definition of Done in AGENTS.md §10. Features are grouped by build phase; build phases in order unless the owner says otherwise. `*` = designed by us (not shown in the recordings) — confirm with the clinic. `?` = meaning unclear in BestoSys — confirm with the clinic. `[~]` = blocked — needs the owner, see docs/BLOCKERS.md.
 
 ## P0 — Project setup
 - [ ] P0-1 Next.js + TypeScript app, Tailwind, shadcn/ui, ESLint/Prettier, Vitest, Playwright

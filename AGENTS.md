@@ -12,6 +12,7 @@ Every feature from the clinic's BestoSys walkthrough is specified in `docs/spec/
 
 | Need | Look in |
 |---|---|
+| Things only the owner can do | `docs/BLOCKERS.md` |
 | What to build next, and every feature ID | `docs/PROGRESS.md` (phased checklist; find the first `- [ ]`) |
 | Exact behaviour of a feature | `docs/spec/NN-*.md` → the `### ID · Title` section only |
 | Architecture decisions | `docs/architecture/` (you write these in P0-6 and keep them current) |
@@ -88,29 +89,37 @@ tests/unit  tests/e2e  tests/rls
 
 ---
 
-## 5. How to work
+## 5. How to work — autonomous mode
 
-**One feature at a time**
-1. Find the next unchecked item in `docs/PROGRESS.md`. Work on one feature ID, or a few closely related IDs, per task.
-2. Read only that feature's section of its spec file (search for `### CAL-25`, read that section). Don't read whole spec files or the source description unless you need to.
-3. Before writing code, give a short plan: files you'll create/change, any migration, tests. Wait for the owner's OK on anything in the "careful areas" below; otherwise go ahead.
-4. Implement, add tests, run `npm run check` (and the relevant `npm run test:e2e -- <file>`). Fix failures until green.
-5. Self-review the diff against the spec section and section 2 of this file. Fix what you find.
-6. Commit with the feature ID first (`CAL-25: new appointment form`), tick the ID in `docs/PROGRESS.md`, and say in two or three lines what's done and what's flagged for the clinic.
+The owner wants the whole build done without being asked anything. Usually you are run by `scripts/autopilot.sh`, one feature per run, with nobody watching. **Never stop to ask a question and never wait for approval.** Make the most reasonable decision, write it down, and keep going.
 
-**Careful areas** (patient data or money — show the plan first, and after building, the owner starts a fresh Codex chat to review the diff with: "Review the uncommitted changes for security and correctness against AGENTS.md §2 and §7. List problems; don't edit."):
+**Each run**
+1. Take the first unchecked item (`- [ ]`) in `docs/PROGRESS.md`, plus any closely related items in the same phase that are naturally built together (keep it to a size you can finish and test in one run).
+2. Read only those features' sections of their spec files (search for `### CAL-25`, read that section). Don't read whole spec files or the source description unless you need to.
+3. Implement, add tests, run `npm run check` (and the relevant `npm run test:e2e -- <file>`). Fix failures until green.
+4. Self-review the diff against the spec sections and section 2 of this file. Fix what you find.
+5. Tick the IDs in `docs/PROGRESS.md`, commit with the feature ID first (`CAL-25: new appointment form`) and `git push`.
+6. End with two or three lines: what's done, what was decided or flagged.
+
+**When something needs the owner** (an account, an API key, a payment, a clinic answer, a legal text): don't stop. Build it with a safe stand-in (log-only adapter, fake/seed data, env var left empty with a clear "not configured" message in the UI), add an entry to `docs/BLOCKERS.md` (ID, what's needed, exact steps for the owner), and continue. If an item truly can't be built at all without the owner, mark it `- [~]` in PROGRESS.md (blocked), log it in BLOCKERS.md, and move to the next item.
+
+**Never do without the owner**, even in autonomous mode: delete or rewrite git history, force-push, touch anything outside this repo folder, create paid accounts or spend money, use real patient data, deploy to production, or turn off a non-negotiable from section 2. Log these in BLOCKERS.md instead.
+
+**Careful areas** (patient data or money): after you commit, the autopilot script runs a separate read-only Codex review of the change and then a fix run for anything it finds. In those runs, take the review seriously and fix real problems; if a finding is wrong, note why in the commit message.
 - `supabase/migrations/` that create tables or change RLS policies
 - `lib/permissions/`, `lib/actions/` core, auth and sessions
 - `lib/billing/` (GST, discounts, balances, voucher numbering)
-- `lib/ai/proposals/` and any AI write tool
-- file storage access and signed URLs
+- `lib/ai/` proposals and tools, and any AI write path
+- file storage access and signed URLs, `app/api/` webhooks
 
-**Keep sessions small (saves usage)**
-- Start a new Codex chat for each phase or each larger feature; long chats re-send their whole history every turn.
+**Keep runs small (saves usage)**
+- One feature (or a small related group) per run; the script starts a fresh run each time.
 - Don't read `node_modules`, lockfiles, generated types, `.next`, or full logs; use `tail`/`head` on long command output.
 - Use the shared blocks in `components/blocks/` instead of rebuilding layouts.
 
-**Decisions**: when you decide a [DESIGN]/[CONFIRM] question or deviate from a spec, add a dated line to `docs/architecture/decisions.md` and keep section 11 current.
+**Decisions**: decide [DESIGN]/[CONFIRM] questions yourself, add a dated line to `docs/architecture/decisions.md`, and keep section 11 current so the owner can check them with the clinic later.
+
+**If Docker isn't running** (local Supabase fails to start): run `open -a Docker`, wait up to 2 minutes, retry once; if it still fails, log it in BLOCKERS.md and work on items that don't need the database.
 
 ---
 
@@ -184,7 +193,7 @@ appointment default card colour #C2417A (doctor/category colours from a 10-colou
 5. Empty, loading and error states done (UI-02, UI-14).
 6. Help article in `docs/help/` for any new screen, linked from its "Need Help?".
 7. `npm run check` passes; committed with the feature ID in the message; ticked in `docs/PROGRESS.md`.
-8. Careful-area changes reviewed in a fresh Codex chat (section 5).
+8. Careful-area changes went through the autopilot review and fix runs (section 5).
 9. [DESIGN]/[CONFIRM] items added to section 11 if still open.
 
 ---
