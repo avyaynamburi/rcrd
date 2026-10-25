@@ -2,7 +2,7 @@
 
 Local development uses the repository-pinned Supabase CLI and Docker Desktop. Run `npm ci`, start Docker, then `npm run db:start`. The app's temporary setup screen remains available without a database; no patient data access is implemented yet.
 
-- `npm run db:reset` resets **only the local database**, applies migrations, then configured fake seed files. Seed paths are empty until P0-5 supplies the demo data.
+- `npm run db:reset` resets **only the local database**, applies migrations, then configured fake seed files. Seed paths remain empty until the P1 schema/security boundary can load the P0-5 synthetic fixtures; see `supabase/seed/README.md` and BLOCKERS 3.
 - `npm run db:types` generates public-schema TypeScript definitions into `lib/supabase/database.types.ts`. Failed generation preserves the existing file. Generate after each migration and commit the result with it.
 - `npm run db:stop` stops the local stack without requesting deletion of its volumes.
 

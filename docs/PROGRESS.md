@@ -7,8 +7,8 @@ Tick a box only when the feature meets the Definition of Done in AGENTS.md §10.
 - [~] P0-2 Supabase projects: dev (local CLI), staging and production in the Mumbai region; migrations folder; generated types
 - [x] P0-3 GitHub Actions: lint + typecheck + unit tests on Ubuntu; Playwright on Windows (Edge and Chrome) and Ubuntu
 - [x] P0-4 PWA basics (manifest, icons, service worker update flow) and deploy pipeline (Vercel, region bom1/Mumbai)
-- [ ] P0-5 Seed script with a fake demo clinic (two centers, five doctors, three staff, fake patients) — never real data
-- [ ] P0-6 `docs/architecture/` written by Codex: data model, permission model, action layer, AI and messaging adapters
+- [~] P0-5 Seed script with a fake demo clinic (two centers, five doctors, three staff, fake patients) — deterministic fixture tested; database loading blocked (BLOCKERS 3)
+- [x] P0-6 `docs/architecture/` written by Codex: data model, permission model, action layer, AI and messaging adapters
 
 ## P1 — Foundation: shell, logins, permissions, audit, shared UI
 - [ ] SHELL-01 App window and installable app  (01-app-shell.md)

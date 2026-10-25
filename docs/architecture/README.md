@@ -1,9 +1,17 @@
-# Architecture docs (Codex writes these in P0-6)
+# Architecture
 
-- `data-model.md` — tables, relations, which carry `org_id` / `center_id`, views (patient balance), counters (voucher numbers).
-- `permissions.md` — roles, presets, the access grid, how Same Day / own-records are evaluated, RLS helper functions.
-- `actions.md` — the action-layer pattern every mutation follows, with one worked example.
-- `ai.md` — provider interface, routing, tools, proposal format, confirm/undo flow.
-- `messaging.md` — engine, triggers, scheduler, providers, credits.
-- `privacy.md` — DPDP measures, consent records, data requests, retention, breach response.
-- `decisions.md` — dated log of decisions on [DESIGN]/[CONFIRM] items and any spec deviations.
+P0-6 records the implementation contracts below. These are plans, not completed
+application security or schema features; their code and tests ship in later phases.
+
+- [Data model](data-model.md): tenancy, relationships, money, files and migrations.
+- [Permissions](permissions.md): presets, day/ownership rules and RLS boundaries.
+- [Actions](actions.md): validation, authorization, atomic writes and audit.
+- [AI](ai.md): adapters, proposals, confirmation and privacy gates.
+- [Messaging](messaging.md): log-only adapters, outbox, delivery and credits.
+- [Privacy](privacy.md): consent, requests, retention and breach response.
+- [Supabase](supabase.md): local and Mumbai hosted environments.
+- [Deployment](deployment.md): PWA and preview deployment.
+- [Decisions](decisions.md): dated choices and verification evidence.
+
+Feature spec sections remain authoritative. An implementation must update these
+contracts when it changes them, and document any spec deviation in decisions.
