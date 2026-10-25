@@ -13,9 +13,15 @@ type AccessGridProps = {
   id: string;
   initial: Grid;
   protectedOwner: boolean;
+  sources: { id: string; label: string; grid: Grid }[];
 };
 
-export function AccessGrid({ id, initial, protectedOwner }: AccessGridProps) {
+export function AccessGrid({
+  id,
+  initial,
+  protectedOwner,
+  sources,
+}: AccessGridProps) {
   const serverVersion = JSON.stringify([id, initial, protectedOwner]);
   const [previousVersion, setPreviousVersion] = useState(serverVersion);
   const [grid, setGrid] = useState(initial);
@@ -54,6 +60,33 @@ export function AccessGrid({ id, initial, protectedOwner }: AccessGridProps) {
         }}
       >
         <fieldset disabled={pending || protectedOwner || !online}>
+          <label className="mb-3 flex flex-wrap items-center justify-end gap-2">
+            {t.copyFrom}
+            <select
+              aria-label={t.copyFrom}
+              className="rounded border border-border bg-white p-2"
+              value=""
+              disabled={!sources.some((source) => source.id !== id)}
+              onChange={(event) => {
+                const source = sources.find(
+                  (item) => item.id === event.target.value && item.id !== id,
+                );
+                if (source) {
+                  setGrid(structuredClone(source.grid));
+                  setMessage(t.copied);
+                }
+              }}
+            >
+              <option value="">{t.chooseSource}</option>
+              {sources
+                .filter((source) => source.id !== id)
+                .map((source) => (
+                  <option key={source.id} value={source.id}>
+                    {source.label}
+                  </option>
+                ))}
+            </select>
+          </label>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <caption className="sr-only">{t.title}</caption>

@@ -66,6 +66,25 @@ export default async function Team() {
                     />
                     {access.success && !accessResult.error ? (
                       <AccessGrid
+                        sources={accounts.data.flatMap((source) => {
+                          const sourceRole = roles.data.find(
+                            (item) => item.id === source.id,
+                          );
+                          const sourceAccess = access.data.find(
+                            (item) => item.id === source.id,
+                          );
+                          return sourceRole && sourceAccess
+                            ? [
+                                {
+                                  id: source.id,
+                                  label: source.email ?? source.id,
+                                  grid:
+                                    sourceAccess.access_grid ??
+                                    defaultGrid(sourceRole.base_role),
+                                },
+                              ]
+                            : [];
+                        })}
                         id={person.id}
                         initial={
                           access.data.find((item) => item.id === person.id)

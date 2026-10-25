@@ -187,6 +187,21 @@ test("live login, access denial, mobile access, password change, recovery and lo
   }
   await roleForm.locator("summary").click();
   await roleForm
+    .getByLabel("Select Copy Access from", { exact: true })
+    .selectOption({ label: ownerEmail });
+  await expect(billingDelete).toHaveValue("any");
+  await expect(
+    roleForm.getByText(
+      "Access copied into this draft. Review it and save access to apply.",
+    ),
+  ).toBeVisible();
+  // Copy is editable and does not grant anything before Save access.
+  await billingDelete.selectOption("same");
+  await expect(billingDelete).toHaveValue("same");
+  await page.reload();
+  await expect(billingDelete).toHaveValue("none");
+  await roleForm.locator("summary").click();
+  await roleForm
     .locator("details")
     .getByRole("button", { name: "Save access", exact: true })
     .click();
