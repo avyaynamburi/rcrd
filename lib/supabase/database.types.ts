@@ -185,13 +185,13 @@ export type Database = {
       };
       memberships: {
         Row: {
-          export_disabled: boolean;
           access_grid: Json | null;
           appointment_visibility: string;
           base_role: string;
           created_at: string;
           created_by: string | null;
           deleted_at: string | null;
+          export_disabled: boolean;
           external_id: string | null;
           external_source: string | null;
           id: string;
@@ -206,13 +206,13 @@ export type Database = {
         };
         ComputedFields: never;
         Insert: {
-          export_disabled?: boolean;
           access_grid?: Json | null;
           appointment_visibility?: string;
           base_role?: string;
           created_at?: string;
           created_by?: string | null;
           deleted_at?: string | null;
+          export_disabled?: boolean;
           external_id?: string | null;
           external_source?: string | null;
           id?: string;
@@ -226,13 +226,13 @@ export type Database = {
           user_id: string;
         };
         Update: {
-          export_disabled?: boolean;
           access_grid?: Json | null;
           appointment_visibility?: string;
           base_role?: string;
           created_at?: string;
           created_by?: string | null;
           deleted_at?: string | null;
+          export_disabled?: boolean;
           external_id?: string | null;
           external_source?: string | null;
           id?: string;
@@ -363,6 +363,7 @@ export type Database = {
         Args: { target_center_id: string };
         Returns: boolean;
       };
+      can_export: { Args: Record<PropertyKey, never>; Returns: boolean };
       can_manage_logins: { Args: Record<PropertyKey, never>; Returns: boolean };
       can_see_appointment: {
         Args: {
@@ -372,15 +373,6 @@ export type Database = {
         };
         Returns: boolean;
       };
-      can_export: { Args: never; Returns: boolean };
-      list_export_disabled: {
-        Args: never;
-        Returns: { id: string; export_disabled: boolean }[];
-      };
-      set_export_disabled: {
-        Args: { target_membership_id: string; disabled: boolean };
-        Returns: undefined;
-      };
       list_appointment_visibility: {
         Args: Record<PropertyKey, never>;
         Returns: {
@@ -389,6 +381,13 @@ export type Database = {
         }[];
       };
       list_center_access: { Args: Record<PropertyKey, never>; Returns: Json };
+      list_export_disabled: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          export_disabled: boolean;
+          id: string;
+        }[];
+      };
       list_login_accounts: {
         Args: Record<PropertyKey, never>;
         Returns: {
@@ -416,6 +415,10 @@ export type Database = {
       };
       set_appointment_visibility: {
         Args: { target_membership_id: string; visibility: string };
+        Returns: undefined;
+      };
+      set_export_disabled: {
+        Args: { disabled: boolean; target_membership_id: string };
         Returns: undefined;
       };
       set_login_access: {
