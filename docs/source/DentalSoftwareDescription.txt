@@ -1,0 +1,987 @@
+BESTOSYS DENTAL SOFTWARE - FULL SCREEN-BY-SCREEN DESCRIPTION
+(as used by the clinic DENTALPROFILES, from the two "babai meeting" recordings, 3 Aug 2026)
+=====================================================================================
+
+HOW TO READ THIS FILE
+---------------------
+This describes every part of the BestoSys app that was shown in the two meeting
+recordings, in enough detail to draw each screen on paper. Positions are given for
+a normal full-size window of 1920 pixels wide by 1080 pixels tall, with x measured
+from the left edge and y measured from the top edge. If you draw on an A4 sheet in
+landscape, roughly 1 cm on paper = 70 pixels across.
+
+Real patient names, phone numbers and account numbers have been left out on purpose.
+Where an example is needed, a placeholder like "Patient" or "#1234" is used.
+
+BestoSys is version v9.64.1. It runs as a Windows desktop app. The clinic has two
+branches (the app calls them "centers"): RBI Layout and Bellandur.
+
+
+=====================================================================================
+PART 1 - THE BIG PICTURE: WHAT EVERY SCREEN LOOKS LIKE
+=====================================================================================
+
+Every screen in BestoSys is built from the same four pieces. If you draw these four
+first, every other screen is just "what goes in the big white area".
+
+1. TITLE BAR (the very top strip, about 22 px tall, full width)
+   - Far left: a small purple letter "b" logo, then the word "BestoSys".
+   - Far right: the usual Windows minimise, restore and close buttons.
+
+2. ICON RAIL (the left edge, about 70 px wide, the full height of the window)
+   - A solid dark navy-blue strip.
+   - A tiny green dot sits in its top-left corner (it shows the app is online).
+   - A column of white icons, each with a small white word under it. The icon for
+     the screen you are on turns orange.
+   - The full list of icons is in Part 2.
+
+3. TOP BAR (a white strip about 60 px tall, starting just right of the rail)
+   - On the left, at about x = 90, the clinic name in dark-blue capital letters:
+     DENTALPROFILES. On a form or a patient's profile, a left-pointing back arrow
+     sits just before it.
+   - On the right, the contents change depending on the screen:
+       * On the Calendar: a search box, a "Compact mode" switch, a center (branch)
+         dropdown, a doctor dropdown, a "+ New" button, and the date and time.
+       * On almost every other screen: a row of seven small coloured circles with
+         numbers in them, then the date and time (for example "3 Aug, 2026 10:07 pm").
+         The circles are a quick count of today's appointments: navy = total,
+         grey = scheduled, red = checked in, orange = engaged, green = checked out,
+         dark grey and light grey = the remaining statuses (light grey is cancelled).
+
+4. WORK AREA (everything else: right of the rail, below the top bar)
+   - White background. This is where each page draws its content.
+   - When you open Settings, Admin, CRM or the bell, a second white menu (about
+     290 px wide) slides out right next to the rail, from about x = 70 to x = 360,
+     and the page fills the rest, from about x = 370 to the right edge.
+
+Two things float on top of almost every screen:
+   - BESTO AI BOT: a round lavender button in the bottom-right corner (about
+     x = 1815, y = 990). To its left there is often a white speech bubble saying
+     "I am Besto AI Bot, Please ask me your queries" with a small red x to close it.
+   - "Need Help?": an orange link, usually in the bottom-left corner of forms.
+
+At the very bottom of the rail is the version text "v9.64.1".
+
+
+-------------------------------------------------------------------------------------
+HOW TO DRAW THE TWO MOST IMPORTANT LAYOUTS
+-------------------------------------------------------------------------------------
+
+LAYOUT A - THE CALENDAR (the home screen)
+   Draw a big rectangle for the window.
+   - Left edge: the narrow navy icon rail, full height.
+   - Top: the white top bar. Left side "DENTALPROFILES". Right side, left to right:
+     a long Search box, the word "Compact" with a small switch, a "Center" dropdown,
+     a "Doctors" dropdown, a navy "+ New" button, and the time.
+   - Under the top bar, a thin toolbar row: on the left "< >  Sunday Aug, 2 2026 v",
+     on the right a row of six small outlined buttons (Today, Day, Week, Month,
+     Schedule, Doctor/Operatory).
+   - The rest splits into three columns:
+       (a) A very thin time ruler on the far left (times every 15 minutes).
+       (b) A wide grid of 7 day columns (SUN to SAT), taking about 75% of the width.
+           Today's column is shaded light peach and today's date number is inside a
+           navy circle. Appointments are pink rectangles inside the columns.
+       (c) A "Today" side panel on the far right, about 345 px wide.
+   - Clicking any pink appointment opens a small white card next to it (the
+     pop-over), described in Part 3.
+
+LAYOUT B - ANY SETTINGS PAGE (about 40 pages look like this)
+   - Left edge: the navy icon rail, with the gear icon highlighted orange.
+   - Top bar: "DENTALPROFILES" on the left, the seven status circles and time on the
+     right.
+   - Next to the rail: the white second menu - a column of bold navy group names,
+     each with a small down-arrow on its right. One group is open, showing its
+     pages underneath in grey, with the open page in orange.
+   - The rest of the screen: the page itself. Usually a navy page title at the
+     top-left, a filter row under it, buttons at the top-right ("+ New", a green
+     Excel icon, a red PDF icon, a blue printer icon), and a table below.
+
+
+=====================================================================================
+PART 2 - THE LEFT ICON RAIL, ICON BY ICON
+=====================================================================================
+
+The rail has two groups of icons: seven near the top and five near the bottom, with
+an empty gap between them. Listed top to bottom with their rough height (y) on the
+screen:
+
+  1. Dashboard (y about 235) - icon of four small squares in a grid.
+     Opens the Dashboard (a summary chart and a "things that need attention" list).
+
+  2. Calendar (y about 295) - icon of a calendar page.
+     Opens the appointment calendar. This is the main screen the clinic uses all day.
+
+  3. Patients (y about 355) - icon of a person.
+     Opens the patient list.
+
+  4. Reports (y about 415) - icon of lined rows.
+     Opens reports. (This was never opened in the recordings.)
+
+  5. Admin (y about 475) - icon of an ID card.
+     Opens a second menu with Team, NABH, Accounting, Inventory, Lab, Tasks, SMS/WA.
+
+  6. CRM (y about 535) - icon of a handshake / diamond shape.
+     Opens a second menu with Practice Growth, CRM and Communications.
+
+  7. Help (y about 610) - icon of a light bulb.
+     Opens Help and Support, with a Support Tickets tab.
+
+  (empty gap from about y = 620 to y = 790)
+
+  8. Notifications (y about 810) - a bell with a small red badge showing "30".
+     Opens a small "Alert" menu (Application Update, Recent Features).
+
+  9. WhatsApp (y about 860) - the WhatsApp logo with a small red "New" tag.
+     Opens the WhatsApp module (shows whether the clinic's WhatsApp is connected).
+
+ 10. Settings (y about 900) - a gear.
+     Opens the large Settings second menu (Part 8). This is where most setup lives.
+
+ 11. User avatar (y about 940) - a white circle with the logged-in user's initials,
+     for example "FD" for the front desk login or "RT" for the owner login.
+
+ 12. Logout (y about 985) - an arrow leaving a box.
+     Opens a small box: "Are you sure you want to logout?" with No and Yes.
+
+ At the very bottom: the text "v9.64.1".
+
+
+=====================================================================================
+PART 3 - CALENDAR
+=====================================================================================
+
+The Calendar is the screen the app opens on. It has a top bar, a toolbar, the day
+grid in the middle and the "Today" panel on the right.
+
+3.1 TOP BAR (y about 50), left to right after "DENTALPROFILES"
+   - A grey icon of a group of people (x about 825).
+   - A Search box with a magnifying glass on the left and an x on the right
+     (x about 850 to 1145). As you type a patient's name, a white panel drops down
+     under it listing matches as "Name (patient number)" with a grey line
+     "Last Appt: date [doctor name]" and a small calendar icon on the right of
+     each result.
+   - The words "Compact mode" with an on/off switch beside them.
+   - A center (branch) dropdown, showing "Bellandur" or "RBI Layout". Changing it
+     reloads the whole calendar with that branch's appointments.
+   - An "All Doctors" dropdown. Opening it shows a "Search doctors..." box at the
+     top, then "All Doctors", then each doctor's name.
+   - A navy "+ New" button (opens the new appointment form, section 3.6).
+   - The date and time, for example "3 Aug, 2026 9:19 pm".
+
+3.2 CALENDAR TOOLBAR (y about 110)
+   - Left: two small arrows (< and >) to move a week back or forward, then the start
+     date as text with a small down-arrow, for example "Sunday Aug, 2 2026 v".
+   - Right: a row of outlined buttons: Today, Day, Week, Month, Schedule,
+     Doctor / Operatory. The view you are using has a darker outline.
+
+3.3 THE GRID
+   - Header row (y about 145 to 175): each column shows the day name in small
+     capitals (SUN, MON, TUE, WED, THU, FRI, SAT) with the date number under it.
+     Today's number sits inside a filled navy circle, and today's whole column is
+     shaded a light peach colour.
+   - Time ruler on the left: tiny grey times every 15 minutes, from 12:15 am down
+     to late night. The hours after the clinic closes are greyed out.
+   - A thin blue line with a dot at its left end runs across today's column at the
+     current time.
+   - APPOINTMENT CARDS: each appointment is a pink/magenta filled rectangle whose
+     height matches the length of the appointment. Inside it, three lines of white
+     text:
+        line 1 (bold): a small status icon then the patient's name. A clock icon
+                       means scheduled, an arrow icon means already checked out.
+        line 2 (italic): the doctor's name.
+        line 3: start time and length, for example "3:30p 30mins".
+     When two appointments overlap, they sit side by side and share the column.
+   - WEEK view shows seven columns.
+   - DAY view shows only one day, with the appointments stretched across the full
+     width.
+   - SCHEDULE view turns the grid into a list grouped by date: on the left a navy
+     circle with the date number and "AUG, MON" next to it; on the right,
+     full-width pink bars, one per appointment, each with name, doctor and time.
+
+3.4 THE APPOINTMENT POP-OVER (click any pink card)
+   A white card about 290 px wide and 450 px tall opens beside the card you clicked,
+   with a small x in its top-right corner. From top to bottom it shows:
+     1. An arrow icon and the patient's name in bold, then gender and age, then the
+        patient number (#...).
+     2. The phone number, with three small icons under it: copy, a green location
+        pin, and a green WhatsApp logo.
+     3. A small red label "Payment Due", the amount in large text ("INR 0.00"), a
+        credit-card icon on the right (hovering it says "Receive payment"), and an
+        underlined link "Bill & Collect".
+     4. A box with a coloured left edge holding the doctor's name, the start time
+        with the word "today", and the length on the right.
+     5. A list of action links: Edit, Missed, Check-In, Cancel Appointment, Copy.
+        If the patient has already been checked out, it shows Undo Check-Out and
+        Copy instead.
+
+3.5 THE "TODAY" PANEL (the right-hand column, x about 1565 to 1910)
+   From top to bottom:
+     - A small ">" arrow at the left (collapses the panel) and the word "Today"
+       centred.
+     - Three tabs: Appointments (underlined when active), Online, Follow ups.
+     - Six coloured counter tiles in a row, each a number under a short label:
+       navy = total (for example 13), dark grey "Sch" (scheduled), red "In"
+       (checked in), orange "Eng" (engaged), green "Out" (checked out), grey
+       "Canc" (cancelled). A small circular refresh arrow sits after them.
+     - Two collapsed filter rows, each with a down-arrow on the right:
+       "Treatment Categories" and "Doctors".
+     - A yellow strip with a warning such as "4 patients haven't checked-in yet!"
+     - A scrolling list of today's patients. Each row has a coloured strip on its
+       left edge, the patient's name in bold, a small clock icon with the time and
+       length, a small red box with a "?" (no treatment category chosen yet), an
+       undo arrow, and the status word on the right ("Sch" in grey, "In" in red,
+       "Out" in green) with a small check-in arrow icon.
+
+3.6 THE "+ NEW" APPOINTMENT FORM
+   A large white box (about 1000 x 650 px) opens in the middle of the screen. The
+   calendar behind it goes darker. A red x sits in the top-right corner.
+   - Top row of tabs: Appointment, Task, Doctor Unavailable.
+   - Second row of tabs: Single Appointment, Appointment Series, Group Appointment.
+   - Then the form, in rows. Each row has a grey label on the left:
+       WHERE   - "Center" dropdown and "Operatory" (room/chair) dropdown, side by
+                 side.
+       WHO     - "Doctor" dropdown across the full width. Under it, a "Patient"
+                 search box. Typing in it shows a list of matching patients as
+                 "Name (#number)". Once chosen, the patient's mobile number
+                 appears inside the box with a phone icon. A "+ New" button on the
+                 right lets you add a brand-new patient.
+       PURPOSE - "Treatment Category" dropdown with its own search box. The
+                 categories include Consultation, Cosmetic, Crown & Bridge,
+                 Dentures, Endodontics, Implants, Not Specified, Occlusal Therapy,
+                 Online Appointment, Oral Surgery, Orthodontics, Others,
+                 Paedodontics and more. Then a "Treatment" dropdown (also
+                 searchable) that only shows treatments from the chosen category
+                 (for Cosmetic: Bleaching, Chemical Peel, Diastema Closure and
+                 others). Then a Notes box.
+       WHEN    - a Date box (calendar icon), a Time box (clock icon) and a
+                 "Walk-In" button. Under them a "Duration" dropdown with choices
+                 5 min, 10 min, 15 min, 20 min, 30 min, 45 min, 1 hour,
+                 1 hour 30 min, 2 hours, 2 hours 30 min, 3 hours, 4 hours,
+                 5 hours, 6 hours, Custom.
+       NOTIFICATIONS - a collapsed grey row reading "Patient: WA/SMS, Email on
+                 Reminder".
+   - Bottom row: "Need Help?" in orange on the left; CANCEL (outlined) and SAVE
+     (navy) on the right.
+   - If you save an appointment outside the doctor's hours, a small box pops up:
+     "BestoSys - Doctor is not available on selected date" with a red Close button
+     and a "Proceed anyway" button.
+   - A successful save shows a green message in the bottom-right corner:
+     "Appointment added successfully!" The new appointment appears in the grid and
+     in the Today list, and the counters go up by one.
+
+3.7 UPDATE APPOINTMENT (Edit from the pop-over)
+   The same form as "+ New", but without the top tabs. It is filled in with the
+   appointment's details. A small red link with the other branch's name appears in
+   the bottom-left corner, for moving the appointment to that branch.
+
+3.8 BILL & RECEIVE (the "Bill & Collect" link)
+   A box in the middle of the screen:
+     - A "Doctor" dropdown across the top.
+     - "Payment": an Amount box, and round buttons to pick the payment mode: Cash,
+       Chq/Online, Card, Wallet, Other.
+     - "Notes" box.
+     - A small table with columns Treatment, Charges, Tax, Total. A blue + adds a
+       row and a red circle-minus removes one.
+     - An "Auto Billing" tick box.
+     - CANCEL and SAVE buttons.
+
+
+=====================================================================================
+PART 4 - DASHBOARD
+=====================================================================================
+
+The Dashboard is two big white cards stacked on top of each other.
+
+   - Top bar, right side: a "Select Center" dropdown and the status circles.
+
+   - CARD 1, "Practice Summary" (top half of the screen):
+       * Title at the top-left, with a grey line under it: "Gross, Discount, Lab
+         Expenses & Remuneration".
+       * A "Doctor" dropdown at the top-right.
+       * A colour key in a row: Net Amount (green bars), Discount (yellow bars), Lab
+         Charges (red bars), Dr Compensation (dark bars), No. of Treatments (a blue
+         line).
+       * A chart under it with "Amount" on the left side axis and "Treatments" on
+         the right side axis. It was empty in the recording.
+
+   - CARD 2, "Things that need your attention" (bottom half):
+       * Four tabs: Inventory (underlined), Lab Task, Tasks, Payment Due.
+       * Under the tabs, a small "Status: Active" dropdown.
+       * The list below it was empty ("Looks like there's nothing to show").
+
+
+=====================================================================================
+PART 5 - PATIENTS
+=====================================================================================
+
+5.1 PATIENT LIST
+   - Three tabs at the top-left: RECENTLY ADDED, RECENTLY VISITED, INACTIVE. The
+     chosen tab has a navy underline.
+   - Top-right: a Search box, the status circles, the time, and a navy "+ New"
+     button under them.
+   - Each patient is a row about 50 px tall across the whole width:
+       * a grey person outline (or their photo) on the left,
+       * the name, with the patient number in grey underneath,
+       * their phone number(s) in the middle,
+       * their email in blue,
+       * on the far right, an amount owed in red (for example "Due. 6,000.00") and
+         a small calendar icon, when there is one.
+   - An empty tab shows the grey message "Looks like there's nothing to show here",
+     a red link "Can't find patient? Tap here." and a round navy + button.
+
+5.2 NEW PATIENT FORM ("+ New")
+   The form takes over the whole screen. A back arrow is in the top-left corner.
+   Six tabs run across the top: BASIC INFO, CONTACT, INSURANCE, MORE, MEDICAL,
+   DEMOGRAPHICS. Small < and > arrows on the far left and far right edges move to the
+   previous or next tab. Labels sit in a column on the left, and the boxes sit in a
+   column about 550 px wide to their right, usually two boxes per row.
+
+   TAB 1 - BASIC INFO
+     - A photo box in the top-left (a grey person outline with a small blue pencil
+       badge to add a photo).
+     - Center (required) - a dropdown across the full width.
+     - Title dropdown + First/Full Name (required)  |  Surname
+     - Middle Names  |  Suffix
+     - Gender (required): round buttons Male, Female, Transgender, Unknown  |
+       Date Of Birth (required): round buttons "DOB" (with a date box) or "Age"
+       (with a number box).
+     - Marital Status dropdown.
+     - CONTACT: +91 dropdown + WhatsApp Number  |  +91 dropdown + Other Mobile;
+       Personal Email  |  Work/Other Email.
+     - IDENTIFICATION: Nationality dropdown  |  National ID (Aadhar Card Number);
+       ID Type dropdown.
+     - RELATIONSHIP: Patient Since (a ticked "New" box, a date, and a red x)  |
+       Group dropdown; Ratecard (required, normally "Standard"); a Search Tag box.
+     - SOURCE: Source Type dropdown  |  Source dropdown. The Source Type list
+       includes Ref by Patient, Ref by Internal Drs/Staff, Ref by External
+       Drs/Other, Website, Facebook, Google, WhatsApp, Email, SMS, Instagram, Shared
+       via Mobile, Practo.com, JustDial, Pamphlets and more.
+     - NOTES: one wide text box.
+
+   TAB 2 - CONTACT
+     The form slides to the left and a new pane appears on the right with:
+     - a "Paste from center" outlined button (copies the clinic's address),
+     - ADDRESS: Address line 1, Locality, State dropdown, Area Code, Landmark,
+     - OTHER CONTACTS: Emergency contact name, Spouse Name, General Practitioner
+       dropdown.
+
+   TAB 3 - INSURANCE
+     "Primary Insurance" with: Company dropdown, Sub Company dropdown, Policy
+     dropdown, Insurance Id Number box, and a "+ Add Another Insurance" link.
+
+   TAB 4 - MORE
+     - Family (empty area).
+     - Notification preference: tick boxes "Standard Appointment Reminder" (ticked),
+       "SMS DND", "Email DND" (DND = do not disturb).
+     - Patient Tracker: an "Excluded" tick box and an "Exclude Note" box.
+     - Patient Portal Access: on/off switches for Show Treatments (on), Allow to Edit
+       Profile, Show Treatments Charges, Allow to Edit Medical Conditions, Show Files
+       (on).
+
+   TAB 5 - MEDICAL
+     Four labelled rows, each a box with clickable grey "chips" (small tags) under it:
+     - Medical Conditions - chips: Diabetes, Blood Pressure, Thyroid, Epilepsy, Heart
+       Disease, Asthma, Dental History, Acidity, Cholesterol, Kidney Disease,
+       Pregnant/Breast Feeding, on Antiplatelet therapy, on Steroid therapy.
+     - Dental Conditions - chips: Bad Breath, Bleeding gums, Sensitivity, Discoloured
+       teeth, Stained teeth, Fractured teeth, Missing teeth, Cracked teeth, and six
+       "Pain in the ... teeth" chips (lower right back, lower left back, upper right
+       back, upper left back, upper front, lower front).
+     - Current Medications - a text box.
+     - Allergies - an "Allergic to" box and a "Select Allergic to Drugs" box.
+     - A collapsed "Habits" row with a down-arrow on the far right.
+
+   TAB 6 - DEMOGRAPHICS
+     - Demographics: Language (English), Religion, Occupation, Ethnic Group and Race
+       dropdowns, stacked.
+     - Other: Blood Group dropdown and DISC Profile dropdown, side by side.
+
+
+=====================================================================================
+PART 6 - A PATIENT'S PROFILE PAGE
+=====================================================================================
+
+You get here by opening a patient from search, the list or the calendar pop-over.
+The page has a narrow left column (about 300 px) of small cards, and a wide right
+area. The rail stays on the far left, and the top bar shows a back arrow,
+DENTALPROFILES and the status circles.
+
+6.1 LEFT COLUMN (x about 10 to 310), top to bottom
+   1. Identity card: a round circle with the patient's two initials, the name in
+      bold, "Gender, age (date of birth)", the patient number with the branch in
+      brackets (for example "#1234 [RBI Layout]"), a phone line and an email line
+      each with a small icon, then a translate icon and the language ("English").
+   2. A row of about ten small grey icons (calendar, kit, headset, documents,
+      clipboard, expand, two printers, link, pencil).
+   3. Three buttons in a row: "SMS/WA" with a +, "Email", "Letter" with a +.
+   4. Relationship card: the word "Relationship", the date they became a patient,
+      and a small (i) icon. Under it two columns: Group / Ratecard (for example
+      None / Standard) and Membership / Family. Then "Reviews" with a Google "G"
+      icon and an Instagram icon.
+   5. Social Notes card: the title, a navy + and a collapse arrow on the right, a
+      small cartoon of two people sitting at a table, and the caption "Know your
+      patient better. Nurture a bond."
+   6. Internal Notes card: same look, caption "Know your patient's preferences.
+      Serve them better."
+   7. An "Address" row with a down-arrow (collapsed).
+   8. A green word "Active" with a blue "Change" link.
+
+6.2 RIGHT AREA - TOP STRIP
+   - Left: "Medical Information [date]" with a pencil, and four small rows under it:
+     History, Dental, Allergies, Habits.
+   - Middle: "Blood Group"; and "Contact" with a pencil, showing Gen. Practitioner
+     and Emergency contact.
+   - Far right, in a box: "Payment Due", the INR amount, and three links: Receive,
+     Refund, Send Payment Link.
+
+6.3 TABS
+   Four tabs spread evenly across the right area: VISITS (navy underline when
+   active), DOCS & IMAGES, MEMBERSHIP, CHARTING.
+
+6.4 VISIT HISTORY (under the VISITS tab)
+   Each past visit is a block that starts with an orange date tag and a small print
+   icon. Under it, up to four sections, each starting with a small coloured dot:
+   - CLINICAL NOTE: a table heading row (#, Surface, Pop, TOP, Pulp Sensibility,
+     Conclusion, Files), then "Chief Complaint" and "Findings" as labelled lines of
+     text. Teeth are written using FDI numbers (for example 18 = upper right third
+     molar).
+   - TREATMENT DONE: rows with a light green background. Columns: Treatment (with
+     the tooth number), Charges, Gross Amt, Disc, Net Amt, GST, Total, Bill (the
+     bill number as a link), Files. A Total row at the bottom and a print icon on
+     the right.
+   - PRESCRIPTION: columns Drug, Dosage (Morning, Noon, Night), Duration, Total Qty,
+     Instruction. A WhatsApp-share icon and a print icon on the right.
+   - RECEIPTS, REFUNDS, CREDIT NOTES: columns Voucher #, Mode, Doctor.
+   Under the visits: "Expand latest visit only" and a "Get Lifetime Data" button.
+   A patient with no recent visits instead shows "No data in last six months.
+   Please click on Get lifetime data to see the past data" with two buttons:
+   "Get Lifetime Data" and "Add first Visit".
+   A round navy + button floats in the bottom-right corner (next to the AI bot) to
+   add a new visit.
+
+6.5 NEW VISIT FORM (the floating + button)
+   The form appears at the top of the VISITS tab:
+   - Row 1: Center dropdown, Visit Date (with a red x to clear), Doctor dropdown,
+     Appointment dropdown (links the visit to today's appointment), and a "Check-In"
+     button on the far right.
+   - Row 2: a blue link "Update Medical History, Habits, Allergies" on the left and a
+     navy "Change Doctor" button on the right.
+   - Then six grey bars, each with a + on its far right. Clicking one opens that
+     section:
+        Clinical Note, Treatment Plan, Treatment Done, Package, Prescriptions,
+        Instructions.
+   - At the bottom: "Need Help?" on the left, CANCEL and SAVE.
+
+   CLINICAL NOTE (opened)
+   A bordered box with a small red bin icon in its top-right corner:
+   - Doctor dropdown across the full width.
+   - A two-column grid of boxes:
+        Teeth                 |  Surface (dropdown)
+        Pain On Palpation (dd)|  TOP (dropdown)
+        Pulp Sensitivity (dd) |  Conclusion (dropdown)
+   - Clicking "Teeth" drops down a TOOTH PICKER - a chart of small numbered squares
+     laid out like a mouth:
+        * a box labelled UR in the top-left corner, UL in the top-right, LR in the
+          bottom-left, LL in the bottom-right;
+        * top line: baby teeth 55 54 53 52 51 | 61 62 63 64 65
+        * next line: adult upper teeth 18 17 16 15 14 13 12 11 | 21 22 23 24 25 26
+          27 28
+        * next line: adult lower teeth 48 47 46 45 44 43 42 41 | 31 32 33 34 35 36
+          37 38
+        * bottom line: baby teeth 85 84 83 82 81 | 71 72 73 74 75
+        * a "Full Mouth" button under the chart.
+   - A "Vitals" row with a down-arrow.
+   - Chief Complaint box, with a blue "Pain Scale" link at its right end.
+   - Findings, Investigation, Diagnosis and Notes boxes, one under another.
+   - A helper column on the right side (x about 1525 to 1885): an "Options" dropdown
+     (set to Complaints), a Search box, and a list of ready-made phrases - Pain,
+     Swelling, Bleeding Gums, Sensitivity, Discolouration, Ulcer - that you click to
+     fill in the box you are typing in.
+
+   PRESCRIPTIONS (opened)
+   - Red column headings: "Drug [+]", "Dosage", "Duration".
+   - Each medicine is a row: a small person icon, a searchable drug dropdown, the
+     form of the drug (for example Tablet), a round button for regular dosing or
+     "SOS" (only when needed), three small boxes for Morning / Noon / Night amounts,
+     a number + "Days" dropdown for how long, the total quantity, a red bin to delete
+     the row, and a drag handle (two lines) to reorder.
+   - A second line under each medicine: a food timing dropdown (before/after food),
+     a language dropdown (English), an Instruction box, and a Notes box.
+
+
+=====================================================================================
+PART 7 - (reserved) SHARED BUILDING BLOCKS USED EVERYWHERE
+=====================================================================================
+
+About 40 pages use the same layout, so it helps to know it once.
+
+7.1 THE STANDARD LIST PAGE
+   1. A navy page title at the top-left of the work area (for example "Center List",
+      "Drug Master List").
+   2. A filter row under it: small grey labels sitting above dropdowns (usually
+      "Center" and "Status = Active"), sometimes a Search box, then a navy "View"
+      button and a grey "Reset" button.
+   3. At the top-right, in a row: a navy "+ New" button, a green Excel icon, a red
+      PDF icon and a blue printer icon.
+   4. The table: a thin grey border, small grey capital-letter column headings (some
+      with a sort arrow and a funnel filter icon), white rows about 32 px tall.
+      "Yes" is written in green and "No" in red.
+   5. Every row starts with a three-dot (vertical) menu. Clicking it shows "Edit"
+      (with a pencil) and "Delete" (with a bin), plus a small yellow note:
+      "Created: [user] on [date]" and "Updated: [user] on [date]".
+   6. A footer under the table: "Count: N" (how many rows).
+   7. Some pages have a second table underneath for deleted records (for example
+      "Deleted Staff List").
+
+7.2 EMPTY PAGES
+   Large, light grey text in the middle of the area: "Looks like there's nothing to
+   show here".
+
+7.3 FORMS AND POP-UP BOXES
+   - Boxes are outlined, with a tiny grey label sitting in the top border. A red *
+     means the box must be filled. Dropdowns have a small down-arrow on the right.
+     Date boxes have a calendar icon on the left and a red x on the right.
+   - Pop-up boxes are white with rounded corners. The purple "b" logo and the title
+     sit in the top-left, a red x in the top-right, tabs under the title, and at the
+     bottom "Need Help?" (orange, left) with CANCEL (outlined) and SAVE (navy) on the
+     right.
+   - Full-page forms end with RESET and SAVE centred under the boxes (or GIVE, or
+     MERGE).
+   - Small warning boxes have the title "BestoSys", one line of text and two buttons
+     (used for logout, "doctor not available", "module expired").
+
+7.4 COLOURS
+   - Navy blue: the rail, headings and main buttons.
+   - Orange: the open menu item, and "Need Help?".
+   - Pink/magenta: appointment cards.
+   - Green: Yes, Out, Connected.
+   - Red: No, In, amounts owed.
+   - Light peach: today's column on the calendar.
+
+
+=====================================================================================
+PART 8 - SETTINGS (THE GEAR ICON)
+=====================================================================================
+
+The gear opens a white second menu next to the rail with ten groups. Each group is a
+bold navy heading with a small down-arrow (closed) or up-arrow (open) on its right.
+Opening a group shows its pages in grey underneath, and the page you are on turns
+orange. The page itself fills the rest of the screen. Most pages are a standard list
+(Part 7.1).
+
+8.0 MENU MAP (group -> pages inside, in order)
+   Practice ............. Clinic, Centers, Owner & Doctor, Staff, Holiday, Operatory,
+                          WA / SMS / Emails, My Gallery, Appointment Series, Project
+   Payment Mode ......... Bank Account, Card Swiping Machine, Cash, Credit Card,
+                          Wallet, Others
+   Practice Growth Setup  Branding, Social Media Integration, Repeat Visit Generator,
+                          Membership, Rate Cards Corp Tie-ups, Packages, PROWA,
+                          Interaction Call Statuses
+   Specialist Fees ...... Specialist Fees
+   Electronic Medical
+   Records .............. Clinical Notes, Treatment Category, Treatment, Sitting Note
+                          Template, Drug Master, Instructions, Perio Charting,
+                          Insurance, Insurance Master, Prescription Template
+   Orthodontics ......... Goals, Limitations
+   Patient Profile ...... Medical Conditions, Dental Conditions, Group, Source, Source
+                          Type, Referral, General Practitioner, Email Domains
+   Templates ............ WA Messages, Email, Letter
+   Inventory & Accounting Vendor, Inventory Category, Inventory Item, Accounts
+   Utilities ............ Patient Merge, Clear Cache And Logout
+
+8.1 PRACTICE
+
+   CLINIC (page title "Clinic Setting")
+   Four tabs: GENERAL DETAILS, PREFERENCES, PRINTING SETUP, INTEGRATIONS. An outlined
+   "Edit" button with a pencil sits at the top-right of the form. Everything is
+   greyed out until you press it.
+
+     GENERAL DETAILS
+       - Two logo spaces side by side, "Upload Logo 1" and "Upload Logo 2", each
+         with a small pencil badge.
+       - Organization: Clinic Name, Billing Name, Tag Line ("Designing smiles since
+         2003"), Owner Name, Website.
+       - Global Settings: "Teeth No. System" with round buttons FDI (chosen),
+         Universal, Palmer; "Allow Vouchers From" date; on/off switches for Reset
+         Voucher Id on New Financial Year, Enable Head Charting, Custom Patient ID,
+         Advanced Security (with an (i) icon).
+       - Patient Portal Access: the same five switches as in the patient form.
+
+     PREFERENCES
+       - Calendar Preferences: Weekly View Start dropdown ("Yesterday"), Calendar
+         Slot Duration dropdown ("15 Minute"), Appointment Duration dropdown
+         ("30 mins"), and an "Activate Appointment Confirmation" switch with a small
+         note under it.
+       - Appointment Card: Color Style round buttons (Strip / Filled), Top Color
+         round buttons (Doctor / Treatment Category), a purple "Preview" card on the
+         right showing what an appointment looks like (Patient name, Operatory name,
+         Doctor name, 12p 1hr), and "Change appointment card color on status change"
+         with Enable / Disable.
+       - Task Card: three coloured dots with colour codes - Task Background (yellow),
+         Overdue Task (orange), Task Font (grey).
+       - Patient Registration: one row per field of the patient form (SurName,
+         Profile Pic, Mobile, Email, Date of birth, Locality / City, Aadhar Card
+         Number, Nationality and more). Each row has three round buttons:
+         Mandatory, Prompt, Optional. Optional is ticked in green for all of them.
+
+     PRINTING SETUP
+       - Printing Setting: Print Paper dropdown ("Plain paper & letterhead").
+       - Letterhead Preference: header template dropdown ("Template With 1 logo"),
+         with a preview of the letterhead under it - clinic name, tag line and
+         address on the left; phone, email and website on the right.
+       - Default Paper size: Plain Paper Size A4; Letterhead Sizes for Prescription,
+         Treatment Plan, Bill/Receipt and Invoice, each an "A4" dropdown.
+       - Margins: a small grid with rows A4, B5, A5 and columns Left, Top, Bottom,
+         Right margin, each a dropdown (for example 1.25, 2.00, 0.50, 0.25 inches).
+       - Font Size For All Prints: ten letter "A"s getting bigger from left to right,
+         over a slider with a red knob.
+       - Additional Settings For Prescription: switches for Medical Conditions,
+         Allergies, Investigation, Include composition.
+       - Invoice: switches for Include Doctor name in Invoice (on), Show GST column
+         always, Include HSN/SAC Code in Invoice.
+       - Footers: text boxes for the bottom line printed on Invoice, Receipt,
+         Refund, Credit Note, Prescription and Patient Profile.
+
+     INTEGRATIONS
+       - One card: "Zoho Books Integration (Accounting)". Three lines explain that
+         every invoice, receipt, return and refund made in BestoSys is copied into
+         Zoho Books automatically, and that it is a paid add-on. An underlined "How
+         it works" link on the left and a navy "Order Now" button on the right.
+
+   CENTERS
+     A list of the clinic's branches. Columns: Center Name, City, Plan, Plan Expiry,
+     Contact No., Contact Person, Center Email ID, Country Name, Active, SMS Balance,
+     Google Map Link. Two rows: RBI Layout (Bestosys Platinum plan, expires 8 Nov
+     2026) and Bellandur (Bestosys Free Trial).
+
+   OWNER & DOCTOR
+     A list: Title, Name, Contact No., Email ID (Personal), Role, Active. Five rows
+     (two "Owner and Doctor", three "Doctor"). A "Deleted Owner & Doctor List" sits
+     under it. Clicking Edit on a row opens "Update Doctor/Owner" with three tabs:
+       - BASIC INFO: a cartoon doctor picture with a pencil; Center; Title, Name,
+         Middle Names, Surname, Suffix, Short Name; Gender round buttons; Date of
+         Birth; Contacts (two mobile numbers, a personal and a work email); Role
+         dropdown ("Doctor") with tick boxes Consultant, Orthodontist, Tele-caller,
+         Marketing, Accountant; Registration (Regn No., Regn Authority);
+         Qualification, Specialty, Experience (Yrs); a Description box;
+         Notifications ("Send Appointment Summary" ticked).
+       - ACCESS: Login ("Enable Login" switch, a "Set New Password" button, "Enable
+         Mobile Access" switch); a Centers box; Appointments ("Allowed to see
+         appointments" dropdown = All); Report Export ("Disable Export to
+         Excel/PDF in Reports" switch); Detailed Access - a "Select Copy Access from"
+         dropdown on the right and a grid with columns Allow Entry, Allow Edit,
+         Allow Delete, View Report and rows Patient, Appointment, Treatment &
+         Package (Settings), Clinical Notes and more. Each cell is a dropdown
+         (Any Day / Same Day / No Access), some with an "Edit Data Entered by
+         others" tick box under them.
+       - WORKING HOURS: one row for each day Monday to Sunday, each with a
+         "Working" switch and four time boxes: Opening Time, Break Start, Break End,
+         Closing Time. Below that, "Special Working Hours 1" and "2", each with an
+         Enable switch.
+
+   STAFF
+     A full-width Center dropdown, then Status + View / Reset. "Staff List" table
+     (Title, Name, Contact No., Email, Role, Active) with three front-desk staff.
+     "Deleted Staff List" under it (empty).
+
+   HOLIDAY
+     "Holiday List" with columns Holiday Reason, Date, Recurring Holiday, Notes. Two
+     rows: Independence Day (15 Aug) and Republic Day (26 Jan), both recurring.
+
+   OPERATORY
+     Center dropdown, Status, View / Reset, + New. Empty (no chairs/rooms set up).
+
+   WA / SMS / EMAILS
+     Two long tables: "WA, SMS & Email to Patients" and below it "WA, SMS & Email to
+     Doctors". Columns: Notification (a full sentence), SMS/WA (Yes/No), Email
+     (Yes/No), Action (a pencil to edit the message and a gear for settings).
+     Some sentences contain highlighted purple values you can change, such as the
+     reminder times, "Appointment Day", "Previous Day" and "2 hrs".
+     The patient messages listed are: appointment confirmation when booked;
+     date/time changed; cancelled; appointment reminder (at 7:30 AM on the day, or
+     8:00 PM the evening before for early appointments); birthday wishes; thank-you
+     to the patient who referred someone; recall message; final reminder 2 hours
+     before; missed appointment; invoice made today; receipt made today; lab work
+     received; welcome on first visit; feedback request on checkout; payment
+     reminder link; anniversary wishes; membership expiry; membership treatment
+     expiry; refund made today; social-media link; payment link.
+
+   MY GALLERY, APPOINTMENT SERIES ("Appointment Series Template List"), PROJECT
+     All empty lists with a "+ New" button.
+
+8.2 PAYMENT MODE
+   Each page is a small list:
+   - Bank Accounts List: Bank Name, Branch, Account #, Active (three banks).
+   - Card Swiping Machine List: a Center dropdown, then Machine Name, Issued By,
+     Bank Name, Active, Notes (three machines).
+   - Cash List: Account Type, Account, Search Words, Active, Default, Notes - one row,
+     "Cash in Hand".
+   - Credit Card: empty.
+   - Wallet List: four wallets (Gpay, UPI and two bank wallets).
+   - Others: empty.
+
+8.3 PRACTICE GROWTH SETUP
+   - BRANDING: two navy bars, each with a pencil on the right. "Global Preferences"
+     (the clinic name used in SMS) and "Center-wise Preferences" (center dropdown,
+     contact number for WA/SMS/Email, email sender name, reply-to email, CC email,
+     and the SMS/WA Balance Alert Level, set to 50).
+   - SOCIAL MEDIA INTEGRATION: an "Edit" button top-right. "Online Appointment Link"
+     shows two web links, Appointment Request and Appointment Booking, each with a
+     copy icon (these are what patients use to book online). "Social Media Links"
+     has empty boxes for Facebook Page, Instagram Page, JustDial and Other. "Google
+     Review Links" has one box per branch.
+   - REPEAT VISIT GENERATOR: one intro line, then four blocks. Each has a bold label
+     on the left and an explanation paragraph on the right:
+       * General Recall - a "Periodicity" box (183 Days, about 6 months), WA/SMS and
+         Email switches, a gear and a pencil.
+       * Treatment-Wise Recall - a + button, then a small table: Name, Send
+         Treatment Recall SMS (switch), Recall after (days). Example: Scaling, 180
+         days, with gear / pencil / bin icons.
+       * Pre-Birthday Offer - sends a message a week before the patient's birthday;
+         WA/SMS and Email switches.
+       * Pre-Anniversary Offer - same idea for wedding anniversaries; SMS and Email
+         switches.
+   - MEMBERSHIP, RATE CARDS & CORP TIE-UPS ("Ratecard List"), PACKAGES: empty lists.
+   - PROWA: two tabs ("About PROWA - Must read before using" and "PROWA
+     Preferences"), a center dropdown, and the message "PROWA is not enabled for RBI
+     Layout. Please contact your Bestosys Growth Advisor."
+   - INTERACTION CALL STATUSES ("Manage Call Status"): a row of removable chips
+     describing how a follow-up call went - Call not received, Not Reachable/Switch
+     Off, Disconnected call, Busy - Call Back, Call Back, Not Interested - Cost,
+     Interested - Budget Issue - and a "+ New" button.
+
+8.4 SPECIALIST FEES
+   "Specialist Fees List": a Center dropdown with View / Reset; columns Doctor Name,
+   Remuneration Basis (a dropdown in each row, set to "Treatments & packages"),
+   Remuneration, Remuneration Insurance (%). One row per doctor.
+
+8.5 ELECTRONIC MEDICAL RECORDS
+   - CLINICAL NOTES ("Clinical Notes Master List"): columns Type, Notes, Active.
+     28 ready-made phrases doctors can pick from, of three types:
+       Diagnoses (Apical periodontitis, Pericoronal Abscess, Reversible Pulpitis,
+       Irreversible Pulpitis, Periodontitis, Dental Caries, Missing Tooth, Fracture,
+       Gingivitis, Peri Apical Abscess, Traumatic Ulcer, Aphthous Ulcer, Cracked
+       tooth Syndrome, Non Vital Teeth),
+       Investigations (CBCT, IOPAR, Bite Wing Radiograph, OPG),
+       Complaints (Difficulty in chewing food, Cavity, Sensitivity, Discolouration,
+       Ulcer).
+     Clicking a row opens "Update Clinical Notes Master" (Type dropdown, Notes,
+     Remark, Active tick box, CANCEL / SAVE).
+   - TREATMENT CATEGORY: a Search box and Status; columns Treatment Category, SMS,
+     WA, Email, Active, SMS/WA Before Hours, Email Before Hours. 18 categories
+     (Online Appointment, Not Specified, Occlusal Therapy, Crown & Bridge,
+     Orthodontics, Endodontics, Restorative, Dentures, Oral Surgery, Scaling and
+     Polishing, Periodontics, Implants, Cosmetic, Paedodontics, Consultation, Recall,
+     Others, Remote Consultation).
+   - TREATMENT: in the menu, not opened.
+   - SITTING NOTE TEMPLATE: Treatment Category and Sitting Note Template, 45 rows of
+     ready-made notes for each sitting (for example Crown & Bridge -> "Cap
+     Cementation Done", "Teeth Preparation Done For Zirconia Bridge").
+   - DRUG MASTER: Drug Type, Drug Name, Composition, Route of Admin, Active - 123
+     medicines (tablets, ointments, mouthwashes, toothpastes and so on).
+   - INSTRUCTIONS ("Instructions Master"): Search and Status; empty.
+   - PERIO CHARTING: 15 rows, one for each gum-pocket depth value from 1 to 15.
+     Columns: Value, Probing Color, Probing Text, Preview, Recession Color,
+     Recession Text, Preview, Notes, Action. The colour boxes are white/grey for
+     1-3, light blue for 4, purple for 5-6 and bright red for 7-15 (deeper = worse).
+   - INSURANCE: three tabs (Company, Sub Company, Policy), each an empty list.
+   - INSURANCE MASTER: a read-only list of 17 insurance companies (Company Name,
+     Website, Email, and a claim-form icon).
+   - PRESCRIPTION TEMPLATE: in the menu, not opened.
+
+8.6 ORTHODONTICS
+   - Orthodontic Goals List: 12 goals (Straighten Teeth, Deep bite correction,
+     Close spaces and so on), columns Goal, Active, Notes.
+   - Orthodontic Limitations List: 8 limitations (Deep Bite, missing teeth at
+     particular positions, Cross bite and so on).
+
+8.7 PATIENT PROFILE
+   - MEDICAL CONDITION and DENTAL CONDITION: a title, a "+ New" button, and the
+     conditions shown as removable chips. These are exactly the chips that appear on
+     the patient form's Medical tab.
+   - GROUP ("Patient Group List"): Patient Group, Icon, Active, Discount. Seven
+     groups: None, Doctor, VIP, Family, Prospect, Prospect - Inactive, Friends.
+   - SOURCE: empty. SOURCE TYPE ("Patient Source Type List"): 26 ways patients find
+     the clinic (Ref by Patient, Website, Facebook, Google, WhatsApp, Instagram,
+     Practo.com, JustDial, Pamphlets, Camp, Walk-in, Word of Mouth and more).
+   - REFERRAL, GENERAL PRACTITIONER, EMAIL DOMAINS: lists (Referral was empty).
+
+8.8 TEMPLATES
+   - WA MESSAGES ("WA Template List"): Template Name, Folder, Notes, Active - 27
+     WhatsApp messages, mostly festival greetings (Diwali, Holi, Onam, Pongal, New
+     Year and others) plus clinic messages (Clinic Address, COVID-19 Questionnaire).
+   - EMAIL ("Email Template List"): 2 templates.
+   - LETTER ("Letter Template List"): 14 consent forms, all in the folder "Dental
+     Consents Form" (Covid Consent, consent for wisdom tooth surgery, dental
+     implants, gum surgery, root canal, general dentistry, children's dentistry,
+     fillings, crowns and bridges, local anaesthesia, extractions).
+     Opening one shows "Update Letter Template": Template Name, Folder and Subject at
+     the top; a large Body editor on the left holding the formatted letter; and a
+     scrollable "Tokens" list on the right (PatientID, Salutation, PatientFirstName,
+     PatientMiddleName, PatientSurName, PatientName, PatientMobile, PatientEmail...).
+     Clicking a token inserts that patient detail into the letter automatically.
+
+8.9 INVENTORY & ACCOUNTING
+   - VENDOR ("Vendor List"): Vendor Organization Name, Lab (Yes/No), Active, Area
+     Code, Land Line, Title, Primary Contact Name, Contact No., Email, Balance - 9
+     suppliers and labs.
+   - INVENTORY CATEGORY: a list of categories.
+   - INVENTORY ITEM ("Inventory Item List"): an Inventory Category dropdown and a
+     Search box; columns Item, Category, Preferred Brands, HSN Code, Tax Rate, Unit
+     of Measure Code / Description, Notes, Active - 268 items (gloves, syringes,
+     gauze, filling materials and so on).
+   - ACCOUNTS ("Account List"): an Account Type dropdown and Status; columns Account
+     Type, Account, Account Group, Search Words, Active, Default, Notes - 140
+     accounts grouped as Expenses, Assets, Liabilities, Owner's Equity and Income.
+
+8.10 UTILITIES
+   - PATIENT MERGE: one "Original Patient" row and four "Duplicate Patient" rows,
+     each with a Select Center dropdown and a patient box. A red note explains that
+     merging moves all appointments, clinical data, money records and messages from
+     the duplicates into the original and then permanently deletes the duplicates.
+     A navy MERGE button under it.
+   - CLEAR CACHE AND LOGOUT: a menu action, no page.
+
+
+=====================================================================================
+PART 9 - ADMIN (THE ID-CARD ICON)
+=====================================================================================
+
+Admin opens the same kind of white second menu, with seven groups (all were open in
+the recording). Most Admin pages are entry forms - a short column of boxes and a navy
+SAVE button - rather than lists.
+
+9.0 MENU MAP
+   Team ........ Doctor Unavailability, Access Audit
+   NABH ........ About NABH, Biomedical Waste, Fumigation, Sterlization, Spore Test,
+                 Equipment Master, Equipment Maintenance, Equipment Breakdown
+   Accounting .. Credit Notes, Settlements, Payment Receive, Payment Gateway
+                 Transactions, Payment Made, Cash/Bank, Journal, Opening Balances
+   Inventory ... Purchase, Consume, Transfer
+   Lab ......... Lab Bill, Give & Receive Lab work
+   Tasks ....... Recurring Task
+   SMS/WA ...... SMS/WA Transfer
+
+9.1 TEAM AND NABH
+   - DOCTOR UNAVAILABILITY: Center dropdown, Status dropdown, View / Reset, + New;
+     the list is empty.
+   - ABOUT NABH: a navy banner "NABH Compliance", a heading "How BestoSys Supports
+     Your NABH Compliance", explanation text (NABH is India's hospital accreditation
+     board, which needs a lot of record keeping), and a grey box with a credit and a
+     disclaimer.
+   - Every other NABH page (Biomedical Waste, Fumigation, Sterilisation and so on)
+     pops up a small box: "BestoSys - Your NABH module is expired. Please renew" with
+     a red "Later" button and a "Renew Now" button. So this add-on is not active.
+
+9.2 ACCOUNTING
+   - CREDIT NOTES and SETTLEMENTS: a filter row - From [date] to [date], a Date
+     dropdown (Today), Center, Doctor (on Settlements: Account Type and Account
+     instead), Voucher Status - then View / Reset, with "+ New" at the far right.
+     Both were empty.
+   - RECEIVE PAYMENT: Date and Center at the top; "Received From" with round buttons
+     Patient / Ratecard, a Patient box and a Doctor dropdown; "Payment" with an
+     Amount box and payment mode round buttons (Cash, Chq/Online, Card, Wallet,
+     Other); a Notes box; SAVE.
+   - PAYMENT MADE (money the clinic pays out): Date and Center; an "Upload your
+     Files" button (max 5 MB); "Made to" round buttons Vendor / Doctor or Staff
+     (payments other than compensation) / Expense Account; a Vendor dropdown; payment
+     mode round buttons; Amount; Notes; a "Print Payment" tick box; SAVE.
+   - CASH/BANK TRANSACTION: Date; round buttons Withdrawal, Deposit, Transfer; a
+     Select Bank dropdown; Cheque/Ref No and Cheque/Ref Date; Amount; Note; SAVE.
+   - JOURNAL ENTRY: Center and Date; "Debit A/C" with round buttons Doctor/Staff,
+     Vendor, Account and a dropdown; "Credit A/C" with the same buttons, a dropdown
+     and an Amount; a Note; SAVE.
+   - OPENING BALANCES: an Opening Balance Date at the top-left; five tabs - PATIENT,
+     DOCTOR, VENDOR, ACCOUNT, INVENTORY. Each tab is a list (for example "Patient
+     Opening Balance") with a Center dropdown, View / Reset and + New.
+
+9.3 INVENTORY
+   - PURCHASE ("Inventory Purchase"): Center and Bill Entry Date; Select Vendor,
+     Bill No. and Bill Date. Then a grid of items with columns Item, Last Price,
+     Price, Qty, Disc, Net, Tax Amount, Total, Notes - a + on the right adds a row,
+     a red bin removes one, and the Item box drops down a searchable list of stock
+     items. Near the bottom: an "Others" amount, a Particulars box and a totals row;
+     a Notes box; "Upload your Files"; RESET and SAVE.
+   - CONSUME ("Inventory Consume", recording stock used up): Center and Consumption
+     Date; rows of Inventory Item, Stock on hand, Quantity, Note, with a green + and
+     a red bin; a Note box; RESET and SAVE.
+   - TRANSFER ("Inventory Transfer", moving stock between branches): From Center,
+     To Center, Transfer Date; rows of Inventory item, Stock in hand, Quantity; Notes;
+     RESET and SAVE.
+
+9.4 LAB
+   - LAB BILL: Center and Bill Entry Date; Select Lab dropdown and Bill No.; Bill
+     Date; a large upload area ("Upload your Files"); RESET and SAVE.
+   - GIVE & RECEIVE LAB WORK ("Lab Work"): Center dropdown and Select Lab dropdown
+     side by side; two tabs, Give and Recieve; a "Giving to person" box; RESET and
+     GIVE.
+
+9.5 TASKS AND SMS/WA
+   Recurring Task and SMS/WA Transfer are in the menu but were not opened.
+
+
+=====================================================================================
+PART 10 - CRM, HELP, NOTIFICATIONS AND WHATSAPP
+=====================================================================================
+
+10.1 CRM (handshake icon)
+   A second menu with three groups:
+   - Practice Growth -> Patient Tracker. The page has the title "Patient Tracker"
+     with a Center dropdown beside it, and seven tabs spread across the top:
+     Prospect (underlined), No Show, Cancelled, Consulted, Treatment Plans,
+     In Progress, Recall. Under the tabs: the tab's name, View / Reset, and a gear
+     at the far right. It was empty.
+   - CRM -> Prospect, Enquiries, Campaign Widget, Opportunity.
+   - Communications -> Emails, SMS/WA Usage Detailed, WABA Usage Detailed, SMS/WA
+     Usage Summary.
+
+10.2 HELP (light bulb)
+   - Two tabs at the top-left: HELP AND SUPPORT and SUPPORT TICKETS.
+   - Help and Support: a Search box on the left and a navy "Show All" button on the
+     right. Below are full-width rows that open when clicked (a down-arrow on the
+     right of each), in groups:
+       * Getting Started: Quick Patient Journey, New WhatsApp activation, Basic Setup
+         (Settings), How to create Bestosys shortcut.
+       * FAQ's: WhatsApp messages are not going, How to send Bulk WA to patients,
+         Unable to edit bill / unable to edit plan.
+       * Clinic Setup Essentials: Clinic & Preference Setting, How to add Doctor/
+         Staff, Add Payment Modes, SMS & Email Settings, and more.
+     "Show All" lists one help row for each feature (My Gallery, Doctor Remuneration,
+     Appointment Series, Membership Plan, Rate Cards, Campaign & Channel, Clinical
+     Notes, Templates, Inventory, Accounts, Patient Merge and more).
+   - Support Tickets: a stack of cards, one per ticket the clinic has raised. Each
+     has a green date tag, a status tag ("Open" or "Opened"), a red ticket number,
+     the question text, and a link icon plus a down-arrow on the right.
+
+10.3 NOTIFICATIONS (bell)
+   A small second menu titled "Alert" with two items, Application Update (orange
+   when open) and Recent Features. The page shows the clinic name and "BestoSys -
+   Click to checkout for latest BestoSys app".
+
+10.4 WHATSAPP (logo with "New")
+   - Tabs across the top: Read Me, Status, FAQs, About WABA, Submit WABA onboarding
+     Request (WABA = WhatsApp Business API). A center dropdown sits at the top-right.
+   - The Status tab shows, centred on the page: a green WhatsApp logo, "WhatsApp
+     feature is on!", "Expiry on 8 Nov, 2026", "Status: Connected" in green, and a
+     navy "Refresh" button. An orange "Need help?" sits on the left.
+
+
+=====================================================================================
+PART 11 - THINGS THAT EXIST BUT WERE NOT SHOWN
+=====================================================================================
+
+These appear in the menus but were never opened, so their layout is unknown:
+   - Reports (rail icon 4).
+   - The Calendar's Month view and Doctor / Operatory view, and the Online and
+     Follow ups tabs of the Today panel.
+   - The patient profile tabs DOCS & IMAGES, MEMBERSHIP and CHARTING, and the
+     Treatment Plan, Treatment Done and Package sections of a new visit.
+   - The Dashboard tabs Lab Task, Tasks and Payment Due.
+   - Settings -> Treatment, Prescription Template, Inventory Category.
+   - Admin -> Access Audit, Payment Gateway Transactions, Recurring Task, SMS/WA
+     Transfer.
+   - Every CRM page except Patient Tracker.
+   - The new appointment form's Task and Doctor Unavailable tabs, and the
+     Appointment Series and Group Appointment tabs.
+
+(End of file)
