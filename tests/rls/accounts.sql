@@ -96,6 +96,10 @@ select extensions.throws_ok($$select public.set_member_role('30000000-0000-4000-
 reset role;
 select extensions.is((select base_role from public.memberships where id = '30000000-0000-4000-8000-000000000002'), 'staff', 'Failed role audit rolls back base role');
 select extensions.is((select cardinality(role_tags) from public.memberships where id = '30000000-0000-4000-8000-000000000002'), 0, 'Failed role audit rolls back tags');
+set local role authenticated;
+select extensions.throws_ok($$select public.set_member_access('30000000-0000-4000-8000-000000000002',jsonb_set((select grid from test_grid),'{billing,edit,day}','"any"'))$$, 'P0001', 'synthetic audit failure', 'Audit failure aborts access grid save');
+reset role;
+select extensions.is((select access_grid from public.memberships where id='30000000-0000-4000-8000-000000000002'),(select grid from test_grid),'Failed access audit rolls back grid');
 drop trigger reject_test_audit on public.access_audit;
 update public.memberships set deleted_at = now() where id = '30000000-0000-4000-8000-000000000002';
 set local role authenticated;

@@ -183,6 +183,7 @@ test("live login, access denial, mobile access, password change, recovery and lo
     .getByLabel("Billing / Invoices: Allow Edit", { exact: true })
     .selectOption("same");
   await roleForm
+    .locator("details")
     .getByRole("button", { name: "Save access", exact: true })
     .click();
   await expect(
