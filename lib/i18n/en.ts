@@ -2,7 +2,8 @@ export const en = {
   accessGrid: {
     copyFrom: "Select Copy Access from",
     chooseSource: "Choose a person",
-    copied: "Access copied into this draft. Review it and save access to apply.",
+    copied:
+      "Access copied into this draft. Review it and save access to apply.",
     loading: "Loading account access…",
     title: "Access",
     area: "Area",
